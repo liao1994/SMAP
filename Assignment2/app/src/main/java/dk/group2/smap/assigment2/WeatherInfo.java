@@ -11,6 +11,7 @@ import java.util.Calendar;
 
 public class WeatherInfo {
     private int id;
+    private String icon;
     private String description;
     private double temp;
     private Calendar timeStamp;

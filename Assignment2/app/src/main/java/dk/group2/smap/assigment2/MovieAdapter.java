@@ -1,21 +1,17 @@
-//package dk.group2.smap.assigment2;
+package dk.group2.smap.assigment2;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+import java.util.ArrayList;
+
+
+public class WeatherAdapter extends BaseAdapter{
 //
-//import android.content.Context;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.BaseAdapter;
-//import android.widget.TextView;
-//
-//import java.util.ArrayList;
-//
-///**
-// * Created by liao on 25-04-2017.
-// */
-//
-//public class MovieAdapter extends BaseAdapter{
-//
-//    ArrayList<Demo> _demos;
+//    ArrayList<> _demos;
 //    Context _context;
 //    static LayoutInflater _layoutInflater = null;
 //    public MovieAdapter(Context c, ArrayList<Demo> demos){
