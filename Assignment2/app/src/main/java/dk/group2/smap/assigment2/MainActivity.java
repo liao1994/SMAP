@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Intent mServiceIntent = new Intent(this, WeatherService.class);
         getApplicationContext().startService(mServiceIntent);
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         currentTemp.setText(String.format( "%.2f", winfol.get(0).getTemp()) + "C" +(char) 0x00B0 );
         TextView currentDescription = (TextView) findViewById(R.id.tv_currentDescription);
         currentDescription.setText(winfol.get(0).getDescription());
+
+        winfol.remove(0);
     }
 
     private void startWeatherService() {
