@@ -25,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
         startWeatherService();
 
         final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
-        _weatherinfo.add(new WeatherInfo());
-        _weatherinfo.add(new WeatherInfo());
-        _weatherinfo.add(new WeatherInfo());
+        _weatherinfo.add(new WeatherInfo(1, "Sunny", 20.2, "Test"));
+        _weatherinfo.add(new WeatherInfo(2, "Rain", 10, "Test2"));
+        _weatherinfo.add(new WeatherInfo(3, "Snow", -5, "Test3"));
 
-        WeatherAdapter weatherAdapter = new WeatherAdapter(this,);
+        WeatherAdapter weatherAdapter = new WeatherAdapter(this, _weatherinfo);
         ListView lw = (ListView) findViewById(R.id.listWeather);
         lw.setAdapter(weatherAdapter);
+        
 //        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
