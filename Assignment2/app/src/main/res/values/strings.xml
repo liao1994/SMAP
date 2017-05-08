@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Weather Aarhus group XX</string>
+    <string name="app_name">Weather Aarhus Group 22</string>
     <string name="txt_current">Current:</string>
     <string name="weather_aarhus">WEATHER: AARHUS</string>
     <string name="weather_info_json">WEATHER_INFO_JSON</string>
+
 </resources>
