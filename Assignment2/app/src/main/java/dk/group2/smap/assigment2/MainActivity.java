@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,5 +18,11 @@ public class MainActivity extends AppCompatActivity {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, WeatherService.class);
         backgroundServiceIntent.putExtra("", "");
         startService(backgroundServiceIntent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }

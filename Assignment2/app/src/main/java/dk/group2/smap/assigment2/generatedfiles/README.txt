@@ -1,0 +1,1 @@
+All files under this folder is genereated form jsonschema2pojo.org
