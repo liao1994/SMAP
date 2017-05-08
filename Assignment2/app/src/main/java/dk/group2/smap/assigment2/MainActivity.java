@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,9 @@ import java.util.Calendar;
 import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 public class MainActivity extends AppCompatActivity {
+
     WeatherDatabase wDB;
+    FloatingActionButton refreshBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent mServiceIntent = new Intent(this, WeatherService.class);
         this.startService(mServiceIntent);//
+
+        refreshBtn = (FloatingActionButton) findViewById(R.id.refreshBtn);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"Updating Weather Info",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
         ArrayList<WeatherInfo> winfol;
@@ -43,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         WeatherAdapter weatherAdapter = new WeatherAdapter(this, winfol);
         ListView lw = (ListView) findViewById(R.id.listWeather);
         lw.setAdapter(weatherAdapter);
-        
+
 //        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(onBackgroundServiceResult);
         wDB.close();
     }
+
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -96,4 +108,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
 }
