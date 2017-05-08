@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pending = PendingIntent.getService(this, 0, backgroundServiceIntent, 0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_HALF_HOUR,pending);
-
     }
 
     @Override
