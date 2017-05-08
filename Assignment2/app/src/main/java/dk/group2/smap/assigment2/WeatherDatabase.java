@@ -31,11 +31,12 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     private static final String TEMP = "temperature";
     private static final String TIMESTAMP = "time_stamp";
     private static final String ICON = "icon";
-
+    private static final String MAIN = "main";
     private SQLiteDatabase myDB;
 
     private String queryTable = CREATE_DB_STRING + TABLE_NAME +
             " (" + ID + " INTEGER PRIMARY KEY, " +
+            MAIN + " TEXT, " +
             DESCRIPTION + " TEXT, " +
             TEMP + " DECIMAL, " +
             ICON + " TEXT, " +
@@ -77,6 +78,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
         values.put(ICON, weatherInfo.getIcon());
+        values.put(MAIN, weatherInfo.getMain());
         // insert row
         return myDB.insert(TABLE_NAME, null, values);
     }
@@ -91,7 +93,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
         values.put(ICON, weatherInfo.getIcon());
-
+        values.put(MAIN, weatherInfo.getMain());
         String WHERE = ID + " = " + weatherInfo.getId();
 
         // update row
@@ -123,6 +125,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             do {
                 WeatherInfo w = new WeatherInfo();
                 w.setId(c.getInt((c.getColumnIndex(ID))));
+                w.setDescription(c.getString(c.getColumnIndex(MAIN)));
                 w.setDescription(c.getString(c.getColumnIndex(DESCRIPTION)));
                 w.setTemp(c.getDouble(c.getColumnIndex(TEMP)));
                 w.setIcon(c.getString(c.getColumnIndex(ICON)));
