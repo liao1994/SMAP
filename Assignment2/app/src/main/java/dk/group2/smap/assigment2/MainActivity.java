@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void startWeatherService() {
         Intent backgroundServiceIntent = new Intent(MainActivity.this, WeatherService.class);
-        backgroundServiceIntent.putExtra("", "");
         startService(backgroundServiceIntent);
     }
 

@@ -1,9 +1,12 @@
 package dk.group2.smap.assigment2;
-
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,8 +19,8 @@ import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 
 public class WeatherService extends IntentService {
-    RequestQueue queue;
     WeatherDatabase weatherDB;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -25,14 +28,15 @@ public class WeatherService extends IntentService {
      */
     public WeatherService(String name) {
         super(name);
-        weatherDB.openDB();
+        Log.d("LOG", "Background service onCreate");
+
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-
-        String dataString = intent.getDataString();
+    protected void onHandleIntent(@Nullable Intent intent) {
+        sendRequest();
     }
+
     private void sendRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
         //send request using Volley
@@ -51,6 +55,7 @@ public class WeatherService extends IntentService {
 
                         WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),r.getMain().getTemp());
                         weatherDB.InsertWeatherInfo(wi);
+                        broadcastTaskResult(wi);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -61,6 +66,20 @@ public class WeatherService extends IntentService {
 
         queue.add(stringRequest);
 
+    }
+    private void broadcastTaskResult(WeatherInfo result){
+        Gson gson = new Gson();
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction("WEATHER_RESULT");
+        broadcastIntent.putExtra(getString(R.string.weather_info_json),gson.toJson(result));
+        Log.d("LOG", "Broadcasting:" + result);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d("LOG", "Intent service destroyed");
+        super.onDestroy();
     }
 
 
