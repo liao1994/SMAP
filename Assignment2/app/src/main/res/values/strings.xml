@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Assigment2</string>
+    <string name="app_name">Weather Aarhus group XX</string>
+    <string name="txt_current">Current:</string>
+    <string name="weather_aarhus">WEATHER: AARHUS</string>
 </resources>
