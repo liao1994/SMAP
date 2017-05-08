@@ -43,7 +43,6 @@ public class WeatherService extends IntentService {
             queue = Volley.newRequestQueue(this);
         }
         String url = Global.WEATHER_API_CALL;
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -52,7 +51,7 @@ public class WeatherService extends IntentService {
                         RootObject r = gson.fromJson(response,RootObject.class);
                         Weather w = r.getWeather().get(0);
 
-                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),r.getMain().getTemp(),w.getIcon());
+                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
                         weatherDB.InsertWeatherInfo(wi);
                         broadcastTaskResult(wi);
                     }
