@@ -13,6 +13,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import dk.group2.smap.assigment2.generatedfiles.Weather;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -22,22 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         startWeatherService();
 
-//        final ArrayList<Demo> demos = new ArrayList<>();
-//        demos.add(new Demo(getString(R.string.pickerDemo),NumberPickerActivity.class.getName(),REQUEST_PICK_A_NUMBER));
-//        demos.add(new Demo(getString(R.string.editTextDemo),EditTextsActivity.class.getName(),REQUEST_EDIT_TESTS));
-//        demos.add(new Demo(getString(R.string.slidersDemo),SliderActivity.class.getName(),REQUEST_COlOR_SLIDER));
-//        demos.add(new Demo(getString(R.string.pickerDemo),NumberPickerActivity.class.getName(),REQUEST_PICK_A_NUMBER));
-//        demos.add(new Demo(getString(R.string.editTextDemo),EditTextsActivity.class.getName(),REQUEST_EDIT_TESTS));
-//        demos.add(new Demo(getString(R.string.slidersDemo),SliderActivity.class.getName(),REQUEST_COlOR_SLIDER));
-//        demos.add(new Demo(getString(R.string.pickerDemo),NumberPickerActivity.class.getName(),REQUEST_PICK_A_NUMBER));
-//        demos.add(new Demo(getString(R.string.editTextDemo),EditTextsActivity.class.getName(),REQUEST_EDIT_TESTS));
-//        demos.add(new Demo(getString(R.string.slidersDemo),SliderActivity.class.getName(),REQUEST_COlOR_SLIDER));
-//        demos.add(new Demo(getString(R.string.pickerDemo),NumberPickerActivity.class.getName(),REQUEST_PICK_A_NUMBER));
-//        demos.add(new Demo(getString(R.string.editTextDemo),EditTextsActivity.class.getName(),REQUEST_EDIT_TESTS));
-//        demos.add(new Demo(getString(R.string.slidersDemo),SliderActivity.class.getName(),REQUEST_COlOR_SLIDER));
-//        DemoAdapter demoAdapter = new DemoAdapter(this,demos);
-//        ListView lw = (ListView) findViewById(R.id.demoListView);
-//        lw.setAdapter(demoAdapter);
+        final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
+        _weatherinfo.add(new WeatherInfo());
+        _weatherinfo.add(new WeatherInfo());
+        _weatherinfo.add(new WeatherInfo());
+
+        WeatherAdapter weatherAdapter = new WeatherAdapter(this,);
+        ListView lw = (ListView) findViewById(R.id.listWeather);
+        lw.setAdapter(weatherAdapter);
 //        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
