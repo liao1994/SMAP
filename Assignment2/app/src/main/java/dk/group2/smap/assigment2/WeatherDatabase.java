@@ -27,11 +27,14 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     private static final String DESCRIPTION = "description";
     private static final String TEMP = "temperature";
     private static final String TIMESTAMP = "timestamp";
+    private static final String ICON = "icon";
     private SQLiteDatabase myDB;
+
     String queryTable = CREATE_DB_STRING + TABLE_NAME +
             " (" + ID + " INTEGER PRIMARY KEY," +
             DESCRIPTION + "TEXT," +
             TEMP + "DECIMAL," +
+            ICON + "TEXT," +
             TIMESTAMP + "DATETIME" + ")";
 
 
@@ -50,7 +53,6 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
-
     }
     public void openDB(){
         myDB = getWritableDatabase();
@@ -68,7 +70,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(DESCRIPTION, weatherInfo.getDescription());
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
-
+        //values.put(ICON);
         // insert row
         return myDB.insert(TABLE_NAME, null, values);
     }
@@ -136,7 +138,6 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     private String createDateTimeString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-
         return dateFormat.format(date);
     }
 }
