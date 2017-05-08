@@ -35,11 +35,9 @@ public class WeatherService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d("LOG", "Background service onHandleIntent");
         sendRequest();
-
-
     }
 
-    private void sendRequest(){
+    public void sendRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
         //send request using Volley
         if(queue==null){
@@ -54,7 +52,7 @@ public class WeatherService extends IntentService {
                         RootObject r = gson.fromJson(response,RootObject.class);
                         Weather w = r.getWeather().get(0);
 
-                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
+                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getMain(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
                         weatherDB = new WeatherDatabase(getApplicationContext());
                         weatherDB.InsertWeatherInfo(wi);
                         broadcastTaskResult(wi);
