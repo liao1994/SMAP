@@ -3,7 +3,9 @@ package dk.group2.smap.assigment2;
 import android.net.NetworkInfo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by liao on 08-05-2017.
@@ -15,7 +17,7 @@ public class WeatherInfo {
     private String description;
     private double temp;
     private Calendar timeStamp;
-    private String icon;
+
     public WeatherInfo(){
         timeStamp = Calendar.getInstance();
     };
@@ -53,8 +55,10 @@ public class WeatherInfo {
         this.temp = temp;
     }
 
-    public Calendar getTimeStamp() {
-        return timeStamp;
+    public String getTimeStamp() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(timeStamp);
     }
 
     public void setTimeStamp(Calendar timeStamp) {

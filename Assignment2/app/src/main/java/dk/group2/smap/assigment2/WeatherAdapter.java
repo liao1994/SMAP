@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class WeatherAdapter extends BaseAdapter{
 
-    ArrayList<WeatherInfo> _weatherinfo;
-    Context _context;
-    static LayoutInflater _layoutInflater = null;
+    private ArrayList<WeatherInfo> _weatherinfo;
+    private Context _context;
+    private static LayoutInflater _layoutInflater = null;
     public WeatherAdapter(Context c, ArrayList<WeatherInfo> weatherinfo){
         _weatherinfo = weatherinfo;
         _context = c;
@@ -56,7 +56,9 @@ public class WeatherAdapter extends BaseAdapter{
         TextView tvTime = (TextView) convertView.findViewById(R.id.tv_time);
         tvTime.setText(_weatherinfo.get(position).getTimeStamp());
         TextView tvTemp = (TextView) convertView.findViewById(R.id.tv_temp);
-        tvTemp.setText(_weatherinfo.get(position).getTemp());
+        tvTemp.setText( String.format( "Temp: %.2f", _weatherinfo.get(position).getTemp() ) );
         return convertView;
+
     }
+
 }
