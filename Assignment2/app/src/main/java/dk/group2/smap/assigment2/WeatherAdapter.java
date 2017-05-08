@@ -49,7 +49,7 @@ public class WeatherAdapter extends BaseAdapter{
         }
         String[] xx = _weatherinfo.get(position).getTimeStamp().split(" ");
         TextView tvWeather = (TextView) convertView.findViewById(R.id.tv_weather);
-        tvWeather.setText(_weatherinfo.get(position).getDescription());
+        tvWeather.setText(_weatherinfo.get(position).getMain());
         TextView tvDate = (TextView) convertView.findViewById(R.id.tv_date);
         tvDate.setText(xx[0]);
         TextView tvTime = (TextView) convertView.findViewById(R.id.tv_time);

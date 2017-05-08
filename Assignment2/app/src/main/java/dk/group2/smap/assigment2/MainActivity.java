@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     WeatherDatabase wDB;
     FloatingActionButton refreshBtn;
+    ArrayList<WeatherInfo> winfol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         wDB = new WeatherDatabase(this);
         winfol = wDB.getWeatherInfoList();
 
+        setCurrentWeather();
 
         WeatherAdapter weatherAdapter = new WeatherAdapter(this, winfol);
         ListView lw = (ListView) findViewById(R.id.listWeather);
@@ -65,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
+    }
+
+    private void setCurrentWeather() {
+        TextView currentInfo = (TextView) findViewById(R.id.tv_currentInfo);
+        currentInfo.setText(winfol.get(0).getMain());
+        TextView currentTemp = (TextView) findViewById(R.id.tv_currentDegrees);
+        currentTemp.setText(String.format( "%.2f", winfol.get(0).getTemp()) + "C" +(char) 0x00B0 );
+        TextView currentDescription = (TextView) findViewById(R.id.tv_currentDescription);
+        currentDescription.setText(winfol.get(0).getDescription());
     }
 
     private void startWeatherService() {
