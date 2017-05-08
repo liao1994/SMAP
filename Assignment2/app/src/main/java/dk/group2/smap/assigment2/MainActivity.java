@@ -55,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent backgroundServiceIntent = new Intent(MainActivity.this, WeatherService.class);
         PendingIntent pending = PendingIntent.getService(this, 0, backgroundServiceIntent, 0);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_HALF_HOUR,pending);
+        alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_HALF_HOUR,
+                pending);
     }
 
     @Override
