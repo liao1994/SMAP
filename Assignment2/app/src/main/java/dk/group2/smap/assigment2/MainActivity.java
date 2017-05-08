@@ -28,10 +28,16 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton refreshBtn;
     ArrayList<WeatherInfo> winfol;
 
+    public void yo (){
+        Intent mServiceIntent = new Intent(this, WeatherService.class);
+        getApplicationContext().startService(mServiceIntent);
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Intent mServiceIntent = new Intent(this, WeatherService.class);
         this.startService(mServiceIntent);//
 
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wDB.InsertWeatherInfo(new WeatherInfo(50,"SUN",10.9,"test"));
+                yo();
                 Toast.makeText(MainActivity.this,"Updating Weather Info", Toast.LENGTH_SHORT).show();
             }
         });

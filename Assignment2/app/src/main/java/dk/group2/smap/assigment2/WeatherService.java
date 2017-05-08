@@ -18,6 +18,7 @@ import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 
 public class WeatherService extends IntentService {
+
     WeatherDatabase weatherDB;
 
     /**
