@@ -23,23 +23,23 @@ import java.util.Locale;
 public class WeatherDatabase  extends SQLiteOpenHelper {
 
     private static final String CREATE_DB_STRING = "CREATE TABLE ";
-    private static final String DATABASE_NAME = "dbo.db";
+    private static final String DATABASE_NAME = "weather.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "weather_info";
     private static final String ID = "id";
     private static final String DESCRIPTION = "description";
     private static final String TEMP = "temperature";
-    private static final String TIMESTAMP = "timestamp";
+    private static final String TIMESTAMP = "time_stamp";
     private static final String ICON = "icon";
 
     private SQLiteDatabase myDB;
 
-    String queryTable = CREATE_DB_STRING + TABLE_NAME +
-            " (" + ID + " INTEGER PRIMARY KEY," +
-            DESCRIPTION + "TEXT," +
-            TEMP + "DECIMAL," +
-            ICON + "TEXT," +
-            TIMESTAMP + "DATETIME" + ")";
+    private String queryTable = CREATE_DB_STRING + TABLE_NAME +
+            " (" + ID + " INTEGER PRIMARY KEY, " +
+            DESCRIPTION + " TEXT, " +
+            TEMP + " DECIMAL, " +
+            ICON + " TEXT, " +
+            TIMESTAMP + " DATETIME" + ")";
 
 
 
@@ -49,6 +49,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("DBhelper.LOG", queryTable);
         db.execSQL(queryTable);
 
     }
@@ -58,6 +59,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
     public void openDB(){
         myDB = getWritableDatabase();
     }
@@ -110,12 +112,11 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             openDB();
         }
         ArrayList<WeatherInfo> weatherInfoList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY " + TIMESTAMP + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery,null);
         if(c == null){
             Log.d("Null.Error", "nothing in db");
-            return null;
         }
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
@@ -138,6 +139,8 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
                 weatherInfoList.add(w);
             } while (c.moveToNext());
         }
+
+        Log.d("LOG","weather list count:" + weatherInfoList.size());
         return weatherInfoList;
     }
     public String getDateTime() {

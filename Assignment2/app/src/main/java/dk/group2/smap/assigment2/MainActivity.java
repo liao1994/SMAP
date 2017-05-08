@@ -37,19 +37,16 @@ public class MainActivity extends AppCompatActivity {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Updating Weather Info",Toast.LENGTH_SHORT).show();
+                wDB.InsertWeatherInfo(new WeatherInfo(50,"SUN",10.9,"test"));
+                Toast.makeText(MainActivity.this,"Updating Weather Info", Toast.LENGTH_SHORT).show();
             }
         });
 
-        final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
+
         ArrayList<WeatherInfo> winfol;
         wDB = new WeatherDatabase(this);
         winfol = wDB.getWeatherInfoList();
-//        winfol = new ArrayList<>();
 
-        winfol.add(new WeatherInfo(1, "Sunny", 20.2, "Test"));
-        winfol.add(new WeatherInfo(2, "Rain", 10, "Test2"));
-        winfol.add(new WeatherInfo(3, "Snow", -5, "Test3"));
 
         WeatherAdapter weatherAdapter = new WeatherAdapter(this, winfol);
         ListView lw = (ListView) findViewById(R.id.listWeather);
