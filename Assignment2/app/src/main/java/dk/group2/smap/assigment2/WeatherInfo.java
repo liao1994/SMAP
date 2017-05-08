@@ -56,9 +56,10 @@ public class WeatherInfo {
     }
 
     public String getTimeStamp() {
+        java.util.Date date = new java.util.Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        return dateFormat.format(timeStamp);
+        return dateFormat.format(date);
     }
 
     public void setTimeStamp(Calendar timeStamp) {

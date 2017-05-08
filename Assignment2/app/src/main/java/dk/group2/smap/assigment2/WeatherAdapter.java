@@ -45,18 +45,17 @@ public class WeatherAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null){
             _layoutInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             convertView = _layoutInflater.inflate(R.layout.weather_list_item, null);//set layout for displaying items
         }
-
+        String[] xx = _weatherinfo.get(position).getTimeStamp().split(" ");
         TextView tvWeather = (TextView) convertView.findViewById(R.id.tv_weather);
         tvWeather.setText(_weatherinfo.get(position).getDescription());
         TextView tvDate = (TextView) convertView.findViewById(R.id.tv_date);
-        tvDate.setText(_weatherinfo.get(position).getTimeStamp());
+        tvDate.setText(xx[0]);
         TextView tvTime = (TextView) convertView.findViewById(R.id.tv_time);
-        tvTime.setText(_weatherinfo.get(position).getTimeStamp());
+        tvTime.setText(xx[1]);
         TextView tvTemp = (TextView) convertView.findViewById(R.id.tv_temp);
-        tvTemp.setText( String.format( "Temp: %.2f", _weatherinfo.get(position).getTemp() ) );
+        tvTemp.setText( String.format( "%.2f", _weatherinfo.get(position).getTemp()) + "C" +(char) 0x00B0 );
         return convertView;
 
     }
