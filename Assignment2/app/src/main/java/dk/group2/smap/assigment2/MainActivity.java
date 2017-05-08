@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startWeatherService();
-
+//        startWeatherService();
+//
         final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
         _weatherinfo.add(new WeatherInfo(1, "Sunny", 20.2, "Test"));
         _weatherinfo.add(new WeatherInfo(2, "Rain", 10, "Test2"));
