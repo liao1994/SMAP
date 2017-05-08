@@ -1,12 +1,10 @@
 package dk.group2.smap.assigment2;
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+
 import dk.group2.smap.assigment2.generatedfiles.RootObject;
 import dk.group2.smap.assigment2.generatedfiles.Weather;
 
@@ -53,7 +52,7 @@ public class WeatherService extends IntentService {
                         RootObject r = gson.fromJson(response,RootObject.class);
                         Weather w = r.getWeather().get(0);
 
-                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),r.getMain().getTemp());
+                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),r.getMain().getTemp(),w.getIcon());
                         weatherDB.InsertWeatherInfo(wi);
                         broadcastTaskResult(wi);
                     }

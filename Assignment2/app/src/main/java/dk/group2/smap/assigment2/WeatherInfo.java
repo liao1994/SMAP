@@ -14,14 +14,15 @@ public class WeatherInfo {
     private String description;
     private double temp;
     private Calendar timeStamp;
-
+    private String icon;
     public WeatherInfo(){
         timeStamp = Calendar.getInstance();
     };
-    public WeatherInfo(int id, String description, double temp){
+    public WeatherInfo(int id, String description, double temp,String icon){
         this.id = id;
         this.description = description;
         this.temp = temp;
+        this.icon = icon;
         timeStamp = Calendar.getInstance();
     }
 
@@ -57,5 +58,13 @@ public class WeatherInfo {
 
     public void setTimeStamp(Calendar timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

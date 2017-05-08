@@ -70,7 +70,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(DESCRIPTION, weatherInfo.getDescription());
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
-        //values.put(ICON);
+        values.put(ICON, weatherInfo.getIcon());
         // insert row
         return myDB.insert(TABLE_NAME, null, values);
     }
@@ -84,6 +84,8 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(DESCRIPTION, weatherInfo.getDescription());
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
+        values.put(ICON, weatherInfo.getIcon());
+
         String WHERE = ID + " = " + weatherInfo.getId();
 
         // update row
@@ -115,6 +117,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
                 w.setId(c.getInt((c.getColumnIndex(ID))));
                 w.setDescription(c.getString(c.getColumnIndex(DESCRIPTION)));
                 w.setTemp(c.getDouble(c.getColumnIndex(TEMP)));
+                w.setIcon(c.getString(c.getColumnIndex(ICON)));
                 String x = c.getString(c.getColumnIndex(TIMESTAMP));
                 Calendar c1 = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
