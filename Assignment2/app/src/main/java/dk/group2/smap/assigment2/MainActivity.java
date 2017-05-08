@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 public class MainActivity extends AppCompatActivity {
 
+    FloatingActionButton refreshBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
         WeatherDatabase wDB = new WeatherDatabase(this);
         Intent mServiceIntent = new Intent(this, WeatherService.class);
         this.startService(mServiceIntent);//
+
+        refreshBtn = (FloatingActionButton) findViewById(R.id.refreshBtn);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Missing
+            }
+        });
 
         final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
         ArrayList<WeatherInfo> winfol;
@@ -73,4 +83,5 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
     }
+
 }
