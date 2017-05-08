@@ -2,13 +2,18 @@ package dk.group2.smap.assigment2;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,26 +21,26 @@ import java.util.Calendar;
 import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 public class MainActivity extends AppCompatActivity {
-
+    WeatherDatabase wDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        startWeatherService();
-        WeatherDatabase wDB = new WeatherDatabase(this);
         Intent mServiceIntent = new Intent(this, WeatherService.class);
         this.startService(mServiceIntent);//
 
         final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
         ArrayList<WeatherInfo> winfol;
-//        winfol = (ArrayList<WeatherInfo>) wDB.getWeatherInfoList();
-        winfol = new ArrayList<>();
+        wDB = new WeatherDatabase(this);
+        winfol = wDB.getWeatherInfoList();
+//        winfol = new ArrayList<>();
+
         winfol.add(new WeatherInfo(1, "Sunny", 20.2, "Test"));
         winfol.add(new WeatherInfo(2, "Rain", 10, "Test2"));
         winfol.add(new WeatherInfo(3, "Snow", -5, "Test3"));
 
-        WeatherAdapter weatherAdapter = new WeatherAdapter(this, _weatherinfo);
+        WeatherAdapter weatherAdapter = new WeatherAdapter(this, winfol);
         ListView lw = (ListView) findViewById(R.id.listWeather);
         lw.setAdapter(weatherAdapter);
         
@@ -71,6 +76,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("WEATHER_RESULT");
+        LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult,filter);
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(onBackgroundServiceResult);
+        wDB.close();
+    }
+    private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("LOG", "Broadcast reveiced from bg service");
+            Toast.makeText(MainActivity.this, "Got result from service:\n", Toast.LENGTH_SHORT).show();
+
+        }
+    };
 }

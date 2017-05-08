@@ -54,6 +54,7 @@ public class WeatherService extends IntentService {
                         Weather w = r.getWeather().get(0);
 
                         WeatherInfo wi = new WeatherInfo(w.getId(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
+                        weatherDB = new WeatherDatabase(getApplicationContext());
                         weatherDB.InsertWeatherInfo(wi);
                         broadcastTaskResult(wi);
                     }

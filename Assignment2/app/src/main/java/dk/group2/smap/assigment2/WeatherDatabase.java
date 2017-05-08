@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,15 +105,18 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         return myDB.delete(TABLE_NAME, WHERE ,null);
     }
 
-    public List<WeatherInfo> getWeatherInfoList() {
+    public ArrayList<WeatherInfo> getWeatherInfoList() {
         if(myDB == null){
             openDB();
         }
-        List<WeatherInfo> weatherInfoList = new ArrayList<>();
+        ArrayList<WeatherInfo> weatherInfoList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
-
+        if(c == null){
+            Log.d("Null.Error", "nothing in db");
+            return null;
+        }
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
