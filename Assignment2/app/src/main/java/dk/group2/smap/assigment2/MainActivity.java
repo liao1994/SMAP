@@ -23,11 +23,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        startWeatherService();
-//
+        WeatherDatabase wDB = new WeatherDatabase(this);
+        Intent mServiceIntent = new Intent(this, WeatherService.class);
+        this.startService(mServiceIntent);//
+
         final ArrayList<WeatherInfo> _weatherinfo = new ArrayList<>();
-        _weatherinfo.add(new WeatherInfo(1, "Sunny", 20.2, "Test"));
-        _weatherinfo.add(new WeatherInfo(2, "Rain", 10, "Test2"));
-        _weatherinfo.add(new WeatherInfo(3, "Snow", -5, "Test3"));
+        ArrayList<WeatherInfo> winfol;
+//        winfol = (ArrayList<WeatherInfo>) wDB.getWeatherInfoList();
+        winfol = new ArrayList<>();
+        winfol.add(new WeatherInfo(1, "Sunny", 20.2, "Test"));
+        winfol.add(new WeatherInfo(2, "Rain", 10, "Test2"));
+        winfol.add(new WeatherInfo(3, "Snow", -5, "Test3"));
 
         WeatherAdapter weatherAdapter = new WeatherAdapter(this, _weatherinfo);
         ListView lw = (ListView) findViewById(R.id.listWeather);

@@ -28,6 +28,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     private static final String TEMP = "temperature";
     private static final String TIMESTAMP = "timestamp";
     private static final String ICON = "icon";
+
     private SQLiteDatabase myDB;
 
     String queryTable = CREATE_DB_STRING + TABLE_NAME +

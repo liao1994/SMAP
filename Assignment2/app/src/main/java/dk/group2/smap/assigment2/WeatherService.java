@@ -28,12 +28,14 @@ public class WeatherService extends IntentService {
     public WeatherService(String name) {
         super(name);
         Log.d("LOG", "Background service onCreate");
-
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        Log.d("LOG", "Background service onHandleIntent");
         sendRequest();
+
+
     }
 
     private void sendRequest(){
