@@ -85,7 +85,7 @@
         android:visibility="visible"
         android:src="@drawable/refresh"
         app:fabSize="normal"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/colorRefresh"
         app:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.882"
