@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Weather Aarhus Group 22</string>
     <string name="weather_info_json">WEATHER_INFO_JSON</string>
+    <string name="no_connection">Could not get Weather from DB</string>
+    <string name="degrees">C</string>
+    <string name="WeDe">Weather Detail</string>
+    <string name="refresh">refreshing</string>
+    <string name="refresh_weather">Refreshed Weather:\n</string>
+
 
 </resources>
