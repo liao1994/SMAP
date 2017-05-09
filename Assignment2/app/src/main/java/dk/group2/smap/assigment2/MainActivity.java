@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         TextView currentInfo = (TextView) findViewById(R.id.tv_currentInfo);
         currentInfo.setText(currentWeather.getMain());
         TextView currentTemp = (TextView) findViewById(R.id.tv_currentDegrees);
-        currentTemp.setText(String.format( "%.2f", currentWeather.getTemp()) + R.string.degrees +(char) 0x00B0 );
+        currentTemp.setText(String.format( "%.2f", currentWeather.getTemp()) + getString(R.string.degrees) +(char) 0x00B0 );
         TextView currentDescription = (TextView) findViewById(R.id.tv_currentDescription);
         currentDescription.setText(currentWeather.getDescription());
 
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] str = obj.getTimeStamp().split(" ");
                 date.setText(str[0]);
                 time.setText(str[1]);
-                temp.setText(String.format( "%.2f", obj.getTemp()) + R.string.degrees +(char) 0x00B0);
+                temp.setText(String.format( "%.2f", obj.getTemp()) + getString(R.string.degrees) +(char) 0x00B0);
                 desp.setText(obj.getDescription());
                 Bitmap tmp = iconDB.getIcon(obj.getIcon());
                 if(tmp != null)

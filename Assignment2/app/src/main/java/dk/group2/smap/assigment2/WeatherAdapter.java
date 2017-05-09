@@ -63,7 +63,6 @@ public class WeatherAdapter extends BaseAdapter{
         TextView tvTime = (TextView) convertView.findViewById(R.id.tv_time);
         tvTime.setText(xx[1]);
         TextView tvTemp = (TextView) convertView.findViewById(R.id.tv_temp);
-        tvTemp.setText( String.format( "%.2f", _weatherinfo.get(position).getTemp()) + R.string.degrees +(char) 0x00B0 );
         return convertView;
 
     }

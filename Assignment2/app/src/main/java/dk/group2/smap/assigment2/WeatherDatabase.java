@@ -22,7 +22,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
 
     private static final String CREATE_DB_STRING = "CREATE TABLE ";
     private static final String DATABASE_NAME = "weather.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "weather_info";
     private static final String ID = "id";
     private static final String DESCRIPTION = "description";
@@ -67,9 +67,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             myDB.close();
     }
     public long InsertWeatherInfo(WeatherInfo weatherInfo){
-        if(myDB == null){
             openDB();
-        }
         ContentValues values = new ContentValues();
         values.put(ID, String.valueOf(weatherInfo.getId()));
         values.put(DESCRIPTION, weatherInfo.getDescription());
@@ -84,9 +82,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     }
 
     public long updateWeatherInfo(WeatherInfo weatherInfo){
-        if(myDB == null){
-            openDB();
-        }
+        openDB();
         ContentValues values = new ContentValues();
         values.put(ID, String.valueOf(weatherInfo.getId()));
         values.put(DESCRIPTION, weatherInfo.getDescription());
@@ -100,7 +96,6 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         closeDB();
         return result;
     }
-    //TODO consider WeatherInfo or Int
     public long delete(int id){
         if(myDB == null){
             openDB();

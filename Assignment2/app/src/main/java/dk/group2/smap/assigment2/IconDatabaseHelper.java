@@ -23,7 +23,7 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "icon_path";
     private static final String ID = "icon";
     private static final String PATH = "path";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
     private Context context;
 
     public IconDatabaseHelper(Context context) {
@@ -65,7 +65,9 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(ID, iconId);
         values.put(PATH, iconPath);
-        return (int) db.insert(TABLE_NAME, null, values );
+        long result =  db.insert(TABLE_NAME, null, values );
+        db.close();
+        return (int)result;
     }
 
     public boolean IconIsNull(String iconId) {
@@ -83,7 +85,7 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
     }
     private String getIconPath(String iconId) {
         // Gets the database in the current database helper in read-only mode
-
+        String result = null;
         String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[]{iconId});
@@ -92,10 +94,11 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
         Log.d("test","query count: "+String.valueOf(c.getCount()));
         if (c.getCount() == 1) {
             c.moveToFirst();
-            return c.getString(c.getColumnIndex(PATH));
+            result = c.getString(c.getColumnIndex(PATH));
         }
         c.close();
-        return null;
+        db.close();
+        return result;
 
     }
     public void deleteIcon(String iconId) {
@@ -109,6 +112,7 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME,
                 ID + " = ?",
                 new String[]{iconId});
+        db.close();
     }
 }
 
