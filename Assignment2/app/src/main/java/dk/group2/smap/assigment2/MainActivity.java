@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.SystemClock;
 import android.support.constraint.ConstraintLayout;
@@ -77,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         winfol = wDB.getWeatherInfoList();
         if (winfol == null){
-                //winfol.add(new WeatherInfo(UUID.randomUUID(),"", "",0,""));
-            Toast.makeText(this,"Could not get Weather from DB", Toast.LENGTH_LONG).show();
+
+            Toast.makeText(this, R.string.weather_db_unavailable, Toast.LENGTH_LONG).show();
         }
 
         if(winfol.size() != 0 && winfol != null)
@@ -115,9 +116,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WeatherInfo obj = winfol.get(position);
                 dialog = new AlertDialog.Builder(MainActivity.this);
-                dialog.setTitle("Weather Detail");
+                dialog.setTitle(R.string.dialog_weather_title);
                 dialog.setCancelable(true);
                 ConstraintLayout viewById = (ConstraintLayout) MainActivity.this.getLayoutInflater().inflate(R.layout.dialog_box,null);
+                viewById.setBackgroundColor(Color.rgb(183, 210, 255));
                 TextView main = (TextView) viewById.findViewById(R.id.dialog_tv_main);
                 TextView date = (TextView) viewById.findViewById(R.id.dialog_tv_date);
                 TextView time = (TextView) viewById.findViewById(R.id.dialog_tv_time);
@@ -150,9 +152,12 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
         Intent backgroundServiceIntent = new Intent(MainActivity.this, WeatherService.class);
         backgroundServiceIntent.setAction(WeatherService.ACTION_WEATHER);
+
         PendingIntent pending = PendingIntent.getService(this, 0, backgroundServiceIntent, 0);
+
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                AlarmManager.INTERVAL_HALF_HOUR, pending);
     }
@@ -162,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction("WEATHER_RESULT");
+        filter.addAction("ICON_RESULT");
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult,filter);
 
     }
