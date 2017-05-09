@@ -6,6 +6,7 @@
     <string name="WeDe">Weather Detail</string>
     <string name="refresh">refreshing</string>
     <string name="refresh_weather">Refreshed Weather:\n</string>
-
-
+    <string name="degree">C</string>
+    <string name="dialog_weather_title">Weather Detail</string>
+    <string name="weather_db_unavailable">Could not get Weather from DB</string>
 </resources>

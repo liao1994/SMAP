@@ -20,9 +20,6 @@ public class WeatherInfo {
     private String main;
     private Calendar timeStamp;
 
-    public WeatherInfo(){
-        timeStamp = Calendar.getInstance();
-    };
     public WeatherInfo(UUID id, String main , String description, double temp, String icon){
         this.id = id;
         this.main = main;
