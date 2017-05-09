@@ -6,13 +6,14 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Created by liao on 08-05-2017.
  */
 
 public class WeatherInfo {
-    private int id;
+    private UUID id;
     private String icon;
     private String description;
     private double temp;
@@ -22,7 +23,7 @@ public class WeatherInfo {
     public WeatherInfo(){
         timeStamp = Calendar.getInstance();
     };
-    public WeatherInfo(int id,String main ,String description, double temp,String icon){
+    public WeatherInfo(UUID id, String main , String description, double temp, String icon){
         this.id = id;
         this.main = main;
         this.description = description;
@@ -40,11 +41,11 @@ public class WeatherInfo {
         this.description = description;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

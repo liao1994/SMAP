@@ -1,11 +1,7 @@
 package dk.group2.smap.assigment2;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Icon;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class WeatherAdapter extends BaseAdapter{
@@ -57,6 +52,9 @@ public class WeatherAdapter extends BaseAdapter{
             convertView = _layoutInflater.inflate(R.layout.weather_list_item, null);//set layout for displaying items
         }
         ImageView imgView = (ImageView) convertView.findViewById(R.id.weather_icon);
+        Bitmap tmp = db.getIcon(_weatherinfo.get(position).getIcon());
+        if (tmp != null)
+         imgView.setImageBitmap(tmp);
         String[] xx = _weatherinfo.get(position).getTimeStamp().split(" ");
         TextView tvWeather = (TextView) convertView.findViewById(R.id.tv_weather);
         tvWeather.setText(_weatherinfo.get(position).getMain());

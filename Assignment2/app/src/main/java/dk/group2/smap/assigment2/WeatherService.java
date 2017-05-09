@@ -17,6 +17,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.util.UUID;
+
 import dk.group2.smap.assigment2.generatedfiles.RootObject;
 import dk.group2.smap.assigment2.generatedfiles.Weather;
 
@@ -42,7 +44,7 @@ public class WeatherService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_WEATHER.equals(action)) {
                 sendRequest();
-                //loadIcon("04d");
+
             }
             if (ACTION_ICON.equals(action)) {
                 loadIcon(intent.getStringExtra("iconID_KEY"));
@@ -76,7 +78,7 @@ public class WeatherService extends IntentService {
                         RootObject r = gson.fromJson(response,RootObject.class);
                         Weather w = r.getWeather().get(0);
 
-                        WeatherInfo wi = new WeatherInfo(w.getId(),w.getMain(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
+                        WeatherInfo wi = new WeatherInfo(UUID.randomUUID(),w.getMain(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
                         weatherDB = new WeatherDatabase(getApplicationContext());
                         weatherDB.InsertWeatherInfo(wi);
 //                            Toast.makeText(getApplicationContext(),"Refreshed too soon",Toast.LENGTH_SHORT).show();
@@ -105,7 +107,8 @@ public class WeatherService extends IntentService {
             ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
                 @Override
                 public void onResponse(Bitmap response) {
-                    iconDB.updateIcon(iconId,response);
+                    int i = iconDB.insertIcon(iconId,response);
+                    Log.d("Log/test","result from iconloading: " + i);
                     broadcastIconResult(iconId);
                 }
             }, 0, 0, null, null);
@@ -123,7 +126,7 @@ public class WeatherService extends IntentService {
     }
 
     private void broadcastWeatherResult(WeatherInfo result){
-        //this.startIconAction(getApplicationContext(),result.getIcon());
+        this.startIconAction(getApplicationContext(),result.getIcon());
         Gson gson = new Gson();
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("WEATHER_RESULT");

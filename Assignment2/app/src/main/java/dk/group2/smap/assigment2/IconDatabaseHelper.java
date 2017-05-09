@@ -19,11 +19,11 @@ import java.io.FileOutputStream;
 
 public class IconDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "icon.db";
+    private static final String DATABASE_NAME = "weather.db";
     private static final String TABLE_NAME = "icon_path";
     private static final String ID = "icon";
     private static final String PATH = "path";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
     private Context context;
 
     public IconDatabaseHelper(Context context) {
@@ -39,12 +39,12 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP IF EXIST " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
-    public int updateIcon(String iconId, Bitmap icon) {
-        // Saves the new picture to the internal storage with the unique identifier of the report as
-        // the name. That way, there will never be two report pictures with the same name.
+    public int insertIcon(String iconId, Bitmap icon) {
+
         File internalStorage = context.getDir("WeatherIcons", Context.MODE_PRIVATE);
         File iconFilePath = new File(internalStorage, iconId + ".png");
         String iconPath = iconFilePath.toString();
@@ -65,8 +65,7 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(ID, iconId);
         values.put(PATH, iconPath);
-        return db.update(TABLE_NAME, values, ID + " = ?",
-                new String[] {iconId});
+        return (int) db.insert(TABLE_NAME, null, values );
     }
 
     public boolean IconIsNull(String iconId) {
@@ -84,11 +83,14 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
     }
     private String getIconPath(String iconId) {
         // Gets the database in the current database helper in read-only mode
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = '" + iconId +"'";
+
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery,null);
+        Cursor c = db.rawQuery(selectQuery, new String[]{iconId});
         c.getCount();
-        if (c.getCount() != 0) {
+        Log.d("test",selectQuery + "AND "+ iconId);
+        Log.d("test","query count: "+String.valueOf(c.getCount()));
+        if (c.getCount() == 1) {
             c.moveToFirst();
             return c.getString(c.getColumnIndex(PATH));
         }

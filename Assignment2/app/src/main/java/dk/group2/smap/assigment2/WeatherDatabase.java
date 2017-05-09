@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import dk.group2.smap.assigment2.generatedfiles.Weather;
 
@@ -26,7 +27,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
 
     private static final String CREATE_DB_STRING = "CREATE TABLE ";
     private static final String DATABASE_NAME = "weather.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private static final String TABLE_NAME = "weather_info";
     private static final String ID = "id";
     private static final String DESCRIPTION = "description";
@@ -37,7 +38,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
     private SQLiteDatabase myDB;
 
     private String queryTable = CREATE_DB_STRING + TABLE_NAME +
-            " (" + ID + " INTEGER PRIMARY KEY, " +
+            " (" + ID + " STRING PRIMARY KEY, " +
             MAIN + " TEXT, " +
             DESCRIPTION + " TEXT, " +
             TEMP + " DECIMAL, " +
@@ -75,7 +76,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             openDB();
         }
         ContentValues values = new ContentValues();
-        values.put(ID, weatherInfo.getId());
+        values.put(ID, String.valueOf(weatherInfo.getId()));
         values.put(DESCRIPTION, weatherInfo.getDescription());
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
@@ -83,6 +84,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(MAIN, weatherInfo.getMain());
         // insert row
         long result = myDB.insert(TABLE_NAME, null, values);
+        closeDB();
         return result;
     }
 
@@ -91,16 +93,17 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             openDB();
         }
         ContentValues values = new ContentValues();
-        values.put(ID, weatherInfo.getId());
+        values.put(ID, String.valueOf(weatherInfo.getId()));
         values.put(DESCRIPTION, weatherInfo.getDescription());
         values.put(TEMP, weatherInfo.getTemp());
         values.put(TIMESTAMP, getDateTime());
         values.put(ICON, weatherInfo.getIcon());
         values.put(MAIN, weatherInfo.getMain());
         String WHERE = ID + " = " + weatherInfo.getId();
-
         // update row
-        return myDB.update(TABLE_NAME, values, WHERE ,null);
+        long result = myDB.update(TABLE_NAME, values, WHERE ,null);
+        closeDB();
+        return result;
     }
     //TODO consider WeatherInfo or Int
     public long delete(int id){
@@ -117,7 +120,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             openDB();
         }
         ArrayList<WeatherInfo> weatherInfoList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + TIMESTAMP + " DESC";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME +" WHERE "+TIMESTAMP+" >= datetime('now','-1 day')"+ " ORDER BY " + TIMESTAMP + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery,null);
         if(c.getCount() == 0){
@@ -128,7 +131,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 WeatherInfo w = new WeatherInfo(
-                        c.getInt(c.getColumnIndex(ID)),
+                        UUID.fromString(c.getString(c.getColumnIndex(ID))),
                         c.getString(c.getColumnIndex(MAIN)),
                         c.getString(c.getColumnIndex(DESCRIPTION)),
                         c.getDouble(c.getColumnIndex(TEMP)),
@@ -148,7 +151,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
                 weatherInfoList.add(w);
             } while (c.moveToNext());
         }
-
+        closeDB();
         Log.d("LOG","weather list count:" + weatherInfoList.size());
         return weatherInfoList;
     }
