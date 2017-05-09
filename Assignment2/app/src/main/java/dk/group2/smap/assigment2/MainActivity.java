@@ -4,10 +4,12 @@ import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         TextView currentInfo = (TextView) findViewById(R.id.tv_currentInfo);
         currentInfo.setText(currentWeather.getMain());
         TextView currentTemp = (TextView) findViewById(R.id.tv_currentDegrees);
-        currentTemp.setText(String.format( "%.2f", currentWeather.getTemp()) + "C" +(char) 0x00B0 );
+        currentTemp.setText(String.format( "%.2f", currentWeather.getTemp()) + R.string.degrees +(char) 0x00B0 );
         TextView currentDescription = (TextView) findViewById(R.id.tv_currentDescription);
         currentDescription.setText(currentWeather.getDescription());
 
@@ -116,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WeatherInfo obj = winfol.get(position);
                 dialog = new AlertDialog.Builder(MainActivity.this);
-                dialog.setTitle(R.string.dialog_weather_title);
+
+                dialog.setTitle(R.string.WeDe);
+
                 dialog.setCancelable(true);
                 ConstraintLayout viewById = (ConstraintLayout) MainActivity.this.getLayoutInflater().inflate(R.layout.dialog_box,null);
                 viewById.setBackgroundColor(Color.rgb(183, 210, 255));
@@ -130,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] str = obj.getTimeStamp().split(" ");
                 date.setText(str[0]);
                 time.setText(str[1]);
-                temp.setText(String.format( "%.2f", obj.getTemp()) + "C" +(char) 0x00B0);
+                temp.setText(String.format( "%.2f", obj.getTemp()) + R.string.degrees +(char) 0x00B0);
                 desp.setText(obj.getDescription());
                 Bitmap tmp = iconDB.getIcon(obj.getIcon());
                 if(tmp != null)
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        Toast.makeText(this, "refreshing", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.refresh, Toast.LENGTH_SHORT).show();
     }
 
     private void startWeatherService() {
@@ -160,6 +164,13 @@ public class MainActivity extends AppCompatActivity {
 
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                AlarmManager.INTERVAL_HALF_HOUR, pending);
+
+        ComponentName receiver = new ComponentName(this, SampleBootReceiver.class);
+        PackageManager pm = this.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
     }
 
     @Override
@@ -198,10 +209,11 @@ public class MainActivity extends AppCompatActivity {
                     weatherAdapter.notifyDataSetChanged();
                     break;
             }
-            Toast.makeText(MainActivity.this, "Refreshed Weather:\n", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.refresh_weather, Toast.LENGTH_SHORT).show();
 
         }
     };
+
 
 
 }
