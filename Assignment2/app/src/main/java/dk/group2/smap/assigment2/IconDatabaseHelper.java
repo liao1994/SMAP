@@ -99,14 +99,11 @@ public class IconDatabaseHelper extends SQLiteOpenHelper {
 
     }
     public void deleteIcon(String iconId) {
-        // Remove picture for report from internal storage
         String iconPath = getIconPath(iconId);
         if (iconPath != null && iconPath.length() != 0) {
             File icon = new File(iconPath);
             icon.delete();
         }
-
-        // Remove the report from the database
         SQLiteDatabase db = getWritableDatabase();
 
         db.delete(TABLE_NAME,
