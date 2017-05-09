@@ -1,22 +1,31 @@
 package dk.group2.smap.assigment2;
 
+import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class WeatherAdapter extends BaseAdapter{
 
+    private IconDatabaseHelper db;
     private ArrayList<WeatherInfo> _weatherinfo;
     private Context _context;
     private static LayoutInflater _layoutInflater = null;
-    public WeatherAdapter(Context c, ArrayList<WeatherInfo> weatherinfo){
+    public WeatherAdapter(Context c, ArrayList<WeatherInfo> weatherinfo, IconDatabaseHelper db){
         _weatherinfo = weatherinfo;
         _context = c;
+        this.db = db;
     }
     @Override
     public int getCount() {
@@ -47,6 +56,7 @@ public class WeatherAdapter extends BaseAdapter{
             _layoutInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = _layoutInflater.inflate(R.layout.weather_list_item, null);//set layout for displaying items
         }
+        ImageView imgView = (ImageView) convertView.findViewById(R.id.weather_icon);
         String[] xx = _weatherinfo.get(position).getTimeStamp().split(" ");
         TextView tvWeather = (TextView) convertView.findViewById(R.id.tv_weather);
         tvWeather.setText(_weatherinfo.get(position).getMain());

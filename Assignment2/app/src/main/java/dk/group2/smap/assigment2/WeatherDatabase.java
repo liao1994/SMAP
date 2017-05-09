@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import dk.group2.smap.assigment2.generatedfiles.Weather;
+
 /**
  * Created by liao on 08-05-2017.
  */
@@ -24,7 +26,7 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
 
     private static final String CREATE_DB_STRING = "CREATE TABLE ";
     private static final String DATABASE_NAME = "weather.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TABLE_NAME = "weather_info";
     private static final String ID = "id";
     private static final String DESCRIPTION = "description";
@@ -80,7 +82,8 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
         values.put(ICON, weatherInfo.getIcon());
         values.put(MAIN, weatherInfo.getMain());
         // insert row
-        return myDB.insert(TABLE_NAME, null, values);
+        long result = myDB.insert(TABLE_NAME, null, values);
+        return result;
     }
 
     public long updateWeatherInfo(WeatherInfo weatherInfo){
@@ -114,21 +117,23 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
             openDB();
         }
         ArrayList<WeatherInfo> weatherInfoList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY " + TIMESTAMP + " DESC";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + TIMESTAMP + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery,null);
-        if(c == null){
+        if(c.getCount() == 0){
             Log.d("Null.Error", "nothing in db");
+            return weatherInfoList;
         }
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                WeatherInfo w = new WeatherInfo();
-                w.setId(c.getInt((c.getColumnIndex(ID))));
-                w.setDescription(c.getString(c.getColumnIndex(MAIN)));
-                w.setDescription(c.getString(c.getColumnIndex(DESCRIPTION)));
-                w.setTemp(c.getDouble(c.getColumnIndex(TEMP)));
-                w.setIcon(c.getString(c.getColumnIndex(ICON)));
+                WeatherInfo w = new WeatherInfo(
+                        c.getInt(c.getColumnIndex(ID)),
+                        c.getString(c.getColumnIndex(MAIN)),
+                        c.getString(c.getColumnIndex(DESCRIPTION)),
+                        c.getDouble(c.getColumnIndex(TEMP)),
+                        c.getString(c.getColumnIndex(ICON))
+                );
                 String x = c.getString(c.getColumnIndex(TIMESTAMP));
                 Calendar c1 = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -138,7 +143,8 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
                     e.printStackTrace();
                 }
                 w.setTimeStamp(c1);
-                // adding to weatherInfoList list
+
+//                 adding to weatherInfoList list
                 weatherInfoList.add(w);
             } while (c.moveToNext());
         }
