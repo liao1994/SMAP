@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -25,15 +26,10 @@ public class HueConnectionService extends IntentService {
 
     public static final String ACTION_CONNECT = "dk.group.shinemyroom.connect";
     public static final String TAG = "serviceDescovery";
-    private static PHHueSDK phHueSDK;
+    private PHHueSDK phHueSDK;
 
-    private static Context context;
-    private String cacheNotificationsList;
-    private String brigdeId;
-    private String ipAddress;
-    private String macAddress;
-    private String userName;
-    private static PHSDKListener listener = new PHSDKListener() {
+
+    private PHSDKListener listener = new PHSDKListener() {
         @Override
         public void onAccessPointsFound(List<PHAccessPoint> list) {
             Log.d("Log","onAccessPointsFound");
@@ -50,12 +46,16 @@ public class HueConnectionService extends IntentService {
         public void onAuthenticationRequired(PHAccessPoint phAccessPoint) {
             Log.d("Log","onAuthenticationRequired");
             phHueSDK.startPushlinkAuthentication(phAccessPoint);
+
             // Arriving here indicates that Pushlinking is required (to prove the User has physical access to the bridge).  Typically here
             // you will display a pushlink image (with a timer) indicating to to the user they need to push the button on their bridge within 30 seconds.
+            broadcastAuthenticationRequired();
             //TODO GETTING A COUNTDOWN TIMER GUI
         }
         @Override
         public void onError(int i, String s) {
+            //onError: 101 | link button not pressed
+            //onError: 1158 | Authentication failed
             Log.d("Log","onError: " + i + " | " +s);
 
         }
@@ -66,7 +66,7 @@ public class HueConnectionService extends IntentService {
 
             Gson gson = new Gson();
 
-            SharedPreferences sharedPref = context.getSharedPreferences("HueJsonData",Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HueInfo",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("HueJsonData", gson.toJson(phBridge));
             editor.commit();
@@ -74,6 +74,8 @@ public class HueConnectionService extends IntentService {
             phHueSDK.setSelectedBridge(phBridge);
             phHueSDK.enableHeartbeat(phBridge, PHHueSDK.HB_INTERVAL);
             //TODO
+
+            broadcastBridgeConnected();
             // Here it is recommended to set your connected bridge in your sdk object (as above) and start the heartbeat.
             // At this point you are connected to a bridge so you should pass control to your main program/activity.
             // The username is generated randomly by the bridge.
@@ -116,31 +118,39 @@ public class HueConnectionService extends IntentService {
 
     public HueConnectionService() {
         super("HueConnectionService");
-
-    }
-
-    public static void startAction(Context context){
-        phHueSDK = PHHueSDK.getInstance();
-        phHueSDK.setAppName(context.getString(R.string.app_name));     // e.g. phHueSDK.setAppName("QuickStartApp");
-        phHueSDK.setDeviceName(android.os.Build.MODEL);
-        phHueSDK.getNotificationManager().registerSDKListener(listener);
-        PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
-        sm.search(true, true);
-//        Intent intent = new Intent(context, HueConnectionService.class);
-//        intent.setAction(ACTION_CONNECT);
-//        context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d("LOG", "Background service onHandleIntent");
-
-
         if (intent != null) {
-            final String action = intent.getAction();
-            if (ACTION_CONNECT.equals(action)) {
+            if(intent.getAction().equals(getString(R.string.authentication_required_action))){
+                startService();
+            }else if(intent.getAction().equals(getString(R.string.start_service_action))){
+                startService();
             }
         }
+    }
+
+    private void startService(){
+        phHueSDK = PHHueSDK.getInstance();
+        phHueSDK.setAppName(getApplicationContext().getString(R.string.app_name));
+        phHueSDK.setDeviceName(android.os.Build.MODEL);
+        phHueSDK.getNotificationManager().registerSDKListener(listener);
+        PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
+        sm.search(true, true);
+    }
+    private void broadcastAuthenticationRequired() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(getString(R.string.authentication_required_action));
+        Log.d("LOG", "Broadcasting:" + getString(R.string.authentication_required_action));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+    private void broadcastBridgeConnected() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(getString(R.string.bridge_connected));
+        Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
 
