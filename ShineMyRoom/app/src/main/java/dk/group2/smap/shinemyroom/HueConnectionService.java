@@ -4,6 +4,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -70,7 +72,6 @@ public class HueConnectionService extends IntentService {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("HueJsonData", gson.toJson(phBridge));
             editor.commit();
-
             phHueSDK.setSelectedBridge(phBridge);
             phHueSDK.enableHeartbeat(phBridge, PHHueSDK.HB_INTERVAL);
             //TODO
@@ -133,12 +134,22 @@ public class HueConnectionService extends IntentService {
     }
 
     private void startService(){
-        phHueSDK = PHHueSDK.getInstance();
-        phHueSDK.setAppName(getApplicationContext().getString(R.string.app_name));
-        phHueSDK.setDeviceName(android.os.Build.MODEL);
-        phHueSDK.getNotificationManager().registerSDKListener(listener);
-        PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
-        sm.search(true, true);
+
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getActiveNetworkInfo();
+
+        if (mWifi.isConnected()) {
+            phHueSDK = PHHueSDK.getInstance();
+
+            phHueSDK.setAppName(getApplicationContext().getString(R.string.app_name));
+            phHueSDK.setDeviceName(android.os.Build.MODEL);
+            phHueSDK.getNotificationManager().registerSDKListener(listener);
+            PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
+            sm.search(true, true);    // Do whatever
+        }else{
+            // remote control when i get API
+        }
+
     }
     private void broadcastAuthenticationRequired() {
         Intent broadcastIntent = new Intent();
