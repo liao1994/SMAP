@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.todddavies.components.progressbar.ProgressWheel;
+
+import junit.framework.Assert;
 
 import java.net.URL;
 
@@ -54,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(getString(R.string.authentication_required_action));
         filter.addAction(getString(R.string.connected));
+        // http://stackoverflow.com/questions/10733121/broadcastreceiver-when-wifi-or-3g-network-state-changed
+        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction("android.net.wifi.STATE_CHANGE");
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult,filter);
     }
     @Override
@@ -61,16 +68,43 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(onBackgroundServiceResult);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent mServiceIntent = new Intent(this, HueConnectionService.class);
+        mServiceIntent.setAction(getString(R.string.kill_app_action));
+        this.startService(mServiceIntent);
+    }
+
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("LOG", "Broadcast received: " + intent.getAction());
-            if(intent != null) {
-                if(intent.getAction().equals(getString(R.string.authentication_required_action))){
-                    dialogTask.execute();
-                }else if(intent.getAction().equals(getString(R.string.connected))){
 
+            if(intent.getAction().equals(getString(R.string.authentication_required_action))){
+                dialogTask.execute();
+            }else if(intent.getAction().equals(getString(R.string.bridge_connected))){
+                dialogTask.cancel(true);
+            }else if(intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED") || intent.getAction().equals( "android.net.wifi.STATE_CHANGE")) {
+                ConnectivityManager conMngr = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                // http://stackoverflow.com/questions/32547006/connectivitymanager-getnetworkinfoint-deprecated
+                NetworkInfo netinfo = conMngr.getActiveNetworkInfo();
+                if (netinfo != null) { // connected to the internet
+                    if (netinfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                        // connected to wifi
+                        Toast.makeText(context, netinfo.getTypeName(), Toast.LENGTH_SHORT).show();
+                    } else if (netinfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                        // connected to the mobile provider's data plan
+                        Toast.makeText(context, netinfo.getTypeName(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+
+                    //TODO SHOW THAT WE ARE NOT CONNECTED, tmp solution
+                    Toast.makeText(context, "not connected to a network",Toast.LENGTH_SHORT).show();
                 }
+
             }
             //Toast.makeText(MainActivity.this,"stuff", Toast.LENGTH_SHORT).show();
 
@@ -103,19 +137,6 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             createDialog();
         }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            pw.setText(String.valueOf(values[0]));
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            d.dismiss();
-        }
-
         @Override
         protected Void doInBackground(Void... params) {
             try {
@@ -129,6 +150,19 @@ public class MainActivity extends AppCompatActivity {
 
             return null;
         }
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            pw.setText(String.valueOf(values[0]));
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            d.dismiss();
+        }
+
+
         @Override
         protected void onCancelled() {
             super.onCancelled();

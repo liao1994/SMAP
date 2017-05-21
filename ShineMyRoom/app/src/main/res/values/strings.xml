@@ -11,4 +11,8 @@
     <string name="enter_ip_btn_text">Manuel enter IP</string>
     <string name="cancel_btn_txt">Cancel</string>
     <string name="bridge_connected">BridgeConnected</string>
+    <string name="ph_bridge_json">phBridgeJson</string>
+    <string name="username">userName</string>
+    <string name="ip_adress">IpAddress</string>
+    <string name="kill_app_action">kill_app_action</string>
 </resources>

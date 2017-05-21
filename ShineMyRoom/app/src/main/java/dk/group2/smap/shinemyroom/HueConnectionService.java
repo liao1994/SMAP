@@ -19,15 +19,18 @@ import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by liao on 18-05-2017.
  */
 
+// using offical PhillipsHue SDK
+// https://github.com/PhilipsHue/PhilipsHueSDK-Java-MultiPlatform-Android
 public class HueConnectionService extends IntentService {
 
     public static final String ACTION_CONNECT = "dk.group.shinemyroom.connect";
-    public static final String TAG = "serviceDescovery";
+    private static final String TAG = "serviceDiscovery";
     private PHHueSDK phHueSDK;
 
 
@@ -38,6 +41,22 @@ public class HueConnectionService extends IntentService {
 
             if(list.size() > 1)
                 Log.d("Log","onAccessPointsFound: Multiple Bridge Found");
+
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HueInfo",Context.MODE_PRIVATE);
+            String phBrigde = sharedPref.getString(getString(R.string.ph_bridge_json),"");
+            if(!phBrigde.equals("")){
+                Gson gson = new Gson();
+                PHBridge phBridge = gson.fromJson(phBrigde,PHBridge.class);
+                String ip = phBridge.getResourceCache().getBridgeConfiguration().getIpAddress();
+                String userName = phBridge.getResourceCache().getBridgeConfiguration().getUsername();
+                if(!Objects.equals(ip, "") && !Objects.equals(userName, "")){
+                    PHAccessPoint accessPoint = new PHAccessPoint();
+                    accessPoint.setIpAddress(ip);
+                    accessPoint.setUsername(userName);
+                    phHueSDK.connect(accessPoint);
+                    return;
+                }
+            }
 
             phHueSDK.connect(list.get(0));
 
@@ -52,14 +71,12 @@ public class HueConnectionService extends IntentService {
             // Arriving here indicates that Pushlinking is required (to prove the User has physical access to the bridge).  Typically here
             // you will display a pushlink image (with a timer) indicating to to the user they need to push the button on their bridge within 30 seconds.
             broadcastAuthenticationRequired();
-            //TODO GETTING A COUNTDOWN TIMER GUI
         }
         @Override
         public void onError(int i, String s) {
             //onError: 101 | link button not pressed
             //onError: 1158 | Authentication failed
             Log.d("Log","onError: " + i + " | " +s);
-
         }
 
         @Override
@@ -70,13 +87,20 @@ public class HueConnectionService extends IntentService {
 
             SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("HueInfo",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("HueJsonData", gson.toJson(phBridge));
-            editor.commit();
+            String ip = phBridge.getResourceCache().getBridgeConfiguration().getIpAddress();
+            editor.putString(getString(R.string.ph_bridge_json), gson.toJson(phBridge));
+            editor.putString(getString(R.string.username), s);
+            editor.putString(getString(R.string.ip_adress), ip);
+
+            // so long as the user doesn't keep getting new link brigde connection it's fine
+            // user need to get a new bridge connection faster than they can discover a bridge anyway...
+
+            editor.apply();
+
             phHueSDK.setSelectedBridge(phBridge);
             phHueSDK.enableHeartbeat(phBridge, PHHueSDK.HB_INTERVAL);
-            //TODO
-
-            broadcastBridgeConnected();
+            //s is username
+            broadcastBridgeConnected(ip, s);
             // Here it is recommended to set your connected bridge in your sdk object (as above) and start the heartbeat.
             // At this point you are connected to a bridge so you should pass control to your main program/activity.
             // The username is generated randomly by the bridge.
@@ -112,6 +136,7 @@ public class HueConnectionService extends IntentService {
             Log.d("Log","onParsingErrors");
 
         }
+
     };
 
 
@@ -121,16 +146,25 @@ public class HueConnectionService extends IntentService {
         super("HueConnectionService");
     }
 
+
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d("LOG", "Background service onHandleIntent");
         if (intent != null) {
             if(intent.getAction().equals(getString(R.string.authentication_required_action))){
-                startService();
+                //startService();
             }else if(intent.getAction().equals(getString(R.string.start_service_action))){
                 startService();
+            }else if(intent.getAction().equals(getString(R.string.kill_app_action))){
+                stopHueBridgeHeartBeat();
             }
         }
+    }
+
+    private void stopHueBridgeHeartBeat() {
+        phHueSDK.disableAllHeartbeat();
+        //maybe more things i need to close myself add here later
     }
 
     private void startService(){
@@ -147,7 +181,8 @@ public class HueConnectionService extends IntentService {
             PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
             sm.search(true, true);    // Do whatever
         }else{
-            // remote control when i get API
+
+            // remote control when i get API i think
         }
 
     }
@@ -157,9 +192,11 @@ public class HueConnectionService extends IntentService {
         Log.d("LOG", "Broadcasting:" + getString(R.string.authentication_required_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
-    private void broadcastBridgeConnected() {
+    private void broadcastBridgeConnected(String ip, String s) {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(getString(R.string.bridge_connected));
+        broadcastIntent.putExtra(getString(R.string.username),s);
+        broadcastIntent.putExtra(getString(R.string.ip_adress),ip);
         Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
