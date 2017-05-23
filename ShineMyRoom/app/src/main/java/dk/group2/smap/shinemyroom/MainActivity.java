@@ -1,6 +1,7 @@
 package dk.group2.smap.shinemyroom;
 
 import android.app.Dialog;
+import android.app.TabActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
         Intent mServiceIntent = new Intent(this, HueConnectionService.class);
         mServiceIntent.setAction(getString(R.string.start_service_action));
         this.startService(mServiceIntent);
@@ -48,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
-
-
     }
 
     @Override
