@@ -6,10 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by liao on 23-05-2017.
- */
-
 
 public class RoomsFragment extends Fragment {
     @Override
