@@ -11,12 +11,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -51,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
 
-        
+    }
+
+    public static class PlaceholderFragment extends Fragment{
+        public PlaceholderFragment(){
+            @Override
+                    public View OnCreateView(LayoutInflater inflater, ViewGroup container, )
+        }
     }
 
     @Override
