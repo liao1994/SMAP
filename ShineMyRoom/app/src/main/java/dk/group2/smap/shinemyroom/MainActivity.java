@@ -46,14 +46,10 @@ public class MainActivity extends AppCompatActivity {
         dialogTask = new myTask();
 
         FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        RoomsFragment roomfragment = new RoomsFragment();
-        TabLayoutFragment tabfragment = new TabLayoutFragment();
-//        fragmentTransaction.add(R.id.contentfragment, roomfragment);
-        fragmentTransaction.add(R.id.tabfragment, tabfragment);
-        fragmentTransaction.commit();
-
-
+        fragmentManager.beginTransaction()
+            .add(R.id.contentfragment, new RoomsFragment())
+            .add(R.id.tabfragment, new TabFragment())
+            .commit();
     }
 
     @Override
