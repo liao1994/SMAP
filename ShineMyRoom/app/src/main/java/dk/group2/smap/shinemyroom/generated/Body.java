@@ -2,7 +2,7 @@
 package dk.group2.smap.shinemyroom.generated;
 
 
-public class Body {
+public class Body implements IBody {
 
     private Boolean on;
 
@@ -15,3 +15,4 @@ public class Body {
     }
 
 }
+

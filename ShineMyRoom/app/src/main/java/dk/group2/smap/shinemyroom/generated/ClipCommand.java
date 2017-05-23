@@ -24,11 +24,11 @@ public class ClipCommand {
         this.method = method;
     }
 
-    public Body getBody() {
+    public IBody getBody() {
         return body;
     }
 
-    public void setBody(Body body) {
+    public void setBody(IBody body) {
         this.body = body;
     }
 

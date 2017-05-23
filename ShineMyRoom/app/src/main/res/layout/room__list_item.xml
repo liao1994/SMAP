@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Switch
+        android:id="@+id/room_switch_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="48dp" />
+
+    <TextView
+        android:id="@+id/room_name_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/room_switch_list_item"
+        android:layout_alignBottom="@+id/room_switch_list_item"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="58dp"
+        android:text="RoomName" />
+
+    <SeekBar
+        android:id="@+id/light_strenght_list_item"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/room_switch_list_item"
+        android:layout_marginTop="24dp" />
+
+</RelativeLayout>
