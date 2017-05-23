@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
+
+        
     }
 
     @Override
