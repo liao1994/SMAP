@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         mServiceIntent.setAction(getString(R.string.start_service_action));
         this.startService(mServiceIntent);
         builder = new AlertDialog.Builder(this);
-
         minflator = getLayoutInflater();
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);

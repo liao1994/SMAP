@@ -67,7 +67,6 @@ public class HueConnectionService extends IntentService {
         public void onAuthenticationRequired(PHAccessPoint phAccessPoint) {
             Log.d("Log","onAuthenticationRequired");
             phHueSDK.startPushlinkAuthentication(phAccessPoint);
-
             // Arriving here indicates that Pushlinking is required (to prove the User has physical access to the bridge).  Typically here
             // you will display a pushlink image (with a timer) indicating to to the user they need to push the button on their bridge within 30 seconds.
             broadcastAuthenticationRequired();
