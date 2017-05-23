@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        RoomsFragment roomfragment = new RoomsFragment();
-        TablayoutFragment tabfragment = new TablayoutFragment();
-        fragmentTransaction.add(R.id.contentfragment, roomfragment);
+//        RoomsFragment roomfragment = new RoomsFragment();
+        TabLayoutFragment tabfragment = new TabLayoutFragment();
+//        fragmentTransaction.add(R.id.contentfragment, roomfragment);
         fragmentTransaction.add(R.id.tabfragment, tabfragment);
         fragmentTransaction.commit();
 
