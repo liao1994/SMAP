@@ -1,7 +1,8 @@
 package dk.group2.smap.shinemyroom;
 
 import android.app.Dialog;
-import android.app.TabActivity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +11,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,15 +18,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
-import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.todddavies.components.progressbar.ProgressWheel;
-
-import junit.framework.Assert;
-
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
-
-        
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        RoomsFragment fragment = new RoomsFragment();
+        fragmentTransaction.add(R.id.contentfragment, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -64,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
         filter.addAction("android.net.wifi.STATE_CHANGE");
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult,filter);
+
+
     }
     @Override
     protected void onStop() {

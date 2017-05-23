@@ -110,7 +110,7 @@ public class RemoteHueControl extends BaseHueControl {
 
     public void setGroupLight(boolean state){
         RequestQueue queue = Volley.newRequestQueue(super.c);
-//        final String bodyString = makeBodyString(i,state);
+        final String bodyString = makeBodyString2(1,state);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, remoteMessageUrl,
                 new Response.Listener<String>() {

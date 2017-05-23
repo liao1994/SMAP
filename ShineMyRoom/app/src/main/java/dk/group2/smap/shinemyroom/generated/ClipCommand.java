@@ -6,7 +6,7 @@ public class ClipCommand {
 
     private String url;
     private String method;
-    private Body body;
+    private IBody body;
 
     public String getUrl() {
         return url;
