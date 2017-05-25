@@ -33,6 +33,8 @@
             android:exported="false" />
 
         <activity android:name=".MainActivity" />
+        <activity android:name=".RoomClickedActivity" />
+        <activity android:name=".LampActivity"></activity>
     </application>
 
 </manifest>
