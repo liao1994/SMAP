@@ -23,6 +23,5 @@ public class RoomListFragment extends Fragment {
         FragmentTransaction roomItemTrans = getChildFragmentManager().beginTransaction();
         roomItemTrans.add(R.id.roomListView, roomListFrag).commit();
     }
-
 }
 
