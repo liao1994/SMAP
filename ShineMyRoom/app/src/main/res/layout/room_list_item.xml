@@ -18,11 +18,11 @@
         android:id="@+id/room_name_list_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:text="RoomName"
         android:layout_alignBaseline="@+id/room_switch_list_item"
         android:layout_alignBottom="@+id/room_switch_list_item"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="58dp"
-        android:text="RoomName" />
+        android:layout_alignParentStart="true" />
 
     <SeekBar
         android:id="@+id/light_strenght_list_item"
