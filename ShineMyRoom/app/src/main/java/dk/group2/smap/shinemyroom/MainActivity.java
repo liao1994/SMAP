@@ -2,7 +2,6 @@ package dk.group2.smap.shinemyroom;
 
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-            .add(R.id.contentfragment, new RoomsFragment())
+            .add(R.id.contentfragment, new RoomListFragment())
             .add(R.id.tabfragment, new TabFragment())
             .commit();
     }
