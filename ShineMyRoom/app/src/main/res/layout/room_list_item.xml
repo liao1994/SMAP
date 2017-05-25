@@ -33,4 +33,13 @@
         android:layout_marginTop="24dp"
         android:progressDrawable="@drawable/seekbar_style" />
 
+    <Button
+        android:id="@+id/musicBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/room_switch_list_item"
+        android:layout_alignBottom="@+id/room_switch_list_item"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/nodeicon" />
+
 </RelativeLayout>
