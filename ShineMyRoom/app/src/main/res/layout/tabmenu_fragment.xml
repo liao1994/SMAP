@@ -3,17 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    //https://developer.android.com/reference/android/support/design/widget/TabItem.html
     <android.support.design.widget.TabItem
         android:id="@+id/tabHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/homeicon"
-        android:text="Home"/>
+        android:icon="@drawable/homeicon"/>
+
     <android.support.design.widget.TabItem
         android:id="@+id/tabEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/hueicon"
-        android:text="Edit"/>
+        android:icon="@drawable/hueicon"/>
 
 </android.support.design.widget.TabLayout>

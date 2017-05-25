@@ -17,7 +17,7 @@ public class RoomListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.room_list_fragment, container, false);
     }
-
+//Fundet https://stackoverflow.com/questions/6672066/fragment-inside-fragment
     public void OnViewCreated(View view, Bundle savedInstanceState){
         Fragment roomListFrag = new RoomListItem();
         FragmentTransaction roomItemTrans = getChildFragmentManager().beginTransaction();

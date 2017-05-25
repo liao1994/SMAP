@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -46,9 +48,35 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-            .add(R.id.contentfragment, new RoomListFragment())
-            .add(R.id.tabfragment, new TabFragment())
-            .commit();
+                .add(R.id.contentfragment, new RoomListFragment())
+                .add(R.id.tabfragment, new TabFragment())
+                .commit();
+
+//        Button homeTab = (Button) findViewById(R.id.tabHome);
+//        homeTab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction()
+//                        .add(R.id.tabfragment, new TabFragment())
+//                        .add(R.id.contentfragment, new RoomListFragment())
+//                        .commit();
+//            }
+//        });
+//
+//        Button ediTab = (Button) findViewById(R.id.tabEdit);
+//        ediTab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction()
+//                        .add(R.id.tabfragment, new TabFragment())
+//                        .add(R.id.contentfragment, new EditRomFragment())
+//                        .commit();
+//            }
+//        });
+
+
     }
 
     @Override
