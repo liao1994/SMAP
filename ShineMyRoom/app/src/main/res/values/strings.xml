@@ -15,4 +15,7 @@
     <string name="username">userName</string>
     <string name="ip_adress">IpAddress</string>
     <string name="kill_app_action">kill_app_action</string>
+    <string name="no_bridge_found">NO BRIDGE FOUND</string>
+    <string name="setup_bridge">Setup Bridge</string>
+    <string name="authenticaion_failed_action">authenticaion_failed_action</string>
 </resources>

@@ -31,24 +31,22 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout viewById;
     LayoutInflater minflator;
     myTask dialogTask;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        this.startService(new Intent(this, PHHueService.class));
 
-        Intent mServiceIntent = new Intent(this, HueConnectionService.class);
-        mServiceIntent.setAction(getString(R.string.start_service_action));
-        this.startService(mServiceIntent);
         builder = new AlertDialog.Builder(this);
         minflator = getLayoutInflater();
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
 
-        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.contentfragment, new RoomListFragment())
                 .add(R.id.tabfragment, new TabFragment())
                 .commit();
 
@@ -75,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
 //                        .commit();
 //            }
 //        });
-
-
     }
 
     @Override
@@ -84,11 +80,14 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(getString(R.string.authentication_required_action));
-        filter.addAction(getString(R.string.connected));
+        filter.addAction(getString(R.string.bridge_connected));
+        filter.addAction(getString(R.string.authenticaion_failed_action));
+
         // http://stackoverflow.com/questions/10733121/broadcastreceiver-when-wifi-or-3g-network-state-changed
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
         filter.addAction("android.net.wifi.STATE_CHANGE");
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult,filter);
+
 
 
     }
@@ -100,11 +99,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        this.stopService(new Intent(this,PHHueService.class));
         super.onDestroy();
-        Intent mServiceIntent = new Intent(this, HueConnectionService.class);
-        mServiceIntent.setAction(getString(R.string.kill_app_action));
-        this.startService(mServiceIntent);
     }
+
 
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
@@ -114,8 +112,18 @@ public class MainActivity extends AppCompatActivity {
             if(intent.getAction().equals(getString(R.string.authentication_required_action))){
                 dialogTask.execute();
             }else if(intent.getAction().equals(getString(R.string.bridge_connected))){
-                dialogTask.cancel(true);
-            }else if(intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED") || intent.getAction().equals( "android.net.wifi.STATE_CHANGE")) {
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.contentfragment, new RoomListFragment())
+                        .commit();
+                if(d != null)
+                    d.dismiss();
+            }else if(intent.getAction().equals(getString(R.string.authenticaion_failed_action))){
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contentfragment,new NoBridgeConnectFragment())
+                        .commit();
+            }
+            else if(intent.getAction().equals("android.net.wifi.WIFI_STATE_CHANGED") || intent.getAction().equals( "android.net.wifi.STATE_CHANGE")) {
                 ConnectivityManager conMngr = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
                 // http://stackoverflow.com/questions/32547006/connectivitymanager-getnetworkinfoint-deprecated
@@ -154,9 +162,9 @@ public class MainActivity extends AppCompatActivity {
                         dialogTask.cancel(true);
                     }
                 });
-        builder.show();
         pw.startSpinning();
         d = builder.create();
+        d.show();
 
     }
     private class myTask extends AsyncTask<Void,Integer,Void>{
@@ -188,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            Log.d("LOG", "task done");
             d.dismiss();
         }
 
@@ -195,7 +204,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             super.onCancelled();
-            d.dismiss();
+            Log.d("LOG", "task cancelled");
+            fragmentManager.beginTransaction()
+                    .replace(R.id.contentfragment,new NoBridgeConnectFragment())
+                    .commit();
+
         }
     }
 

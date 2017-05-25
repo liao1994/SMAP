@@ -29,12 +29,21 @@
         </activity>
 
         <service
-            android:name=".HueConnectionService"
+            android:name=".PHHueService"
             android:exported="false" />
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RoomClickedActivity" />
-        <activity android:name=".LampActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RoomClickedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LampActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".generated.BridgeActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

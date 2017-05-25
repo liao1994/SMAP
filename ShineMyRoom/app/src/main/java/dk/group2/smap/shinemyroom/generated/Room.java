@@ -6,7 +6,9 @@ package dk.group2.smap.shinemyroom.generated;
 
 public class Room {
 
-    public Room(){}
+    public Room(){
+
+    }
     public Room(boolean on){
         this.on = on;
     }

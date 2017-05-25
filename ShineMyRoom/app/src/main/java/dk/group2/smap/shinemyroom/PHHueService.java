@@ -1,18 +1,16 @@
 package dk.group2.smap.shinemyroom;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -21,18 +19,16 @@ import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
-import java.util.Objects;
 
-// using offical PhillipsHue SDK
-// https://github.com/PhilipsHue/PhilipsHueSDK-Java-MultiPlatform-Android
-public class HueConnectionService extends IntentService {
+/**
+ * Created by liao on 18-05-2017.
+ */
 
+public class PHHueService extends Service {
     public static final String ACTION_CONNECT = "dk.group.shinemyroom.connect";
     private static final String TAG = "serviceDiscovery";
     private PHHueSDK phHueSDK;
     private HueSharedPreferences prefs;
-
-
     private PHSDKListener listener = new PHSDKListener() {
         @Override
         public void onAccessPointsFound(List<PHAccessPoint> list) {
@@ -138,33 +134,23 @@ public class HueConnectionService extends IntentService {
         }
 
     };
-
-
-
-
-    public HueConnectionService() {
-        super("HueConnectionService");
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
-
-
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        Log.d("LOG", "Background service onHandleIntent");
-        if (intent != null) {
-            if(intent.getAction().equals(getString(R.string.authentication_required_action))){
-                //startService();
-            }else if(intent.getAction().equals(getString(R.string.start_service_action))){
-                startService();
-            }else if(intent.getAction().equals(getString(R.string.kill_app_action))){
-                stopHueBridgeHeartBeat();
-            }
-        }
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        startService();
+        return super.onStartCommand(intent, flags, startId);
     }
 
-    private void stopHueBridgeHeartBeat() {
-        phHueSDK.disableAllHeartbeat();
-        //maybe more things i need to close myself add here later
+    @Override
+    public void onDestroy() {
+
+        stopHueBridgeHeartBeat();
+        super.onDestroy();
     }
 
     private void startService(){
@@ -182,13 +168,16 @@ public class HueConnectionService extends IntentService {
             sm.search(true, true);    // Do whatever
         }
     }
+    private void stopHueBridgeHeartBeat() {
+        phHueSDK.disableAllHeartbeat();
+        //maybe more things i need to close myself add here later
+    }
     private void broadcastAuthenticationRequired() {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(getString(R.string.authentication_required_action));
         Log.d("LOG", "Broadcasting:" + getString(R.string.authentication_required_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
-
     private void broadcastAuthenticationFailed() {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(getString(R.string.authenticaion_failed_action));
@@ -206,4 +195,3 @@ public class HueConnectionService extends IntentService {
 
 
 }
-
