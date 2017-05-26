@@ -59,35 +59,13 @@ public class RoomListFragment extends Fragment {
         for (int i = 0; i <roomlist.size(); i++) {
             if(roomlist.get(i).getLightIdentifiers().size() != 0)
             {
-                Room room = new Room();
                 List<String> lightIdentifiers = roomlist.get(i).getLightIdentifiers();
                 ArrayList<PHLight> lights = new ArrayList<>();
                 for (String key : lightIdentifiers){
                     lights.add(lightsMap.get(key));
                 }
-                room.setLights(lights);
-                room.setPhGroup(roomlist.get(i));
+                Room room = new Room(roomlist.get(i),lights);
                 rooms.add(room);
-
-                //just to allococate in compile time
-//                final Room[] room = new Room[1];
-//                room[0] = new Room();
-//                room[0].setPhGroup(roomlist.get(i));
-//
-//                hueControl.getGroupDetails(Integer.parseInt(rooms.get(i).getPhGroup().getIdentifier()), new IHueControl.onGroupResponseListener() {
-//                    @Override
-//                    public void onGroupResult(String response) {
-//                        //GroupDetails roomDetail = new Gson().fromJson(response, GroupDetails.class);
-//                        Log.d("LOG","it got result:" + response);
-////                        if(room[0] != null)
-////                        {
-////                            room[0].setDetails(roomDetail);
-////                            if(roomAdapter != null)
-////                                notifyAdapter();
-////                        }
-////                        else Log.d("LOG","something happened in trying to create a list to adapter");
-//                    }
-//                });
             }
         }
 

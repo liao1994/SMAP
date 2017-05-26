@@ -11,10 +11,13 @@ import java.util.ArrayList;
 
 public class Room {
 
-    public Room(){
+    public Room(PHGroup phGroup, ArrayList<PHLight> lights){
+        this.phGroup = phGroup;
+        this.lights = lights;
     }
     private PHGroup phGroup;
     private ArrayList<PHLight> lights;
+    private Boolean on;
 
 
     public PHGroup getPhGroup() {
@@ -31,5 +34,14 @@ public class Room {
 
     public void setLights(ArrayList<PHLight> lights) {
         this.lights = lights;
+    }
+
+    public Boolean getOn() {
+        for(PHLight light : lights)
+        {
+            if(light.getLastKnownLightState().isOn() && !on)
+                return true;
+        }
+        return false;
     }
 }
