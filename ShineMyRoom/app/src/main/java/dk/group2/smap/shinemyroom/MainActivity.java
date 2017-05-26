@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
+                .add(R.id.contentfragment, new LoadingFragment())
                 .add(R.id.tabfragment, new TabFragment())
                 .commit();
 

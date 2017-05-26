@@ -146,8 +146,6 @@ public class HueConnectionService extends IntentService {
         super("HueConnectionService");
     }
 
-
-
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d("LOG", "Background service onHandleIntent");
