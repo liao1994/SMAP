@@ -11,9 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.internal.util.Predicate;
+import com.google.gson.Gson;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHGroup;
+import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,6 @@ public class RoomListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.room_list_fragment, container, false);
         ListView lw = (ListView) view.findViewById(R.id.room_listView);
-
         RoomAdapter roomAdapter = new RoomAdapter(getActivity().getApplicationContext(),list);
         lw.setAdapter(roomAdapter);
         return view;

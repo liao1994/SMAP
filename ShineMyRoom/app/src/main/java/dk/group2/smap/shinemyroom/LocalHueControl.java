@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dk.group2.smap.shinemyroom.generated.Body;
+import dk.group2.smap.shinemyroom.generated.GroupResponse;
 
 /**
  * Created by liao on 21-05-2017.
@@ -25,16 +26,22 @@ public class LocalHueControl extends BaseHueControl {
     private String ipAddr;
     private String userName;
     private String url;
-    public LocalHueControl(Context c, String ipAddr, String userName) {
+    private Boolean trst;
+    private onGroupResponseListener listner;
+    @Override
+    public void setOnGroupResponseListener(onGroupResponseListener listner) {
+        this.listner = listner;
+    }
+    public LocalHueControl(Context c) {
         super(c);
-        this.ipAddr = ipAddr;
-        this.userName = userName;
+        HueSharedPreferences h = HueSharedPreferences.getInstance(c);
+        this.ipAddr = h.getLastConnectedIPAddress();
+        this.userName = h.getUsername();
         String remoteApiBase = "/api/";
         url = "http://" + ipAddr + remoteApiBase + userName + "/";
     }
-
     @Override
-    public void setLight(int light, boolean state) {
+    public void setGroupLight(int groupId, boolean state) {
         RequestQueue queue = Volley.newRequestQueue(super.c);
 //        final String bodyString = new
         Body b = new Body();
@@ -42,11 +49,11 @@ public class LocalHueControl extends BaseHueControl {
         Gson gson = new Gson();
         final String bodyString = gson.toJson(b);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url+"lights/"+light+"/state",
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url+"groups/"+groupId+"/action",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //TODO handling responses, doesn't really matter so low priority right now since the api doesn't respond with any useful info anyway
+                        //fire and forget
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -67,4 +74,49 @@ public class LocalHueControl extends BaseHueControl {
         queue.add(stringRequest);
 
     }
+
+
+    @Override
+    public void getGroupDetails(int groupId) {
+        final Boolean[] grpState = new Boolean[1];
+        RequestQueue queue = Volley.newRequestQueue(super.c);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url+"groups/"+groupId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                GroupResponse responseObj = gson.fromJson(response, GroupResponse.class);
+                grpState[0] = responseObj.getState().getAllOn();
+                listner.onGroupResult(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error.API", error.getMessage());
+            }
+
+        } );
+    }
+
+    public void getGroupDetails_V2(int groupId, final onGroupResponseListener listner1) {
+        final Boolean[] grpState = new Boolean[1];
+        RequestQueue queue = Volley.newRequestQueue(super.c);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url+"groups/"+groupId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                GroupResponse responseObj = gson.fromJson(response, GroupResponse.class);
+                grpState[0] = responseObj.getState().getAllOn();
+                listner1.onGroupResult(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error.API", error.getMessage());
+            }
+
+        } );
+    }
+
+
+
 }
