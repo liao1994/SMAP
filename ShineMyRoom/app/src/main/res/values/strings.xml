@@ -18,4 +18,5 @@
     <string name="no_bridge_found">NO BRIDGE FOUND</string>
     <string name="setup_bridge">Setup Bridge</string>
     <string name="authenticaion_failed_action">authenticaion_failed_action</string>
+    <string name="api_group_result_action">api_group_result_action</string>
 </resources>

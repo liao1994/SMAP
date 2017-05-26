@@ -1,5 +1,6 @@
 package dk.group2.smap.shinemyroom.generated;
 
+import com.philips.lighting.model.PHGroup;
 /**
  * Created by liao on 23-05-2017.
  */

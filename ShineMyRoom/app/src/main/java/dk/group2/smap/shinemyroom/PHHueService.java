@@ -170,6 +170,7 @@ public class PHHueService extends Service {
     }
     private void stopHueBridgeHeartBeat() {
         phHueSDK.disableAllHeartbeat();
+        phHueSDK.disconnect(phHueSDK.getSelectedBridge());
         //maybe more things i need to close myself add here later
     }
     private void broadcastAuthenticationRequired() {
