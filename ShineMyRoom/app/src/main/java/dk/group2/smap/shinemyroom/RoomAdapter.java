@@ -68,7 +68,6 @@ public class RoomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // not going over 10 items anyway no need for viewholder
 
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = layoutInflater.inflate(R.layout.room_list_item, null);//set layout for displaying items
