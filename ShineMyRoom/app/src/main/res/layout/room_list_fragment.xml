@@ -3,8 +3,8 @@
     android:id="@+id/room_list_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
     <!--<ListView-->
     <!--android:id="@+id/roomListView"-->
@@ -13,5 +13,13 @@
     <ListView
         android:id="@+id/room_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:divider="@drawable/divider"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="true"
+
+
+        />
 </LinearLayout>

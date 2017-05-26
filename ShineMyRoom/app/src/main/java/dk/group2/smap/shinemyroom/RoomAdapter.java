@@ -62,6 +62,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         protected TextView roomName;
         protected Switch lightSwitch;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;

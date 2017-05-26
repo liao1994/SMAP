@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }else if(intent.getAction().equals(getString(R.string.bridge_connected))){
 
                 fragmentManager.beginTransaction()
-                        .add(R.id.contentfragment, new RoomListFragment())
+                        .replace(R.id.contentfragment, new RoomListFragment())
                         .commit();
                 if(d != null)
                     d.dismiss();
