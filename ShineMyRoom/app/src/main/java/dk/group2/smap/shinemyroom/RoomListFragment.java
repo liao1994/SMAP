@@ -33,13 +33,13 @@ import static android.R.id.list;
 
 
 public class RoomListFragment extends Fragment {
-
+    private static final String TAG = "LOG/" + RoomListFragment.class.getName();
     IHueControl hueControl;
     ListView lw;
     RoomAdapter roomAdapter;
     @Override
     public void onStart() {
-        Log.d("LOG/Fragment","RoomListFragment started");
+        Log.d(TAG,"RoomListFragment started");
         super.onStart();
         hueControl = new LocalHueControl(getActivity().getApplicationContext());
     }
@@ -52,62 +52,30 @@ public class RoomListFragment extends Fragment {
 
         PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
-        List<PHGroup> roomlist = resourceCache.getAllGroups();
+        List<PHGroup> roomList = resourceCache.getAllGroups();
         Map<String, PHLight> lightsMap = resourceCache.getLights();
 
-        final ArrayList<Room> rooms = new ArrayList<>();
-        for (int i = 0; i <roomlist.size(); i++) {
-            if(roomlist.get(i).getLightIdentifiers().size() != 0)
+        ArrayList<Room> filteredRooms = new ArrayList<>();
+        for (int i = 0; i <roomList.size(); i++) {
+            if(roomList.get(i).getLightIdentifiers().size() != 0)
             {
-                Room room = new Room();
-                List<String> lightIdentifiers = roomlist.get(i).getLightIdentifiers();
+                List<String> lightIdentifiers = roomList.get(i).getLightIdentifiers();
                 ArrayList<PHLight> lights = new ArrayList<>();
                 for (String key : lightIdentifiers){
                     lights.add(lightsMap.get(key));
                 }
-                room.setLights(lights);
-                room.setPhGroup(roomlist.get(i));
-                rooms.add(room);
 
-                //just to allococate in compile time
-//                final Room[] room = new Room[1];
-//                room[0] = new Room();
-//                room[0].setPhGroup(roomlist.get(i));
-//
-//                hueControl.getGroupDetails(Integer.parseInt(rooms.get(i).getPhGroup().getIdentifier()), new IHueControl.onGroupResponseListener() {
-//                    @Override
-//                    public void onGroupResult(String response) {
-//                        //GroupDetails roomDetail = new Gson().fromJson(response, GroupDetails.class);
-//                        Log.d("LOG","it got result:" + response);
-////                        if(room[0] != null)
-////                        {
-////                            room[0].setDetails(roomDetail);
-////                            if(roomAdapter != null)
-////                                notifyAdapter();
-////                        }
-////                        else Log.d("LOG","something happened in trying to create a list to adapter");
-//                    }
-//                });
+                filteredRooms.add(new Room(roomList.get(i),lights));
             }
         }
 
-        Log.d("LOG/Fragment", "inflating lw with "+ rooms.size() +" items");
+        Log.d(TAG, "inflating lw with "+ filteredRooms.size() +" items");
         // Inflate the layout for this fragment
-        roomAdapter = new RoomAdapter(getActivity().getApplicationContext(),rooms);
+        roomAdapter = new RoomAdapter(getActivity().getApplicationContext(),filteredRooms);
         lw.setAdapter(roomAdapter);
         return view;
 
     }
-    private void notifyAdapter(){
-        roomAdapter.notifyDataSetChanged();
-    }
-//Fundet https://stackoverflow.com/questions/6672066/fragment-inside-fragment
-//    public void OnViewCreated(View view, Bundle savedInstanceState){
-
-//        Fragment roomListFrag = new RoomListItem();
-//        FragmentTransaction roomItemTrans = getChildFragmentManager().beginTransaction();
-//        roomItemTrans.add(R.id.roomListView, roomListFrag).commit();
-
 }
 
 
