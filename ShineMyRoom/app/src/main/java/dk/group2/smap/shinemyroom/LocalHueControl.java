@@ -1,6 +1,8 @@
 package dk.group2.smap.shinemyroom;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -11,12 +13,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.philips.lighting.hue.listener.PHHTTPListener;
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import dk.group2.smap.shinemyroom.generated.Body;
-import dk.group2.smap.shinemyroom.generated.GroupResponse;
+import dk.group2.smap.shinemyroom.generated.GroupDetails;
 
 /**
  * Created by liao on 21-05-2017.
@@ -27,11 +32,7 @@ public class LocalHueControl extends BaseHueControl {
     private String userName;
     private String url;
     private Boolean trst;
-    private onGroupResponseListener listner;
-    @Override
-    public void setOnGroupResponseListener(onGroupResponseListener listner) {
-        this.listner = listner;
-    }
+
     public LocalHueControl(Context c) {
         super(c);
         HueSharedPreferences h = HueSharedPreferences.getInstance(c);
@@ -40,52 +41,14 @@ public class LocalHueControl extends BaseHueControl {
         String remoteApiBase = "/api/";
         url = "http://" + ipAddr + remoteApiBase + userName + "/";
     }
-    @Override
-    public void setGroupLight(int groupId, boolean state) {
-        RequestQueue queue = Volley.newRequestQueue(super.c);
-//        final String bodyString = new
-        Body b = new Body();
-        b.setOn(state);
-        Gson gson = new Gson();
-        final String bodyString = gson.toJson(b);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url+"groups/"+groupId+"/action",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //fire and forget
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error.API", error.getMessage());
-            }
-
-        }){
-            //http://stackoverflow.com/questions/17049473/how-to-set-custom-header-in-volley-request
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return bodyString.getBytes();
-            }
-
-
-
-        };
-        queue.add(stringRequest);
-
-    }
-
 
     @Override
-    public void getGroupDetails(int groupId) {
-        final Boolean[] grpState = new Boolean[1];
+    public void getGroupDetails(int groupId, final onGroupResponseListener listner) {
+        Log.d("LOG","calling HueControl");
         RequestQueue queue = Volley.newRequestQueue(super.c);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url+"groups/"+groupId, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Gson gson = new Gson();
-                GroupResponse responseObj = gson.fromJson(response, GroupResponse.class);
-                grpState[0] = responseObj.getState().getAllOn();
                 listner.onGroupResult(response);
             }
         }, new Response.ErrorListener() {
@@ -95,26 +58,7 @@ public class LocalHueControl extends BaseHueControl {
             }
 
         } );
-    }
-
-    public void getGroupDetails_V2(int groupId, final onGroupResponseListener listner1) {
-        final Boolean[] grpState = new Boolean[1];
-        RequestQueue queue = Volley.newRequestQueue(super.c);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url+"groups/"+groupId, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                GroupResponse responseObj = gson.fromJson(response, GroupResponse.class);
-                grpState[0] = responseObj.getState().getAllOn();
-                listner1.onGroupResult(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error.API", error.getMessage());
-            }
-
-        } );
+        queue.add(stringRequest);
     }
 
 

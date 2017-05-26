@@ -3,7 +3,7 @@ package dk.group2.smap.shinemyroom.generated;
 
 import java.util.List;
 
-public class GroupResponse {
+public class GroupDetails {
 
     private String name;
     private List<String> lights = null;
