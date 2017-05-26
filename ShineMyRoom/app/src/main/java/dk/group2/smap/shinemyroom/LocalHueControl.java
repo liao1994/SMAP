@@ -43,32 +43,13 @@ public class LocalHueControl extends BaseHueControl {
     }
 
     @Override
+    public void getGroupDetails(int groupId, final onGroupResponseListener listner) {
         Log.d("LOG","calling HueControl");
         RequestQueue queue = Volley.newRequestQueue(super.c);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url+"groups/"+groupId, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 listner.onGroupResult(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error.API", error.getMessage());
-            }
-
-        } );
-    }
-
-    public void getGroupDetails_V2(int groupId, final onGroupResponseListener listner1) {
-        final Boolean[] grpState = new Boolean[1];
-        RequestQueue queue = Volley.newRequestQueue(super.c);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url+"groups/"+groupId, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                GroupResponse responseObj = gson.fromJson(response, GroupResponse.class);
-                grpState[0] = responseObj.getState().getAllOn();
-                listner1.onGroupResult(response);
             }
         }, new Response.ErrorListener() {
             @Override
