@@ -76,9 +76,7 @@ public class RoomListFragment extends Fragment {
         return view;
 
     }
-    private void notifyAdapter(){
-        roomAdapter.notifyDataSetChanged();
-    }
+
 //Fundet https://stackoverflow.com/questions/6672066/fragment-inside-fragment
 //    public void OnViewCreated(View view, Bundle savedInstanceState){
 

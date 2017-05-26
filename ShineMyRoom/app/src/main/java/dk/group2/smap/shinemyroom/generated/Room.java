@@ -2,6 +2,7 @@ package dk.group2.smap.shinemyroom.generated;
 
 import com.philips.lighting.model.PHGroup;
 import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 
@@ -39,9 +40,19 @@ public class Room {
     public Boolean getOn() {
         for(PHLight light : lights)
         {
-            if(light.getLastKnownLightState().isOn() && !on)
+            if(light.getLastKnownLightState().isOn())
                 return true;
         }
         return false;
+    }
+    public void setOn(boolean state){
+        for(PHLight light : lights)
+        {
+            light.getLastKnownLightState().setOn(state);
+            //lastKnownLightState.setOn(state);
+            //PHLightState phLightState = new PHLightState();
+            //phLightState.setOn(state);
+            //if(light.setLastKnownLightState(phLightState);
+        }
     }
 }
