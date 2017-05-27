@@ -1,39 +1,69 @@
-//package dk.group2.smap.shinemyroom;
-//
-//import android.content.Context;
-//import android.util.Log;
-//
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.Request;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.android.volley.toolbox.Volley;
-//import com.google.gson.Gson;
-//
-//import java.io.ObjectStreamException;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//import dk.group2.smap.shinemyroom.generated.Body;
-//import dk.group2.smap.shinemyroom.generated.ClipCommand;
-//import dk.group2.smap.shinemyroom.generated.HueRemoteMessageBody;
-//
-//
-//public class RemoteHueControl extends BaseHueControl {
-//
-//    private static String remoteApiBase = "https://www.meethue.com/api/";
-//    private static String token = "NmlQc0RUZnRXeVpwK3NFRHB4ekRmMkUybEVxa21UaVlLeEdMY2lKdEt4MD0%3D"; //Get it from https://www.meethue.com/en-us/user/apps
-//    private static String remoteMessageUrl = remoteApiBase + "sendmessage" + "?token=" + token;
-//    //private static String remoteStatusUrl = remoteApiBase + "getbridge" + "?token=" + token;
-//
-//    public RemoteHueControl(Context c){
-//        super(c);
-//    }
-//
-//
-//
+package dk.group2.smap.shinemyroom;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+public class RemoteHueControl {
+
+    private static String remoteApiBase = "https://www.meethue.com/api/";
+    private static String token = "?token=NmlQc0RUZnRXeVpwK3NFRHB4ekRmMkUybEVxa21UaVlLeEdMY2lKdEt4MD0%3D"; //Get it from https://www.meethue.com/en-us/user/apps
+    private static String remoteMessageUrl = remoteApiBase + "sendmessage" + token;
+    private static String getBrigdeUrl =  remoteApiBase + "getbridge" + token;
+    private Context c;
+    //private static String remoteStatusUrl = remoteApiBase + "getbridge" + "?token=" + token;
+
+    public RemoteHueControl(Context c){
+        this.c = c;
+    }
+
+    public boolean canGetBridge() {
+        URL url;
+        HttpsURLConnection connection = null;
+        boolean result = false;
+        try {
+            url = new URL(getBrigdeUrl);
+            connection = (HttpsURLConnection) url.openConnection();
+            // Timeout for reading InputStream arbitrarily set to 3000ms.
+            connection.setReadTimeout(3000);
+            // Timeout for connection.connect() arbitrarily set to 3000ms.
+            connection.setConnectTimeout(3000);
+            // For this use case, set HTTP method to GET.
+            connection.setRequestMethod("GET");
+            // Already true by default but setting just in case; needs to be true since this request
+            // is carrying an input (response) body.
+            connection.setDoInput(true);
+            // Open communications link (network traffic occurs here).
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK)
+                result = true;
+            // Retrieve the response body as an InputStream.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return result;
+    }
+
+
 //    /**
 //     *@param state ON or Off
 //     *@param i which light
@@ -142,12 +172,9 @@
 //        };
 //        queue.add(stringRequest);
 //    }
-//
-//
-//
-//
-//    @Override
-//    public Boolean getGroupState(int groupId) {
-//        return null;
-//    }
-//}
+
+
+
+
+
+}

@@ -40,14 +40,12 @@ import static android.app.Activity.RESULT_OK;
 public class RoomListFragment extends Fragment {
 
     private static final String TAG = "LOG/" + RoomListFragment.class.getName();
-    IHueControl hueControl;
     ListView lw;
     RoomAdapter roomAdapter;
     @Override
     public void onStart() {
         Log.d("LOG/Fragment","RoomListFragment started");
         super.onStart();
-        hueControl = new LocalHueControl(getActivity().getApplicationContext());
     }
     // get phbrigde, take the info we need, create a list, inflate adapter
     @Override

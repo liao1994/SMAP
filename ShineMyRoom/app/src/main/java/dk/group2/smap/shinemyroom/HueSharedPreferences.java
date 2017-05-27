@@ -45,4 +45,5 @@ public class HueSharedPreferences {
         mSharedPreferencesEditor.putString(LAST_CONNECTED_IP, ipAddress);
         return (mSharedPreferencesEditor.commit());
     }
+
 }

@@ -195,10 +195,10 @@ public class HueConnectionService extends IntentService {
     }
     private void broadcastBridgeConnected(String ip, String s) {
         Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(getString(R.string.bridge_connected));
+        broadcastIntent.setAction(getString(R.string.bridge_connected_action));
         broadcastIntent.putExtra(getString(R.string.username),s);
         broadcastIntent.putExtra(getString(R.string.ip_adress),ip);
-        Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected));
+        Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
@@ -32,7 +34,19 @@ public class MainActivity extends AppCompatActivity {
     LayoutInflater minflator;
     myTask dialogTask;
     FragmentManager fragmentManager;
+    TextView connectionStatus;
 
+    private void updateConnectionStatus(String status){
+        if(status.equals(getString(R.string.connection_status_waiting)))
+        {
+            connectionStatus.setText(status);
+            connectionStatus.setBackgroundColor(Global.CONNECTING_COLOR);
+        }else if(status.equals(getString(R.string.connection_status_bridge)))
+        {
+            connectionStatus.setText(status);
+            connectionStatus.setBackgroundColor(Global.CONNECTED_COLOR);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
-
+        connectionStatus = (TextView) findViewById(R.id.connection_txt);
+        updateConnectionStatus(getString(R.string.connection_status_waiting));
         fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.contentfragment, new LoadingFragment())
@@ -81,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(getString(R.string.authentication_required_action));
-        filter.addAction(getString(R.string.bridge_connected));
+        filter.addAction(getString(R.string.bridge_connected_action));
         filter.addAction(getString(R.string.authenticaion_failed_action));
 
         // http://stackoverflow.com/questions/10733121/broadcastreceiver-when-wifi-or-3g-network-state-changed
@@ -112,11 +127,12 @@ public class MainActivity extends AppCompatActivity {
 
             if(intent.getAction().equals(getString(R.string.authentication_required_action))){
                 dialogTask.execute();
-            }else if(intent.getAction().equals(getString(R.string.bridge_connected))){
+            }else if(intent.getAction().equals(getString(R.string.bridge_connected_action))){
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.contentfragment, new RoomListFragment())
                         .commit();
+                updateConnectionStatus(getString(R.string.connection_status_bridge));
                 if(d != null)
                     d.dismiss();
             }else if(intent.getAction().equals(getString(R.string.authenticaion_failed_action))){

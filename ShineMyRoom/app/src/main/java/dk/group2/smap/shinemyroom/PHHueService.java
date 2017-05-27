@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telecom.RemoteConnection;
 import android.util.Log;
 
 import com.philips.lighting.hue.sdk.PHAccessPoint;
@@ -166,6 +167,13 @@ public class PHHueService extends Service {
             phHueSDK.getNotificationManager().registerSDKListener(listener);
             PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
             sm.search(true, true);    // Do whatever
+        }else
+        {
+            RemoteHueControl hueControl = new RemoteHueControl(getApplicationContext());
+            if(hueControl.canGetBridge())
+            {
+                broadcastRemoteConnected();
+            }
         }
     }
     private void stopHueBridgeHeartBeat() {
@@ -187,10 +195,16 @@ public class PHHueService extends Service {
     }
     private void broadcastBridgeConnected(String ip, String s) {
         Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(getString(R.string.bridge_connected));
+        broadcastIntent.setAction(getString(R.string.bridge_connected_action));
         broadcastIntent.putExtra(getString(R.string.username),s);
         broadcastIntent.putExtra(getString(R.string.ip_adress),ip);
-        Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected));
+        Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected_action));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+    private void broadcastRemoteConnected() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(getString(R.string.remote_connected_action));
+        Log.d("LOG", "Broadcasting:" + getString(R.string.remote_connected_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
