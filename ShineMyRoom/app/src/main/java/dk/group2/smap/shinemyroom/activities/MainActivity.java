@@ -1,4 +1,4 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.activities;
 
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -17,13 +16,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
+
+import dk.group2.smap.shinemyroom.Global;
+import dk.group2.smap.shinemyroom.NoBridgeConnectFragment;
+import dk.group2.smap.shinemyroom.services.PHHueService;
+import dk.group2.smap.shinemyroom.R;
+import dk.group2.smap.shinemyroom.fragments.RoomListFragment;
+import dk.group2.smap.shinemyroom.fragments.TabFragment;
+import dk.group2.smap.shinemyroom.fragments.LoadingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         {
             connectionStatus.setText(status);
             connectionStatus.setBackgroundColor(Global.CONNECTED_COLOR);
+        }else if(status.equals(getString(R.string.no_connection_found))){
+            connectionStatus.setText(status);
+            connectionStatus.setBackgroundColor(Global.NO_CONNECTION_FOUND_COLOR);
         }
     }
     @Override
@@ -103,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction(getString(R.string.bridge_connected_action));
         filter.addAction(getString(R.string.authenticaion_failed_action));
         filter.addAction(getString(R.string.remote_connected_action));
+        filter.addAction(getString(R.string.no_connection_action));
 //        filter.addAction(getString(R.string.start_service_action));
         // http://stackoverflow.com/questions/10733121/broadcastreceiver-when-wifi-or-3g-network-state-changed
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
@@ -141,7 +150,11 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (intent.getAction().equals(getString(R.string.remote_connected_action))){
                 updateConnectionStatus(getString(R.string.connection_status_remote));
-            }else if(intent.getAction().equals(getString(R.string.authenticaion_failed_action))){
+            }else if(intent.getAction().equals(getString(R.string.no_connection_action)))
+            {
+                updateConnectionStatus(getString(R.string.no_connection_found));
+            }
+            else if(intent.getAction().equals(getString(R.string.authenticaion_failed_action))){
                 fragmentManager.beginTransaction()
                         .replace(R.id.contentfragment,new NoBridgeConnectFragment())
                         .commit();

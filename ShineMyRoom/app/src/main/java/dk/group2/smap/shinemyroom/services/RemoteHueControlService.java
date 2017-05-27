@@ -1,4 +1,4 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.services;
 
 import android.app.IntentService;
 import android.content.Context;

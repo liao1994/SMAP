@@ -1,4 +1,4 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.todddavies.components.progressbar.ProgressWheel;
+
+import dk.group2.smap.shinemyroom.R;
 
 /**
  * Created by liao on 26-05-2017.

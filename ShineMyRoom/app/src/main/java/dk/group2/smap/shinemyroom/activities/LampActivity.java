@@ -1,9 +1,8 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import dk.group2.smap.shinemyroom.R;
 
 public class LampActivity extends AppCompatActivity {
 

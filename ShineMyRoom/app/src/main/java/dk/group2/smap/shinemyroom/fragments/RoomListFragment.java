@@ -1,39 +1,32 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.fragments;
 
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.android.internal.util.Predicate;
-import com.google.gson.Gson;
-import com.philips.lighting.hue.listener.PHHTTPListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHGroup;
 import com.philips.lighting.model.PHLight;
-import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import dk.group2.smap.shinemyroom.generated.GroupDetails;
+import dk.group2.smap.shinemyroom.Global;
+import dk.group2.smap.shinemyroom.R;
+import dk.group2.smap.shinemyroom.RoomAdapter;
+import dk.group2.smap.shinemyroom.activities.LampActivity;
 import dk.group2.smap.shinemyroom.generated.Room;
 
-import static android.R.id.list;
 import static android.app.Activity.RESULT_OK;
 
 

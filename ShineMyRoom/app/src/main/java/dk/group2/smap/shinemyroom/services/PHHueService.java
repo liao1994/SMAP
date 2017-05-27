@@ -1,4 +1,4 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.services;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -8,10 +8,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.telecom.RemoteConnection;
 import android.util.Log;
 
 import com.philips.lighting.hue.sdk.PHAccessPoint;
@@ -23,7 +21,8 @@ import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
 
-import static android.net.ConnectivityManager.TYPE_WIFI;
+import dk.group2.smap.shinemyroom.R;
+import dk.group2.smap.shinemyroom.storage.HueSharedPreferences;
 
 /**
  * Created by liao on 18-05-2017.
@@ -104,7 +103,8 @@ public class PHHueService extends Service {
         @Override
         public void onCacheUpdated(List<Integer> list, PHBridge phBridge) {
             Log.d(TAG,"onCacheUpdated");
-
+            if(!prefs.setLastConnectedBridgeData(phBridge))
+                Log.d(TAG,"failed to store updated phBridge");
             // Here you receive notifications that the BridgeResource Cache was updated. Use the PHMessageType to
             // check which cache was updated, e.g.
 //            if (cacheNotificationsList.contains(PHMessageType.LIGHTS_CACHE_UPDATED)) {
@@ -188,9 +188,9 @@ public class PHHueService extends Service {
 
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
-        if (networkInfo.isConnected()) {
-            if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI)
-            {
+
+        if (networkInfo != null ? networkInfo.isConnected() : false) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 phHueSDK = PHHueSDK.getInstance();
                 phHueSDK.setAppName(getApplicationContext().getString(R.string.app_name));
                 phHueSDK.setDeviceName(android.os.Build.MODEL);
@@ -198,20 +198,15 @@ public class PHHueService extends Service {
                 PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
                 sm.search(true, true);    // Do whatever
 
-            }else{
+            } else {
                 RemoteHueControlService.startTryGetRemoteAccessAction(getApplicationContext());
             }
 
 
-        }else
-        {
+        } else {
             boardcastNoConnectionFound();
         }
-    }
 
-
-
-    private void remoteConnect(){
     }
     private void stopHueBridgeHeartBeat() {
         phHueSDK.disableAllHeartbeat();

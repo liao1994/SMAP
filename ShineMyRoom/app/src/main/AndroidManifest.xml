@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".FullscreenActivity"
+            android:name=".activities.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme">
@@ -29,19 +29,19 @@
         </activity>
 
         <service
-            android:name=".PHHueService"
+            android:name=".services.PHHueService"
             android:exported="false" />
         <service
-            android:name=".RemoteHueControlService"
+            android:name=".services.RemoteHueControlService"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RoomClickedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LampActivity"
+            android:name=".activities.LampActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".generated.BridgeActivity"
