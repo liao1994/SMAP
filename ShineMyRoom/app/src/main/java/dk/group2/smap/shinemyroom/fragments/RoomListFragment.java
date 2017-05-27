@@ -61,7 +61,7 @@ public class RoomListFragment extends Fragment {
                 createWifiView();
             else
                 try {
-                    return createRemoteView(view);
+                    return createRemoteView();
                 } catch (JSONException e) {
                     Log.d(ERR_TAG, "error while creating remoteview see stackTrace");
                     e.printStackTrace();
@@ -71,18 +71,17 @@ public class RoomListFragment extends Fragment {
 
     }
 
-    private View createRemoteView(View view) throws JSONException {
+    private void createRemoteView(View view) throws JSONException {
         HueSharedPreferences prefs = HueSharedPreferences.getInstance(getActivity().getApplicationContext());
         String remoteBridge = prefs.getRemoteBridge();
         JSONObject reader = new JSONObject(remoteBridge);
         JSONObject lights = reader.getJSONObject("lights");
         JSONObject groups = reader.getJSONObject("groups");
         //TODO SOME MAGIC JSON WORK
-        return view;
     }
 
 
-    private View createWifiView() {
+    private void createWifiView() {
 
         PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
