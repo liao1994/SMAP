@@ -1,6 +1,10 @@
 package dk.group2.smap.shinemyroom;
 
+import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -12,22 +16,68 @@ import com.android.volley.toolbox.Volley;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class RemoteHueControl {
+public class RemoteHueControlService extends IntentService{
 
+    private static final String TAG = "LOG/" + RemoteHueControlService.class.getName();
     private static String remoteApiBase = "https://www.meethue.com/api/";
     private static String token = "?token=NmlQc0RUZnRXeVpwK3NFRHB4ekRmMkUybEVxa21UaVlLeEdMY2lKdEt4MD0%3D"; //Get it from https://www.meethue.com/en-us/user/apps
     private static String remoteMessageUrl = remoteApiBase + "sendmessage" + token;
     private static String getBrigdeUrl =  remoteApiBase + "getbridge" + token;
-    private Context c;
+    private static final String TRY_GET_REMOTE_ACESS = "INTENTSERVICE_TRY_GET_REMOTE_ACESS_ACTION";
+    public static final String remote_access_failed_action_result = "remote_access_failed_action_result";
+    public static final String remote_access_sucess_action_result = "remote_access_sucess_action_result";
+
+    public RemoteHueControlService() {
+        super(RemoteHueControlService.class.getName());
+    }
     //private static String remoteStatusUrl = remoteApiBase + "getbridge" + "?token=" + token;
 
-    public RemoteHueControl(Context c){
-        this.c = c;
+   public static void startTryGetRemoteAccessAction(Context c){
+           Intent intent = new Intent(c, RemoteHueControlService.class);
+           intent.setAction(TRY_GET_REMOTE_ACESS);
+           c.startService(intent);
+       }
+
+    private void tryGetRemoteAccess() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //send request using Volley
+        if(queue==null){
+            queue = Volley.newRequestQueue(this);
+        }
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, getBrigdeUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        broadcastRemoteAccessSuccess();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error.API", error.getMessage());
+                broadcastRemoteAccessFailed();
+            }
+        });
+
+        queue.add(stringRequest);
+
+    }
+
+    private void broadcastRemoteAccessFailed() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(remote_access_failed_action_result);
+        Log.d(TAG, "Broadcasting:" + remote_access_failed_action_result);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+
+    private void broadcastRemoteAccessSuccess() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(remote_access_sucess_action_result);
+        Log.d(TAG, "Broadcasting:" + remote_access_sucess_action_result);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
     public boolean canGetBridge() {
@@ -61,6 +111,17 @@ public class RemoteHueControl {
             }
         }
         return result;
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        if(intent != null){
+            if(intent.getAction().equals(TRY_GET_REMOTE_ACESS))
+            {
+                tryGetRemoteAccess();
+            }
+        }
+
     }
 
 

@@ -1,8 +1,10 @@
 package dk.group2.smap.shinemyroom;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
@@ -21,13 +23,15 @@ import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
 
+import static android.net.ConnectivityManager.TYPE_WIFI;
+
 /**
  * Created by liao on 18-05-2017.
  */
 
 public class PHHueService extends Service {
     public static final String ACTION_CONNECT = "dk.group.shinemyroom.connect";
-    private static final String TAG = "serviceDiscovery";
+    private static final String TAG = "LOG/" + PHHueService.class.getName();
     private PHHueSDK phHueSDK;
     private HueSharedPreferences prefs;
     private PHSDKListener listener = new PHSDKListener() {
@@ -53,6 +57,7 @@ public class PHHueService extends Service {
                 phHueSDK.connect(list.get(0));
             }
 
+
             // Handle your bridge search results here.  Typically if multiple results are returned you will want to display them in a list
             // and let the user select their bridge.   If one is found you may opt to connect automatically to that bridge.
         }
@@ -68,9 +73,12 @@ public class PHHueService extends Service {
         public void onError(int i, String s) {
             //onError: 101 | link button not pressed
             //onError: 1158 | Authentication failed
-            Log.d("Log","onError: " + i + " | " +s);
+            //onError: 1157 | No bridge found
+            Log.d(TAG,"onError: " + i + " | " +s);
             if(i == 1158)
                 broadcastAuthenticationFailed();
+            if(i == 1157)
+                RemoteHueControlService.startTryGetRemoteAccessAction(getApplicationContext());
         }
 
         @Override
@@ -95,7 +103,7 @@ public class PHHueService extends Service {
         // https://github.com/PhilipsHue/PhilipsHueSDK-Java-MultiPlatform-Android
         @Override
         public void onCacheUpdated(List<Integer> list, PHBridge phBridge) {
-            Log.d("Log","onCacheUpdated");
+            Log.d(TAG,"onCacheUpdated");
 
             // Here you receive notifications that the BridgeResource Cache was updated. Use the PHMessageType to
             // check which cache was updated, e.g.
@@ -108,7 +116,7 @@ public class PHHueService extends Service {
         // https://github.com/PhilipsHue/PhilipsHueSDK-Java-MultiPlatform-Android
         @Override
         public void onConnectionResumed(PHBridge phBridge) {
-            Log.d("Log","onConnectionResumed");
+            Log.d(TAG,"onConnectionResumed");
             phHueSDK.getLastHeartbeat().put(phBridge.getResourceCache().getBridgeConfiguration().getIpAddress(),  System.currentTimeMillis());
             for (int i = 0; i < phHueSDK.getDisconnectedAccessPoint().size(); i++) {
 
@@ -130,11 +138,27 @@ public class PHHueService extends Service {
 
         @Override
         public void onParsingErrors(List<PHHueParsingError> list) {
-            Log.d("Log","onParsingErrors");
+            Log.d(TAG,"onParsingErrors");
 
         }
 
     };
+    private BroadcastReceiver onIntentServiceResult = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("LOG", "Broadcast received from service");
+            switch (intent.getAction()){
+                case RemoteHueControlService.remote_access_sucess_action_result:
+                    broadcastRemoteConnected();
+                    break;
+                case RemoteHueControlService.remote_access_failed_action_result:
+                    boardcastNoConnectionFound();
+                    break;
+            }
+
+        }
+    };
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -143,43 +167,62 @@ public class PHHueService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        int returnCode = super.onStartCommand(intent, flags, startId);
         startService();
-        return super.onStartCommand(intent, flags, startId);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(RemoteHueControlService.remote_access_failed_action_result);
+        filter.addAction(RemoteHueControlService.remote_access_sucess_action_result);
+        LocalBroadcastManager.getInstance(this).registerReceiver(onIntentServiceResult,filter);
+        return returnCode;
     }
 
     @Override
     public void onDestroy() {
 
         stopHueBridgeHeartBeat();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(onIntentServiceResult);
         super.onDestroy();
     }
 
     private void startService(){
 
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mWifi = connManager.getActiveNetworkInfo();
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+        if (networkInfo.isConnected()) {
+            if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI)
+            {
+                phHueSDK = PHHueSDK.getInstance();
+                phHueSDK.setAppName(getApplicationContext().getString(R.string.app_name));
+                phHueSDK.setDeviceName(android.os.Build.MODEL);
+                phHueSDK.getNotificationManager().registerSDKListener(listener);
+                PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
+                sm.search(true, true);    // Do whatever
 
-        if (mWifi.isConnected()) {
-            phHueSDK = PHHueSDK.getInstance();
+            }else{
+                RemoteHueControlService.startTryGetRemoteAccessAction(getApplicationContext());
+            }
 
-            phHueSDK.setAppName(getApplicationContext().getString(R.string.app_name));
-            phHueSDK.setDeviceName(android.os.Build.MODEL);
-            phHueSDK.getNotificationManager().registerSDKListener(listener);
-            PHBridgeSearchManager sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
-            sm.search(true, true);    // Do whatever
+
         }else
         {
-            RemoteHueControl hueControl = new RemoteHueControl(getApplicationContext());
-            if(hueControl.canGetBridge())
-            {
-                broadcastRemoteConnected();
-            }
+            boardcastNoConnectionFound();
         }
+    }
+
+
+
+    private void remoteConnect(){
     }
     private void stopHueBridgeHeartBeat() {
         phHueSDK.disableAllHeartbeat();
         phHueSDK.disconnect(phHueSDK.getSelectedBridge());
         //maybe more things i need to close myself add here later
+    }
+    private void boardcastNoConnectionFound() {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(getString(R.string.no_connection_action));
+        Log.d(TAG, "Broadcasting:" + getString(R.string.no_connection_action));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
     private void broadcastAuthenticationRequired() {
         Intent broadcastIntent = new Intent();
@@ -190,7 +233,7 @@ public class PHHueService extends Service {
     private void broadcastAuthenticationFailed() {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(getString(R.string.authenticaion_failed_action));
-        Log.d("LOG", "Broadcasting:" + getString(R.string.authenticaion_failed_action));
+        Log.d(TAG, "Broadcasting:" + getString(R.string.authenticaion_failed_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
     private void broadcastBridgeConnected(String ip, String s) {
@@ -198,13 +241,13 @@ public class PHHueService extends Service {
         broadcastIntent.setAction(getString(R.string.bridge_connected_action));
         broadcastIntent.putExtra(getString(R.string.username),s);
         broadcastIntent.putExtra(getString(R.string.ip_adress),ip);
-        Log.d("LOG", "Broadcasting:" + getString(R.string.bridge_connected_action));
+        Log.d(TAG, "Broadcasting:" + getString(R.string.bridge_connected_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
     private void broadcastRemoteConnected() {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(getString(R.string.remote_connected_action));
-        Log.d("LOG", "Broadcasting:" + getString(R.string.remote_connected_action));
+        Log.d(TAG, "Broadcasting:" + getString(R.string.remote_connected_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 

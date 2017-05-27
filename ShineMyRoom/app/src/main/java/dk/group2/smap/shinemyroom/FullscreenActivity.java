@@ -96,7 +96,7 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(1000);
+                    sleep(3000);
                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(i);
                     finish();

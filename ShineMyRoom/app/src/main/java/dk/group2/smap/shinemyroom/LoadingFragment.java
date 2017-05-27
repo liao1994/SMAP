@@ -21,9 +21,15 @@ public class LoadingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.authentication_progress_bar, container, false);
         pw = (ProgressWheel) view.findViewById(R.id.pw_spinner);
-        pw.startSpinning();
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        pw.startSpinning();
+    }
+
 
     @Override
     public void onStop() {

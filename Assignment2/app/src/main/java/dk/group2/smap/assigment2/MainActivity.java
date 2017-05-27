@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             Toast.makeText(MainActivity.this, R.string.refresh_weather, Toast.LENGTH_SHORT).show();
-
         }
     };
 
