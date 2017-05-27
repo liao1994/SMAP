@@ -103,8 +103,6 @@ public class PHHueService extends Service {
         @Override
         public void onCacheUpdated(List<Integer> list, PHBridge phBridge) {
             Log.d(TAG,"onCacheUpdated");
-            if(!prefs.setLastConnectedBridgeData(phBridge))
-                Log.d(TAG,"failed to store updated phBridge");
             // Here you receive notifications that the BridgeResource Cache was updated. Use the PHMessageType to
             // check which cache was updated, e.g.
 //            if (cacheNotificationsList.contains(PHMessageType.LIGHTS_CACHE_UPDATED)) {
@@ -124,6 +122,8 @@ public class PHHueService extends Service {
                     phHueSDK.getDisconnectedAccessPoint().remove(i);
                 }
             }
+//            if(!prefs.setLastConnectedBridgeResourceCache(phBridge.getResourceCache()))
+//                Log.d(TAG,"failed to store updated phBridge");
         }
         // Found in offical Phillips Hue SDK quickStart app
         // https://github.com/PhilipsHue/PhilipsHueSDK-Java-MultiPlatform-Android

@@ -150,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (intent.getAction().equals(getString(R.string.remote_connected_action))){
                 updateConnectionStatus(getString(R.string.connection_status_remote));
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.contentfragment, new RoomListFragment())
+//                        .commit();
             }else if(intent.getAction().equals(getString(R.string.no_connection_action)))
             {
                 updateConnectionStatus(getString(R.string.no_connection_found));

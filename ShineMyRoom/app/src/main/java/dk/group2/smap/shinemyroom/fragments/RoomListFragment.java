@@ -1,7 +1,10 @@
 package dk.group2.smap.shinemyroom.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,9 @@ import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHGroup;
 import com.philips.lighting.model.PHLight;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +32,14 @@ import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.RoomAdapter;
 import dk.group2.smap.shinemyroom.activities.LampActivity;
 import dk.group2.smap.shinemyroom.generated.Room;
+import dk.group2.smap.shinemyroom.storage.HueSharedPreferences;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class RoomListFragment extends Fragment {
 
+    private static final String ERR_TAG = "ERROR/" + RoomListFragment.class.getName();
     private static final String TAG = "LOG/" + RoomListFragment.class.getName();
     ListView lw;
     RoomAdapter roomAdapter;
@@ -46,8 +54,39 @@ public class RoomListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.room_list_fragment, container, false);
         lw = (ListView) view.findViewById(R.id.room_listView);
+        ConnectivityManager connManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI)
+                createWifiView();
+            else
+                try {
+                    return createRemoteView(view);
+                } catch (JSONException e) {
+                    Log.d(ERR_TAG, "error while creating remoteview see stackTrace");
+                    e.printStackTrace();
+                }
+        }
+        return view;
+
+    }
+
+    private View createRemoteView(View view) throws JSONException {
+        HueSharedPreferences prefs = HueSharedPreferences.getInstance(getActivity().getApplicationContext());
+        String remoteBridge = prefs.getRemoteBridge();
+        JSONObject reader = new JSONObject(remoteBridge);
+        JSONObject lights = reader.getJSONObject("lights");
+        JSONObject groups = reader.getJSONObject("groups");
+        //TODO SOME MAGIC JSON WORK
+        return view;
+    }
+
+
+    private View createWifiView() {
+
         PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
+
         List<PHGroup> roomlist = resourceCache.getAllGroups();
         final Map<String, PHLight> lightsMap = resourceCache.getLights();
 
@@ -78,9 +117,8 @@ public class RoomListFragment extends Fragment {
                 Intent intent = new Intent(view.getContext(), LampActivity.class);
             }
         });
-        return view;
-
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to

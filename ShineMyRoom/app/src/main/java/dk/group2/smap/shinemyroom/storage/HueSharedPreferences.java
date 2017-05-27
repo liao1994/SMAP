@@ -6,7 +6,16 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeResourcesCache;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.Objects;
 
 // Found in offical Phillips Hue SDK quickStart app
@@ -54,26 +63,12 @@ public class HueSharedPreferences {
         return (mSharedPreferencesEditor.commit());
     }
 
-    public boolean setLastConnectedBridgeData(PHBridge phBridge){
-        Gson gson = new Gson();
-        String json = gson.toJson(phBridge);
-        mSharedPreferencesEditor.putString(LAST_CONNECTED_BRIDGE_DATA, json);
+    public boolean setRemoteBridge(String bridge){
+        mSharedPreferencesEditor.putString(LAST_CONNECTED_BRIDGE_DATA, bridge);
         return (mSharedPreferencesEditor.commit());
     }
-    public PHBridge getLastConnectedBridgeData(){
-        Gson gson = new Gson();
-        PHBridge phBridge = null;
-        String s = mSharedPreferences.getString(LAST_CONNECTED_IP, "");
-        if(!Objects.equals(s, ""))
-        {
-            try {
-                phBridge = gson.fromJson(s, PHBridge.class);
-            }catch (Exception e)
-            {
-                Log.d(TAG,"error while converting from string to phBrigde");
-            }
-        }
-        return phBridge;
+    public String getRemoteBridge(){
+        return mSharedPreferences.getString(LAST_CONNECTED_BRIDGE_DATA, "");
     }
 
 }
