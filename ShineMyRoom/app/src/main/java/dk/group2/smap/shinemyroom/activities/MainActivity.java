@@ -10,13 +10,17 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +28,7 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.NoBridgeConnectFragment;
+import dk.group2.smap.shinemyroom.RoomAdapter;
 import dk.group2.smap.shinemyroom.services.PHHueService;
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.fragments.RoomListFragment;
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     myTask dialogTask;
     FragmentManager fragmentManager;
     TextView connectionStatus;
+
 
     private void updateConnectionStatus(String status){
         if(status.equals(getString(R.string.connection_status_waiting)))
@@ -72,35 +78,12 @@ public class MainActivity extends AppCompatActivity {
         dialogTask = new myTask();
         connectionStatus = (TextView) findViewById(R.id.connection_txt);
         updateConnectionStatus(getString(R.string.connection_status_waiting));
+
         fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.contentfragment, new LoadingFragment())
                 .add(R.id.tabfragment, new TabFragment())
                 .commit();
-
-//        Button homeTab = (Button) findViewById(R.id.tabHome);
-//        homeTab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction()
-//                        .add(R.id.tabfragment, new TabFragment())
-//                        .add(R.id.contentfragment, new RoomListFragment())
-//                        .commit();
-//            }
-//        });
-//
-//        Button ediTab = (Button) findViewById(R.id.tabEdit);
-//        ediTab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction()
-//                        .add(R.id.tabfragment, new TabFragment())
-//                        .add(R.id.contentfragment, new EditRomFragment())
-//                        .commit();
-//            }
-//        });
     }
 
     @Override
