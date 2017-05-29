@@ -92,6 +92,9 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
         RoomAdapter.ViewHolder holder = (RoomAdapter.ViewHolder) view.getTag();
         holder.roomName.setText(remoteRooms.get(position).getGroup().getName());
         holder.lightSwitch.setChecked(remoteRooms.get(position).getLightStateForGroup());
+        holder.lightStrength.setEnabled(false);
+
+
         return view;
     }
 }

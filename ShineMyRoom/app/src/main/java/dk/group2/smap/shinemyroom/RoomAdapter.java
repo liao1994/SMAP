@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
@@ -93,8 +94,12 @@ public class RoomAdapter extends ArrayAdapter<Room> {
             viewHolder.lightStrength.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    viewHolder.stack.push(progress*5);
-                    // limiting calls to only around 5 calls per second
+
+                    if(!fromUser)
+                        return;
+
+                    viewHolder.stack.push(progress);
+                    // limiting calls to bridge
                     if(sleeping)
                         return;
 
@@ -139,6 +144,13 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         holder.lightStrength.setMax(Global.LightStrengthMAX);
         holder.roomName.setText(rooms.get(position).getPhGroup().getName());
         holder.lightSwitch.setChecked(rooms.get(position).getOn());
+        ArrayList<PHLight> lights = rooms.get(position).getLights();
+
+        Integer brightness = Global.LightStrengthMAX;
+        for (PHLight light : lights){
+            brightness = light.getLastKnownLightState().getBrightness() < brightness ? light.getLastKnownLightState().getBrightness() : brightness;
+        }
+        holder.lightStrength.setProgress(brightness);
         return view;
     }
 }
