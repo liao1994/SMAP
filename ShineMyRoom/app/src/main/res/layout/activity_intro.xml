@@ -10,7 +10,7 @@
         android:id="@+id/tabfragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.09" />
+        android:layout_weight="0.13" />
 
 
     <android.support.v4.widget.Space
@@ -22,7 +22,7 @@
         android:id="@+id/contentfragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.89" />
+        android:layout_weight="0.86" />
 
     <TextView
         android:id="@+id/connection_txt"

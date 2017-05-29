@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        this.startService(new Intent(this, PHHueService.class));
+        //this.startService(new Intent(this, PHHueService.class));
 
         builder = new AlertDialog.Builder(this);
         minflator = getLayoutInflater();
