@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.philips.lighting.model.PHLight;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.hue.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -59,7 +57,7 @@ public class RoomListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.room_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_room_list, container, false);
         lw = (ListView) view.findViewById(R.id.room_listView);
         ConnectivityManager connManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
