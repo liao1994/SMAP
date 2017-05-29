@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        //this.startService(new Intent(this, PHHueService.class));
+        this.startService(new Intent(this, PHHueService.class));
 
         builder = new AlertDialog.Builder(this);
         minflator = getLayoutInflater();
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction(getString(R.string.authenticaion_failed_action));
         filter.addAction(getString(R.string.remote_connected_action));
         filter.addAction(getString(R.string.no_connection_action));
-//        filter.addAction(getString(R.string.start_service_action));
+        filter.addAction(getString(R.string.start_service_action));
         // http://stackoverflow.com/questions/10733121/broadcastreceiver-when-wifi-or-3g-network-state-changed
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
         filter.addAction("android.net.wifi.STATE_CHANGE");

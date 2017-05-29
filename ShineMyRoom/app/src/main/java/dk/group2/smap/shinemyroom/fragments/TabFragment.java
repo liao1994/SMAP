@@ -17,13 +17,6 @@ public class TabFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflate;
         inflate = inflater.inflate(R.layout.tabmenu_layout, container, false);
-        TabItem viewById = (TabItem) inflate.findViewById(R.id.tabHome);
-        viewById.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"tabmenu clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
         return inflate;
 
     }
