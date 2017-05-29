@@ -29,7 +29,6 @@ import dk.group2.smap.shinemyroom.generated.Room;
 public class RoomAdapter extends ArrayAdapter<Room> {
     private ArrayList<Room> rooms;
     private Context c;
-    private LayoutInflater layoutInflater;
 
     public RoomAdapter(Context c, ArrayList<Room> rooms){
         super(c,R.layout.room_list_item,rooms);
