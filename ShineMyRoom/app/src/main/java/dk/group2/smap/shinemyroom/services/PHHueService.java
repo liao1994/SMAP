@@ -21,6 +21,7 @@ import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
+import java.util.Objects;
 
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.storage.HueSharedPreferences;
@@ -45,16 +46,15 @@ public class PHHueService extends Service {
             prefs = HueSharedPreferences.getInstance(getApplicationContext());
             String lastIpAddress   = prefs.getLastConnectedIPAddress();
             String lastUsername    = prefs.getUsername();
-
-            if (lastIpAddress !=null && !lastIpAddress.equals("")) {
-                PHAccessPoint lastAccessPoint = new PHAccessPoint();
-                lastAccessPoint.setIpAddress(lastIpAddress);
-                lastAccessPoint.setUsername(lastUsername);
-                if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
-                    phHueSDK.connect(lastAccessPoint);
+            PHAccessPoint phAccessPoint = list.get(0);
+            // if not the accessIp as last time, request new conn otherwise just use last one
+            if (lastIpAddress.equals(phAccessPoint.getIpAddress()))  {
+                if (!phHueSDK.isAccessPointConnected(phAccessPoint)) {
+                    phAccessPoint.setUsername(lastUsername);
+                    phHueSDK.connect(phAccessPoint);
                 }
             }else {
-                phHueSDK.connect(list.get(0));
+                phHueSDK.connect(phAccessPoint);
             }
 
 
@@ -79,10 +79,8 @@ public class PHHueService extends Service {
             Log.d(TAG,"onError: " + i + " | " +s);
             if(i == 1158)
                 broadcastAuthenticationFailed();
-            if(i == 1157)
+            if(i == 1157 | i == 46)
                 RemoteHueControlService.startTryGetRemoteAccessAction(getApplicationContext());
-            if(i == 46)
-                broadcastBridgeNotRespoding();
         }
 
         @Override

@@ -17,6 +17,7 @@ public class TabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflate;
+        
         inflate = inflater.inflate(R.layout.tabmenu, container, false);
 
         ImageView homeBtn = (ImageView) inflate.findViewById(R.id.homeView);
