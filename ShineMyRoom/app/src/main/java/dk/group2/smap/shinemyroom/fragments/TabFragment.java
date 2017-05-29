@@ -6,6 +6,7 @@ import android.support.design.widget.TabItem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import dk.group2.smap.shinemyroom.R;
 
@@ -20,7 +21,7 @@ public class TabFragment extends Fragment {
         viewById.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Toast.makeText(getActivity().getApplicationContext(),"tabmenu clicked",Toast.LENGTH_SHORT).show();
             }
         });
         return inflate;
