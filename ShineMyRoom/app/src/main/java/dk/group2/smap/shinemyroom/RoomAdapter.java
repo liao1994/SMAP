@@ -5,22 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
-import com.philips.lighting.model.PHGroup;
-import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import dk.group2.smap.shinemyroom.generated.GroupDetails;
 import dk.group2.smap.shinemyroom.generated.Room;
 
 
@@ -60,10 +55,11 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     static class ViewHolder {
         protected TextView roomName;
         protected Switch lightSwitch;
+        protected SeekBar lightStrength;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view;
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -86,6 +82,26 @@ public class RoomAdapter extends ArrayAdapter<Room> {
                             selectedBridge.setLightStateForGroup(element.getPhGroup().getIdentifier(),phLightState);
                         }
                     });
+            viewHolder.lightStrength = (SeekBar) view.findViewById(R.id.light_strenght_list_item);
+            viewHolder.lightStrength.setTag(rooms.get(position));
+            viewHolder.lightStrength.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    Room element = (Room) viewHolder.lightSwitch.getTag();
+                    PHBridge selectedBridge = PHHueSDK.getInstance().getSelectedBridge();
+                    PHLightState phLightState = new PHLightState();
+                    phLightState.setBrightness(progress);
+                    selectedBridge.setLightStateForGroup(element.getPhGroup().getIdentifier(),phLightState);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+
             view.setTag(viewHolder);
 
         } else {
@@ -93,6 +109,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
             ((ViewHolder) view.getTag()).lightSwitch.setTag(rooms.get(position));
         }
         ViewHolder holder = (ViewHolder) view.getTag();
+        holder.lightStrength.setMax(Global.LightStrengthMAX);
         holder.roomName.setText(rooms.get(position).getPhGroup().getName());
         holder.lightSwitch.setChecked(rooms.get(position).getOn());
         return view;

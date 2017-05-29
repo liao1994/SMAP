@@ -45,6 +45,8 @@ public class RemoteHueControlService extends IntentService{
     private static final String setLightForGroupAction_state = "setLightForGroupAction.state";
     public static final String remote_access_failed_action_result = "remote_access_failed_action_result";
     public static final String remote_access_sucess_action_result = "remote_access_sucess_action_result";
+    private static String url =  "https://www.meethue.com/en-us/user/apps";
+
     private static RequestQueue requestQueue;
 
     private static synchronized RequestQueue getRequestQueue(Context c) {

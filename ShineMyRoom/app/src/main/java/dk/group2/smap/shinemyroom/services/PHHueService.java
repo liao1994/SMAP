@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
@@ -73,11 +74,15 @@ public class PHHueService extends Service {
             //onError: 101 | link button not pressed
             //onError: 1158 | Authentication failed
             //onError: 1157 | No bridge found
+
+
             Log.d(TAG,"onError: " + i + " | " +s);
             if(i == 1158)
                 broadcastAuthenticationFailed();
             if(i == 1157)
                 RemoteHueControlService.startTryGetRemoteAccessAction(getApplicationContext());
+            if(i == 46)
+                broadcastBridgeNotRespoding();
         }
 
         @Override
@@ -143,6 +148,8 @@ public class PHHueService extends Service {
         }
 
     };
+
+
     private BroadcastReceiver onIntentServiceResult = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -210,7 +217,9 @@ public class PHHueService extends Service {
     }
     private void stopHueBridgeHeartBeat() {
         phHueSDK.disableAllHeartbeat();
-        phHueSDK.disconnect(phHueSDK.getSelectedBridge());
+        PHBridge selectedBridge = phHueSDK.getSelectedBridge();
+        if(selectedBridge != null)
+        phHueSDK.disconnect(selectedBridge);
         //maybe more things i need to close myself add here later
     }
     private void boardcastNoConnectionFound() {
@@ -244,6 +253,11 @@ public class PHHueService extends Service {
         broadcastIntent.setAction(getString(R.string.remote_connected_action));
         Log.d(TAG, "Broadcasting:" + getString(R.string.remote_connected_action));
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+    }
+
+    private void broadcastBridgeNotRespoding() {
+        //TODO finish implementing this
+        Toast.makeText(getApplicationContext(),"External Error: Bridge not responding",Toast.LENGTH_SHORT).show();
     }
 
 

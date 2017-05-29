@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -62,6 +63,8 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
             viewHolder.roomName = (TextView) view.findViewById(R.id.room_name_list_item);
             viewHolder.lightSwitch = (Switch) view.findViewById(R.id.room_switch_list_item);
             viewHolder.lightSwitch.setTag(remoteRooms.get(position));
+            viewHolder.lightStrength = (SeekBar) view.findViewById(R.id.light_strenght_list_item);
+            viewHolder.lightStrength.setTag(remoteRooms.get(position));
             viewHolder.lightSwitch
                     .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -84,6 +87,7 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
         } else {
             view = convertView;
             ((RoomAdapter.ViewHolder) view.getTag()).lightSwitch.setTag(remoteRooms.get(position));
+            ((RoomAdapter.ViewHolder) view.getTag()).lightStrength.setTag(remoteRooms.get(position));
         }
         RoomAdapter.ViewHolder holder = (RoomAdapter.ViewHolder) view.getTag();
         holder.roomName.setText(remoteRooms.get(position).getGroup().getName());
