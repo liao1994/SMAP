@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 authenticationDialog.run();
             }else if(intent.getAction().equals(getString(R.string.bridge_connected_action))){
 
-                fragmentPageAdapter.replaceFragmentAt(0,new NoBridgeConnectFragment());
+                fragmentPageAdapter.replaceFragmentAt(0,new RoomListFragment());
                 updateConnectionStatus(getString(R.string.connection_status_bridge));
                 authenticationDialog.dismiss();
 
