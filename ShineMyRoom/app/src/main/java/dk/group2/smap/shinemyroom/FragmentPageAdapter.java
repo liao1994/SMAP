@@ -28,7 +28,6 @@ public class FragmentPageAdapter extends FragmentStatePagerAdapter {
     private HashMap<Class<? extends Fragment>,Integer> fragmentToKey = new HashMap<>();
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private Context c;
-    private SparseArray<Drawable> iconMap = new SparseArray<>();
     public FragmentPageAdapter(Context c, FragmentManager fm) {
         super(fm);
         this.c = c;
@@ -41,9 +40,6 @@ public class FragmentPageAdapter extends FragmentStatePagerAdapter {
         fragmentMap.append(2, new EditRomFragment());
         fragmentToKey.put(EditRomFragment.class,2);
 
-        iconMap.append(0, ContextCompat.getDrawable(c, R.drawable.home_icon));
-        iconMap.append(1, ContextCompat.getDrawable(c, R.drawable.hue_geo_fencing));
-        iconMap.append(2, ContextCompat.getDrawable(c, R.drawable.hue_icon));
     }
 
     //https://stackoverflow.com/questions/31260384/how-to-add-page-title-and-icon-in-android-fragmentpageradapter
@@ -57,7 +53,7 @@ public class FragmentPageAdapter extends FragmentStatePagerAdapter {
 //        return sb;
 //    }
 
-    private boolean replaceFragmentWith(Class<? extends Fragment> oldFragment, Fragment newFragment){
+    public boolean replaceFragmentWith(Class<? extends Fragment> oldFragment, Fragment newFragment){
         Integer integer;
         if(fragmentToKey.containsKey(oldFragment)) {
             integer = fragmentToKey.get(oldFragment);
@@ -69,7 +65,13 @@ public class FragmentPageAdapter extends FragmentStatePagerAdapter {
         fragmentToKey.put(newFragment.getClass(),integer);
         return true;
     }
+    public void replaceFragmentAt(int key, Fragment fragment) {
+        if(getCount() == key) {
+            return;
+        }
+        fragmentMap.append(key, fragment);
 
+    }
     @Override
     public Fragment getItem(int position) {
         return fragmentMap.get(position);
@@ -79,5 +81,6 @@ public class FragmentPageAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return fragmentMap.size();
     }
+
 
 }
