@@ -27,14 +27,12 @@ import dk.group2.smap.shinemyroom.RoomAdapter;
 import dk.group2.smap.shinemyroom.generated.Room;
 
 public class RoomClickedAdapter extends ArrayAdapter<PHLight> {
-    private boolean sleeping;
     private ArrayList<PHLight> editlights;
     private Context c;
 
     public RoomClickedAdapter(Context c, ArrayList<PHLight> editrooms) {
         super(c, R.layout.item_edit_room_list, editrooms);
         this.c = c;
-        this.editlights = editlights;
     }
 
     @Override
