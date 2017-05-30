@@ -16,6 +16,6 @@ public class EditRomFragment extends Fragment {
                                  Bundle savedInstanceState) {
 
             // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.edit_room_fragment, container, false);
+            return inflater.inflate(R.layout.activity_edit_room, container, false);
         }
 }
