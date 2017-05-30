@@ -1,28 +1,17 @@
 package dk.group2.smap.shinemyroom.services;
 
-import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import dk.group2.smap.shinemyroom.Global;
-
-/**
- * Created by liao on 20-05-2017.
- */
 
 public class GeoFencingService extends Service {
     private static final String TAG = "LOG/" + GeoFencingService.class.getName();
