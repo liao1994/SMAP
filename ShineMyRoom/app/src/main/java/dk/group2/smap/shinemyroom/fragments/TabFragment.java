@@ -1,24 +1,16 @@
 package dk.group2.smap.shinemyroom.fragments;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import dk.group2.smap.shinemyroom.R;
-import dk.group2.smap.shinemyroom.activities.LampActivity;
-import dk.group2.smap.shinemyroom.activities.MainActivity;
 
 public class TabFragment extends Fragment {
     private static final int HOMETAB_REQUEST_CODE = 1;
-
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {

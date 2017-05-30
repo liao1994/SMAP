@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.R;
 
 /**
@@ -97,8 +98,8 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(5000);
-                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    sleep(Global.SPLASHSCREEN_LENGTH);
+                    Intent i = new Intent(getApplicationContext(),HomeActivity.class);
                     startActivity(i);
                     finish();
                 } catch (InterruptedException e) {

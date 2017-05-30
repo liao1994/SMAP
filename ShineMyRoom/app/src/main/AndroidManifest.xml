@@ -36,7 +36,7 @@
             android:name=".services.RemoteHueControlService"
             android:exported="false" />
         <service
-            android:name=".services.GeofencingService"
+            android:name=".services.GeoFencingService"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
@@ -50,6 +50,10 @@
         <activity
             android:name=".generated.BridgeActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

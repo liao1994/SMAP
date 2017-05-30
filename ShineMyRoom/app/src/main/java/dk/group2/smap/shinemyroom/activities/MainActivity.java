@@ -1,7 +1,6 @@
 package dk.group2.smap.shinemyroom.activities;
 
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,17 +9,14 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.design.widget.TabItem;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +24,11 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.NoBridgeConnectFragment;
-import dk.group2.smap.shinemyroom.RoomAdapter;
+import dk.group2.smap.shinemyroom.fragments.TabFragment;
 import dk.group2.smap.shinemyroom.services.PHHueService;
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.fragments.RoomListFragment;
-import dk.group2.smap.shinemyroom.fragments.TabFragment;
 import dk.group2.smap.shinemyroom.fragments.LoadingFragment;
-
 public class MainActivity extends AppCompatActivity {
 
     AlertDialog.Builder builder;
@@ -76,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
         viewById = (RelativeLayout) minflator.inflate(R.layout.authentication_progress_bar, null);
         pw = (ProgressWheel) viewById.findViewById(R.id.pw_spinner);
         dialogTask = new myTask();
-        connectionStatus = (TextView) findViewById(R.id.connection_txt);
-        updateConnectionStatus(getString(R.string.connection_status_waiting));
+//        connectionStatus = (TextView) findViewById(R.id.connection_txt);
+//        updateConnectionStatus(getString(R.string.connection_status_waiting));
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.contentfragment, new LoadingFragment())
                 .add(R.id.tabfragment, new TabFragment())
