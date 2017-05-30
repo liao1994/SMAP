@@ -25,5 +25,7 @@
     <string name="connection_status_remote">Out Of Home Connection</string>
     <string name="no_connection_action">no_connection_action</string>
     <string name="no_connection_found">No connection found</string>
+    <string name="room_name">Room Name</string>
+    <string name="save_btn_text">Save</string>
 
 </resources>

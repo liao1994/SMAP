@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
-        android:text="RoomName"
+        android:text="@string/room_name"
         android:layout_alignBaseline="@+id/room_switch_list_item"
         android:layout_alignBottom="@+id/room_switch_list_item"
         android:layout_alignParentStart="true" />
