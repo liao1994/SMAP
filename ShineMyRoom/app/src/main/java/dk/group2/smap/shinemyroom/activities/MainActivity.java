@@ -79,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setPagingEnabled(false);
         viewPager.setAdapter(fragmentPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        View viewByLayout1 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
+        view1 = (ImageView) viewByLayout1.findViewById(R.id.tab_icon);
+        View viewByLayout2 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
+        view2 = (ImageView) viewByLayout2.findViewById(R.id.tab_icon);
+        View viewByLayout3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
+        view3 = (ImageView) viewByLayout3.findViewById(R.id.tab_icon);
+        view1.setImageResource(R.drawable.home_icon);
+        view2.setImageResource(R.drawable.hue_geo_fencing);
+        view3.setImageResource(R.drawable.hue_icon);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -95,16 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        View viewByLayout1 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        view1 = (ImageView) viewByLayout1.findViewById(R.id.tab_icon);
-        View viewByLayout2 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        view2 = (ImageView) viewByLayout2.findViewById(R.id.tab_icon);
-        View viewByLayout3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        view3 = (ImageView) viewByLayout3.findViewById(R.id.tab_icon);
-        view1.setImageResource(R.drawable.home_icon);
-        view2.setImageResource(R.drawable.hue_geo_fencing);
-        view3.setImageResource(R.drawable.hue_icon);
-
 
         drawTabIcons();
     }

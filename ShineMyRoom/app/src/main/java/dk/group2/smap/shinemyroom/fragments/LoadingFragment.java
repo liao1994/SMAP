@@ -11,10 +11,6 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 import dk.group2.smap.shinemyroom.R;
 
-/**
- * Created by liao on 26-05-2017.
- */
-
 public class LoadingFragment extends Fragment {
     ProgressWheel pw;
 

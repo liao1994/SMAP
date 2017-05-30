@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Shine My Room</string>
-
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="title_activity_fullscreen">Shine My Room</string>
     <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="shine_my_room">SHINE MY\nROOM</string>
     <string name="authentication_required">Push Link Button On Bridge</string>
     <string name="connected">connected</string>
     <string name="enter_ip_btn_text">Manuel enter IP</string>

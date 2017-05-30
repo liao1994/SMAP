@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by liao on 25-05-2017.
- */
 
 public class NoBridgeConnectFragment extends Fragment {
 

@@ -14,9 +14,6 @@ import java.util.ArrayList;
 
 import dk.group2.smap.shinemyroom.services.RemoteHueControlService;
 
-/**
- * Created by liao on 28-05-2017.
- */
 
 public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
     private Context applicationContext;

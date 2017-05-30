@@ -21,8 +21,6 @@ import java.util.Stack;
 import dk.group2.smap.shinemyroom.generated.Room;
 
 
-
-
 public class RoomAdapter extends ArrayAdapter<Room> {
     private boolean sleeping;
     private ArrayList<Room> rooms;
