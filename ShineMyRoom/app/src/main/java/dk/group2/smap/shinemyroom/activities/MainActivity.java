@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
     private void createTabIcons(){
 
         View view1 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view1.findViewById(R.id.tab_icon)).setImageResource(R.drawable.home_icon);
+        ((ImageView) view1.findViewById(R.id.tab_icon)).setImageResource(R.drawable.homeiconwhite);
 
         View view2 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view2.findViewById(R.id.tab_icon)).setImageResource(R.drawable.hue_geo_fencing);
+        ((ImageView) view2.findViewById(R.id.tab_icon)).setImageResource(R.drawable.geofenceicon);
 
 
         View view3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);

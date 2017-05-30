@@ -3,21 +3,13 @@ package dk.group2.smap.shinemyroom.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import dk.group2.smap.shinemyroom.CustomViewPager;
 import dk.group2.smap.shinemyroom.FragmentPageAdapter;
 import dk.group2.smap.shinemyroom.R;
-import dk.group2.smap.shinemyroom.fragments.EditRomFragment;
-import dk.group2.smap.shinemyroom.fragments.GeoFencingFragment;
-import dk.group2.smap.shinemyroom.fragments.LoadingFragment;
 
 //https://www.youtube.com/watch?v=bNpWGI_hGGg
 public class HomeActivity extends AppCompatActivity {
@@ -46,10 +38,10 @@ public class HomeActivity extends AppCompatActivity {
     private void createTabIcons(){
 
         View view1 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view1.findViewById(R.id.tab_icon)).setImageResource(R.drawable.home_icon);
+        ((ImageView) view1.findViewById(R.id.tab_icon)).setImageResource(R.drawable.homeiconwhite);
 
         View view2 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view2.findViewById(R.id.tab_icon)).setImageResource(R.drawable.hue_geo_fencing);
+        ((ImageView) view2.findViewById(R.id.tab_icon)).setImageResource(R.drawable.geofenceicon);
 
 
         View view3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
