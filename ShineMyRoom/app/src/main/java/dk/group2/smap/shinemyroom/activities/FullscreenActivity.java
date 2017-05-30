@@ -99,7 +99,7 @@ public class FullscreenActivity extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(Global.SPLASHSCREEN_LENGTH);
-                    Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(i);
                     finish();
                 } catch (InterruptedException e) {
