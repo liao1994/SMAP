@@ -27,5 +27,9 @@
     <string name="no_connection_found">No connection found</string>
     <string name="room_name">Room Name</string>
     <string name="save_btn_text">Save</string>
+    <string name="lamp_name">Lamp Name</string>
+    <string name="lamp_status_label">Status:</string>
+    <string name="lamp_status_connected">Connected</string>
+    <string name="lamp_status_not_connected">Not Connected</string>
 
 </resources>

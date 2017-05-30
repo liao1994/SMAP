@@ -23,7 +23,7 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
     private ArrayList<RemoteRoom> remoteRooms;
 
     public RemoteRoomAdapter(Context applicationContext, ArrayList<RemoteRoom> remoteRoom) {
-        super(applicationContext,R.layout.room_list_item,remoteRoom);
+        super(applicationContext,R.layout.item_room_list,remoteRoom);
         this.applicationContext = applicationContext;
         this.remoteRooms = remoteRoom;
     }
@@ -58,7 +58,7 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
         View view;
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflator.inflate(R.layout.room_list_item, null);
+            view = inflator.inflate(R.layout.item_room_list, null);
             final RoomAdapter.ViewHolder viewHolder = new RoomAdapter.ViewHolder();
             viewHolder.roomName = (TextView) view.findViewById(R.id.room_name_list_item);
             viewHolder.lightSwitch = (Switch) view.findViewById(R.id.room_switch_list_item);
