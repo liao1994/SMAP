@@ -1,4 +1,4 @@
-@echo I4PRJ Rapport characters:
-@pdftotext I4PRJRapport.pdf -enc UTF-8 - | wc
+@echo ShineMyRoom Rapport characters:
+@pdftotext ShineMyRoom.pdf -enc UTF-8 - | wc -m
 @echo   Lines ^| Words ^| Chars
 @pause

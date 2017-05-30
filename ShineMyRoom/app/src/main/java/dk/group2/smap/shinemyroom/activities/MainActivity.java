@@ -1,9 +1,5 @@
 package dk.group2.smap.shinemyroom.activities;
 
-/**
- * Created by liao on 30-05-2017.
- */
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +21,7 @@ import dk.group2.smap.shinemyroom.AuthenticationDialog;
 import dk.group2.smap.shinemyroom.CustomViewPager;
 import dk.group2.smap.shinemyroom.FragmentPageAdapter;
 import dk.group2.smap.shinemyroom.Global;
-import dk.group2.smap.shinemyroom.NoBridgeConnectFragment;
+import dk.group2.smap.shinemyroom.fragments.NoBridgeConnectFragment;
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.fragments.RoomListFragment;
 import dk.group2.smap.shinemyroom.services.PHHueService;
