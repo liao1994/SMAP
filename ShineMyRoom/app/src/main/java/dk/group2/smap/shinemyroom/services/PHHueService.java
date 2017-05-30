@@ -26,9 +26,6 @@ import java.util.Objects;
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.storage.HueSharedPreferences;
 
-/**
- * Created by liao on 18-05-2017.
- */
 
 public class PHHueService extends Service {
     public static final String ACTION_CONNECT = "dk.group.shinemyroom.connect";

@@ -8,9 +8,6 @@ import dk.group2.smap.shinemyroom.generated.Group;
 import dk.group2.smap.shinemyroom.generated.Light;
 import dk.group2.smap.shinemyroom.generated.State;
 
-/**
- * Created by liao on 28-05-2017.
- */
 
 public class RemoteRoom {
 

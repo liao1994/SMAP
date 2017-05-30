@@ -42,7 +42,7 @@
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RoomClickedActivity"
+            android:name=".activities.RoomClickedActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LampActivity"

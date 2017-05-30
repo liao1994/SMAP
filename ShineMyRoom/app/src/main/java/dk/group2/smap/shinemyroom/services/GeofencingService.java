@@ -20,9 +20,6 @@ import com.google.android.gms.location.LocationServices;
 
 import dk.group2.smap.shinemyroom.Global;
 
-/**
- * Created by liao on 20-05-2017.
- */
 
 public class GeoFencingService extends Service {
     private static final String TAG = "LOG/" + GeoFencingService.class.getName();

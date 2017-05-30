@@ -13,7 +13,6 @@ import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.R;
 
 
-
 public class GeoFencingFragment extends Fragment {
 
     public GeoFencingFragment() {

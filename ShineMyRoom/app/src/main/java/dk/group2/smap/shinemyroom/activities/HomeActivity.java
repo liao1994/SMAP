@@ -1,8 +1,5 @@
 package dk.group2.smap.shinemyroom.activities;
 
-/**
- * Created by liao on 30-05-2017.
- */
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
