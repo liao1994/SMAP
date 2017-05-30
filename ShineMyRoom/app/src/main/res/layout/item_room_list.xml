@@ -43,19 +43,6 @@
         />
 
 
-    <Button
-        android:id="@+id/musicBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/nodeicon"
-        android:layout_marginEnd="22dp"
-        android:layout_alignTop="@+id/room_switch_list_item"
-        android:layout_toStartOf="@+id/room_switch_list_item"
-
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"/>
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="5dp"
