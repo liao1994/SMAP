@@ -10,12 +10,13 @@
         android:id="@+id/room_name_list_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:text="@string/room_name"
-        android:textSize="18sp"
-        android:layout_marginTop="21dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/space" />
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="21dp"
+        android:layout_toEndOf="@+id/space"
+        android:text="@string/room_name"
+        android:textColor="#FFFFFFFF"
+        android:textSize="18sp" />
 
     <Space
         android:layout_width="wrap_content"
