@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         view2 = (ImageView) viewByLayout2.findViewById(R.id.tab_icon);
         View viewByLayout3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
         view3 = (ImageView) viewByLayout3.findViewById(R.id.tab_icon);
-        view1.setImageResource(R.drawable.home_icon);
-        view2.setImageResource(R.drawable.hue_geo_fencing);
+        view1.setImageResource(R.drawable.homeiconwhite);
+        view2.setImageResource(R.drawable.geofenceicon);
         view3.setImageResource(R.drawable.hue_icon);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
