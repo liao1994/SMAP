@@ -58,7 +58,7 @@
         app:layout_constraintVertical_bias="0.113" />
 
     <TextView
-        android:id="@+id/lamp_status"
+        android:id="@+id/room_clicked_lamp_status"
         android:layout_width="84dp"
         android:layout_height="21dp"
         android:text="@string/lamp_status_connected"
