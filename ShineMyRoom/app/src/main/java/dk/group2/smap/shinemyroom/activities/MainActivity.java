@@ -15,10 +15,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,9 +27,6 @@ import dk.group2.smap.shinemyroom.FragmentPageAdapter;
 import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.NoBridgeConnectFragment;
 import dk.group2.smap.shinemyroom.R;
-import dk.group2.smap.shinemyroom.fragments.EditRomFragment;
-import dk.group2.smap.shinemyroom.fragments.GeoFencingFragment;
-import dk.group2.smap.shinemyroom.fragments.LoadingFragment;
 import dk.group2.smap.shinemyroom.fragments.RoomListFragment;
 import dk.group2.smap.shinemyroom.services.PHHueService;
 
@@ -42,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentPageAdapter fragmentPageAdapter;
     TextView connectionStatus;
     AuthenticationDialog authenticationDialog;
-
+    CustomViewPager viewPager;
+    ImageView view1;
+    ImageView view2;
+    ImageView view3;
     @Override
     protected void onStart() {
         super.onStart();
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //for more info, look in declaration
-        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.pager);
+        viewPager = (CustomViewPager) findViewById(R.id.pager);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         connectionStatus = (TextView) findViewById(R.id.connection_status_txt);
         authenticationDialog = new AuthenticationDialog(this);
@@ -82,22 +79,36 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setPagingEnabled(false);
         viewPager.setAdapter(fragmentPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        createTabIcons();
+        View viewByLayout1 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
+        view1 = (ImageView) viewByLayout1.findViewById(R.id.tab_icon);
+        View viewByLayout2 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
+        view2 = (ImageView) viewByLayout2.findViewById(R.id.tab_icon);
+        View viewByLayout3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
+        view3 = (ImageView) viewByLayout3.findViewById(R.id.tab_icon);
+        view1.setImageResource(R.drawable.home_icon);
+        view2.setImageResource(R.drawable.hue_geo_fencing);
+        view3.setImageResource(R.drawable.hue_icon);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                fragmentPageAdapter.getItem(position).onResume();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        drawTabIcons();
     }
     
-    private void createTabIcons(){
-
-        View view1 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view1.findViewById(R.id.tab_icon)).setImageResource(R.drawable.homeiconwhite);
-
-        View view2 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view2.findViewById(R.id.tab_icon)).setImageResource(R.drawable.geofenceicon);
-
-
-        View view3 = getLayoutInflater().inflate(R.layout.custom_tab_icon, null);
-        ((ImageView) view3.findViewById(R.id.tab_icon)).setImageResource(R.drawable.hue_icon);
-
-
+    private void drawTabIcons(){
         tabLayout.getTabAt(0).setCustomView(view1);
         tabLayout.getTabAt(1).setCustomView(view2);
         tabLayout.getTabAt(2).setCustomView(view3);
@@ -149,8 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
             //Toast.makeText(MainActivity.this,"stuff", Toast.LENGTH_SHORT).show();
-
-
+            drawTabIcons();
         }
     };
     private void updateConnectionStatus(String status){
