@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         view2.setImageResource(R.drawable.geofenceicon);
         view3.setImageResource(R.drawable.hue_icon);
 
+//        viewPager.setCurrentItem();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -92,8 +94,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                fragmentPageAdapter.getItem(position).onResume();
+//                FragmentPageAdapter adapter = (FragmentPageAdapter) viewPager.getAdapter();
+//                adapter.getFragment(position).onResume();
+                Log.d("LOG/onPageSelected", "yo");
+                viewPager.setCurrentItem(position);
             }
+
 
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -121,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 fragmentPageAdapter.replaceFragmentAt(0,new RoomListFragment());
                 updateConnectionStatus(getString(R.string.connection_status_bridge));
                 authenticationDialog.dismiss();
-
             }
             else if (intent.getAction().equals(getString(R.string.remote_connected_action))){
                 updateConnectionStatus(getString(R.string.connection_status_remote));

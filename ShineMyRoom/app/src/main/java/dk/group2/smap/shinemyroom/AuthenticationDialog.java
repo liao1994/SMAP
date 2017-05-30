@@ -20,10 +20,10 @@ import com.todddavies.components.progressbar.ProgressWheel;
 
 public class AuthenticationDialog extends AlertDialog {
     private final static String TAG = "LOG/" + AuthenticationDialog.class.getName();
-    private final Builder builder;
+    private Builder builder;
     private Context context;
     private final AuthenticationDialogTask dialogTask;
-    AlertDialog alertDialog;
+    private AlertDialog alertDialog;
     ProgressWheel pw;
 
     public AuthenticationDialog(Context context) {
@@ -54,6 +54,7 @@ public class AuthenticationDialog extends AlertDialog {
         dialogTask.execute();
     }
     public void dismiss(){
+        alertDialog.dismiss();
         dialogTask.cancel(true);
     }
 
