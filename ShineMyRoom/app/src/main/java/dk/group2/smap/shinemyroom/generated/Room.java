@@ -6,9 +6,6 @@ import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 
-/**
- * Created by liao on 23-05-2017.
- */
 
 public class Room {
 

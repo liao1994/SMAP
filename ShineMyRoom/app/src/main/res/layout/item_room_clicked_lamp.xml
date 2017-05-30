@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.053" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/room_clicked_lampSwitch"
         android:layout_width="92dp"
         android:layout_height="27dp"
         android:text="Switch"
@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.033" />
 
     <TextView
-        android:id="@+id/edit_room_lamp_name"
+        android:id="@+id/room_clicked_lamp_name"
         android:layout_width="90dp"
         android:layout_height="23dp"
         android:text="@string/lamp_name"

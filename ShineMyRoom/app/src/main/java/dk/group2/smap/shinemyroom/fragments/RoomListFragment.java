@@ -34,7 +34,7 @@ import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.RemoteRoom;
 import dk.group2.smap.shinemyroom.RemoteRoomAdapter;
 import dk.group2.smap.shinemyroom.RoomAdapter;
-import dk.group2.smap.shinemyroom.activities.LampActivity;
+import dk.group2.smap.shinemyroom.activities.RoomClickedActivity;
 import dk.group2.smap.shinemyroom.generated.Group;
 import dk.group2.smap.shinemyroom.generated.Light;
 import dk.group2.smap.shinemyroom.generated.Room;
@@ -127,13 +127,7 @@ public class RoomListFragment extends Fragment {
         RemoteRoomAdapter remoteRoomAdapter = new RemoteRoomAdapter(getActivity().getApplicationContext(), remoteRoomArrayList);
         lw.setAdapter(remoteRoomAdapter);
 
-        lw.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "starting new activity: " + LampActivity.class.getName());
-                Intent intent = new Intent(view.getContext(), LampActivity.class);
-            }
-        });
+        StartRoomClicked(lw);
 
 //        Iterator<String> iter = json.keys();
 //        while (iter.hasNext()) {
@@ -145,7 +139,6 @@ public class RoomListFragment extends Fragment {
 //            }
 //        }
     }
-
 
     private void createWifiView() {
 
@@ -175,14 +168,7 @@ public class RoomListFragment extends Fragment {
         RoomAdapter roomAdapter = new RoomAdapter(getActivity().getApplicationContext(),rooms);
         lw.setAdapter(roomAdapter);
 
-        lw.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "starting new activity: " + LampActivity.class.getName());
-                Intent intent = new Intent(view.getContext(), LampActivity.class);
-
-            }
-        });
+        StartRoomClicked(lw);
     }
 
     @Override
@@ -194,6 +180,17 @@ public class RoomListFragment extends Fragment {
                 //TODO something
             }
         }
+    }
+
+    public void StartRoomClicked(View view){
+        lw.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "starting new activity: " + RoomClickedActivity.class.getName());
+                Intent intent = new Intent(view.getContext(), RoomClickedActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
