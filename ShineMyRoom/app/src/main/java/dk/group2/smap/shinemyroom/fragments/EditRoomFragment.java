@@ -32,6 +32,6 @@ public class EditRoomFragment extends Fragment {
 
             PHBridgeResourcesCache resourceCache = PHHueSDK.getInstance().getSelectedBridge().getResourceCache();
             List<PHGroup> allGroups = resourceCache.getAllGroups();
-
+            return view;
         }
 }

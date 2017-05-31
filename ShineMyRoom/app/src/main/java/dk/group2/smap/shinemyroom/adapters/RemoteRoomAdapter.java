@@ -1,4 +1,4 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import dk.group2.smap.shinemyroom.R;
+import dk.group2.smap.shinemyroom.RemoteRoom;
 import dk.group2.smap.shinemyroom.services.RemoteHueControlService;
 
 
@@ -20,7 +22,7 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
     private ArrayList<RemoteRoom> remoteRooms;
 
     public RemoteRoomAdapter(Context applicationContext, ArrayList<RemoteRoom> remoteRoom) {
-        super(applicationContext,R.layout.item_room_list,remoteRoom);
+        super(applicationContext, R.layout.item_room_list,remoteRoom);
         this.applicationContext = applicationContext;
         this.remoteRooms = remoteRoom;
     }

@@ -1,6 +1,9 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import com.philips.lighting.model.PHLightState;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import dk.group2.smap.shinemyroom.Global;
+import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.generated.Room;
 
 
@@ -26,7 +31,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     private ArrayList<Room> rooms;
     private Context c;
     public RoomAdapter(Context c, ArrayList<Room> rooms){
-        super(c,R.layout.item_room_list,rooms);
+        super(c, R.layout.item_room_list,rooms);
         this.c = c;
         this.rooms = rooms;
     }
@@ -68,6 +73,8 @@ public class RoomAdapter extends ArrayAdapter<Room> {
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.roomName = (TextView) view.findViewById(R.id.room_name_list_item);
             viewHolder.lightSwitch = (Switch) view.findViewById(R.id.room_switch_list_item);
+            ColorFilter colorFilter = new ColorFilter();
+            viewHolder.lightSwitch.getThumbDrawable().setColorFilter(0xf4b642, PorterDuff.Mode.SRC_ATOP);
             viewHolder.lightStrength = (SeekBar) view.findViewById(R.id.light_strenght_list_item);
             viewHolder.stack = new Stack<>();
             viewHolder.lightSwitch.setTag(rooms.get(position));

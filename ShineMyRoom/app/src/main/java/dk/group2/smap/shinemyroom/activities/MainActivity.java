@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import dk.group2.smap.shinemyroom.AuthenticationDialog;
 import dk.group2.smap.shinemyroom.CustomViewPager;
-import dk.group2.smap.shinemyroom.FragmentPageAdapter;
+import dk.group2.smap.shinemyroom.adapters.FragmentPageAdapter;
 import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.fragments.NoBridgeConnectFragment;
 import dk.group2.smap.shinemyroom.R;

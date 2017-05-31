@@ -1,25 +1,14 @@
-package dk.group2.smap.shinemyroom;
+package dk.group2.smap.shinemyroom.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.MotionEvent;
-import android.view.TextureView;
-import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import dk.group2.smap.shinemyroom.fragments.EditRomFragment;
+import dk.group2.smap.shinemyroom.fragments.EditRoomFragment;
 import dk.group2.smap.shinemyroom.fragments.GeoFencingFragment;
 import dk.group2.smap.shinemyroom.fragments.LoadingFragment;
 
@@ -40,7 +29,7 @@ public class FragmentPageAdapter extends FragmentStatePagerAdapter {
 
         fragmentMap.append(0, new LoadingFragment());
         fragmentMap.append(1, new GeoFencingFragment());
-        fragmentMap.append(2, new EditRomFragment());
+        fragmentMap.append(2, new EditRoomFragment());
 
     }
 

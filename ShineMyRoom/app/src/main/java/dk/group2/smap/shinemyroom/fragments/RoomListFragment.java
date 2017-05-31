@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -32,8 +33,8 @@ import java.util.Objects;
 import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.RemoteRoom;
-import dk.group2.smap.shinemyroom.RemoteRoomAdapter;
-import dk.group2.smap.shinemyroom.RoomAdapter;
+import dk.group2.smap.shinemyroom.adapters.RemoteRoomAdapter;
+import dk.group2.smap.shinemyroom.adapters.RoomAdapter;
 import dk.group2.smap.shinemyroom.activities.RoomClickedActivity;
 import dk.group2.smap.shinemyroom.generated.Group;
 import dk.group2.smap.shinemyroom.generated.Light;
@@ -82,18 +83,8 @@ public class RoomListFragment extends Fragment {
         //TODO SOME MAGIC JSON WORK
         JSONObject reader = new JSONObject(remoteBridge);
 
-        //method 1
         Gson gson = new Gson();
 
-//        ArrayList<Light> lightArrayList = new ArrayList<>();
-//        JSONObject lights = reader.getJSONObject("lights");
-//        Iterator<?> lightKeys = lights.keys();
-//        while( lightKeys.hasNext() ) {
-//            String key = (String) lightKeys.next();
-//            JSONObject jsonObject = (JSONObject) lights.get(key);
-//            Light light = gson.fromJson(String.valueOf(jsonObject),Light.class);
-//            lightArrayList.add(light);
-//        }
         ArrayList<Group> groupArrayList = new ArrayList<>();
         JSONObject groupsJson = reader.getJSONObject("groups");
         JSONObject lightsJson = reader.getJSONObject("lights");
@@ -129,15 +120,6 @@ public class RoomListFragment extends Fragment {
 
         StartRoomClicked(lw);
 
-//        Iterator<String> iter = json.keys();
-//        while (iter.hasNext()) {
-//            String key = iter.next();
-//            try {
-//                Object value = json.get(key);
-//            } catch (JSONException e) {
-//                // Something went wrong!
-//            }
-//        }
     }
 
     private void createWifiView() {
@@ -186,9 +168,28 @@ public class RoomListFragment extends Fragment {
         lw.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "starting new activity: " + RoomClickedActivity.class.getName());
+                TextView viewById = (TextView) view.findViewById(R.id.room_name_list_item);
+                CharSequence text = viewById.getText();
+                String s = String.valueOf(text);
                 Intent intent = new Intent(view.getContext(), RoomClickedActivity.class);
+                Object obj = view.findViewById(R.id.room_switch_list_item).getTag();
+                String groupId = "";
+                ArrayList<String> lightIdArrayList = new ArrayList<>();
+                if(obj instanceof Room){
+                    Room room = (Room) obj;
+                    groupId = room.getPhGroup().getIdentifier();
+                    for(PHLight light : room.getLights())
+                    {
+                        lightIdArrayList.add(light.getIdentifier());
+                    }
+
+                }
+                intent.putExtra("roomIdToClickedActivity",groupId);
+                intent.putExtra("roomNameToClickedActivity",s);
+                intent.putStringArrayListExtra("lightIdArrayListToClickedActivity",lightIdArrayList);
+                Log.d(TAG, "starting new activity: " + RoomClickedActivity.class.getName() + "| for: " + s);
                 startActivity(intent);
+
             }
         });
     }
