@@ -26,5 +26,7 @@
     <string name="no_wifi">Edit Room Not Avalible\nConnect To Wifi</string>
     <string name="add_room">Add Room</string>
     <string name="locked_txt">Connect to wifi to unlock light feature</string>
+    <string name="need_location_permission_to_enable_geofencing">Need location Permission to enable geofencing</string>
+    <string name="grant_permission">Grant Permission</string>
 
 </resources>

@@ -27,4 +27,6 @@
     <string name="no_wifi">Rediger Værelse Ikke Tilgængeligt\nForbind til WIFI</string>
     <string name="add_room">Tilføj Værelse</string>
     <string name="locked_txt">Forbind til WIFI for at låse op for denne funktionalitet</string>
+    <string name="need_location_permission_to_enable_geofencing">Skal bruge lokations tilladelse for at aktiverer geofencing</string>
+    <string name="grant_permission">Giv Tilladelse</string>
 </resources>
