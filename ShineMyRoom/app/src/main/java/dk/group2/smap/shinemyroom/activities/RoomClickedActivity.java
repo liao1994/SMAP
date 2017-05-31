@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHGroup;
 import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -38,16 +40,15 @@ public class RoomClickedActivity extends AppCompatActivity {
         //init
         lw = (ListView)findViewById(R.id.room_click_listview);
         roomTextView = (TextView) findViewById(R.id.room_clicked_name);
-        sw = (Switch) findViewById(R.id.room_clicked_lamp_switch);
         //data from intent
         final Intent intent = getIntent();
-        String roomIdToClickedActivity = intent.getStringExtra("roomIdToClickedActivity");
+        final String roomIdToClickedActivity = intent.getStringExtra("roomIdToClickedActivity");
         String roomNameToClickedActivity = intent.getStringExtra("roomNameToClickedActivity");
         ArrayList<String> lightIdArrayListToClickedActivity = intent.getStringArrayListExtra("lightIdArrayListToClickedActivity");
 
         //data from brigde
         ArrayList<PHLight> allLights = new ArrayList<>();
-        PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
+        final PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
 
         Map<String, PHLight> lights = resourceCache.getLights();
@@ -55,15 +56,12 @@ public class RoomClickedActivity extends AppCompatActivity {
 
        //----------------
         //our room
-        PHGroup ourRoom = groups.get(roomIdToClickedActivity);
+        //PHGroup ourRoom = groups.get(roomIdToClickedActivity);
 
         ArrayList<PHLight> lightForRoom = new ArrayList<>();
         for (String str : lightIdArrayListToClickedActivity)
         {
-            PHLight phLight = lights.get(str);
-            if(phLight.getLastKnownLightState().isOn())
-                sw.setChecked(true);
-            lightForRoom.add(phLight);
+            lightForRoom.add(lights.get(str));
         }
         RoomClickedAdapter roomClickedAdapter = new RoomClickedAdapter(this, lightForRoom);
         lw.setAdapter(roomClickedAdapter);

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         // http://stackoverflow.com/questions/10733121/broadcastreceiver-when-wifi-or-3g-network-state-changed
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
         filter.addAction("android.net.wifi.STATE_CHANGE");
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         LocalBroadcastManager.getInstance(this).registerReceiver(onBackgroundServiceResult,filter);
     }
     @Override
