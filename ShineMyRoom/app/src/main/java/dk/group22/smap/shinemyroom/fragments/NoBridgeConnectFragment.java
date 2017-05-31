@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 
 
 public class NoBridgeConnectFragment extends Fragment {

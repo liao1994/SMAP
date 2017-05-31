@@ -3,7 +3,7 @@ package dk.group22.smap.shinemyroom.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 
 public class BridgeActivity extends AppCompatActivity {
 

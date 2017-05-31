@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import dk.group22.smap.shinemyroom.Global;
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 
 //https://developer.android.com/training/permissions/requesting.html
 public class GeoFencingFragment extends Fragment {

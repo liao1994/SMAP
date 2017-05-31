@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import dk.group22.smap.shinemyroom.Global;
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 import dk.group22.smap.shinemyroom.generated.Room;
 
 //https://developer.android.com/training/improving-layouts/smooth-scrolling.html

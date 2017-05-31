@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.view.View;
 
 import dk.group22.smap.shinemyroom.Global;
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

@@ -16,7 +16,7 @@ import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 
 
 public class RoomClickedAdapter extends BaseAdapter {

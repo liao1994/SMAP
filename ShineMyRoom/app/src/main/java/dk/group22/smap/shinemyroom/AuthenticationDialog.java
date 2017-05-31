@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 
 
 public class AuthenticationDialog extends AlertDialog {

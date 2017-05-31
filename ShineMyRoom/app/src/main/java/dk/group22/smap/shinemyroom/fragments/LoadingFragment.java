@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.todddavies.components.progressbar.ProgressWheel;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 //https://github.com/Todd-Davies/ProgressWheel
 public class LoadingFragment extends Fragment {
     ProgressWheel pw;

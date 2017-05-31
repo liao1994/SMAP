@@ -22,7 +22,7 @@ import dk.group22.smap.shinemyroom.CustomViewPager;
 import dk.group22.smap.shinemyroom.adapters.FragmentPageAdapter;
 import dk.group22.smap.shinemyroom.Global;
 import dk.group22.smap.shinemyroom.fragments.NoBridgeConnectFragment;
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 import dk.group22.smap.shinemyroom.fragments.RoomListFragment;
 import dk.group22.smap.shinemyroom.services.PHHueService;
 

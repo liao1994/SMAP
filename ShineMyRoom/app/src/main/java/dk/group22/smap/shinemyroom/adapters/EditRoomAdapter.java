@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 import dk.group22.smap.shinemyroom.generated.Room;
 
 public class EditRoomAdapter extends BaseAdapter{

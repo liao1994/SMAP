@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import dk.group22.smap.shinemyroom.Global;
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 import dk.group22.smap.shinemyroom.RemoteRoom;
 import dk.group22.smap.shinemyroom.adapters.RemoteRoomAdapter;
 import dk.group22.smap.shinemyroom.adapters.RoomAdapter;

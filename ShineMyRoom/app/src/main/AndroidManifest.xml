@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="dk.group2.smap.shinemyroom">
+    package="dk.group22.smap.shinemyroom">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -51,7 +51,9 @@
         <activity
             android:name="dk.group22.smap.shinemyroom.activities.BridgeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="dk.group22.smap.shinemyroom.activities.AddRoomActivity"></activity>
+        <activity
+            android:name="dk.group22.smap.shinemyroom.activities.AddRoomActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

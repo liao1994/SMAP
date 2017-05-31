@@ -19,7 +19,7 @@ import com.philips.lighting.model.PHLight;
 import java.util.ArrayList;
 import java.util.Map;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 import dk.group22.smap.shinemyroom.adapters.RoomClickedAdapter;
 
 public class RoomClickedActivity extends AppCompatActivity {

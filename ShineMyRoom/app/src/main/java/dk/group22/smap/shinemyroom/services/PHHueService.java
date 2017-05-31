@@ -22,7 +22,7 @@ import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
 
-import dk.group2.smap.shinemyroom.R;
+import dk.group22.smap.shinemyroom.R;
 import dk.group22.smap.shinemyroom.storage.HueSharedPreferences;
 
 
