@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -34,12 +35,12 @@ public class EditRoomFragment extends Fragment {
     ListView lw;
     View view;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         WifiManager wifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
+        PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
 
         if (wifi.isWifiEnabled() == false) {
             // Inflate the layout for fragment no wificonnection
@@ -48,16 +49,28 @@ public class EditRoomFragment extends Fragment {
         else {
             // Inflate the layout for fragment editroom fragment
             view = inflater.inflate(R.layout.fragment_edit_room_list, container, false);
-//            Map<String, PHGroup> groups = resourceCache.getGroups();
-//            EditRoomAdapter editRoomAdapter = new EditRoomAdapter(getActivity().getApplicationContext(), groups);
-//            lw.setAdapter(editRoomAdapter);
-//            lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent intentaddroom = new Intent(getContext(), AddRoomActivity.class);
-//                    startActivity(intentaddroom);
-//                }
-//            });
+            Map<String, PHGroup> groups = resourceCache.getGroups();
+            EditRoomAdapter editRoomAdapter = new EditRoomAdapter(getActivity().getApplicationContext(), groups);
+            lw.setAdapter(editRoomAdapter);
+            lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intentaddroom = new Intent(getContext(), AddRoomActivity.class);
+                    // More stuff
+
+
+                    startActivity(intentaddroom);
+                }
+            });
+
+            Button addBtn = (Button)view.findViewById(R.id.addRoomBtn);
+            addBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentaddroom = new Intent(getContext(), AddRoomActivity.class);
+                    startActivity(intentaddroom);
+                }
+            });
         }
         return view;
 
