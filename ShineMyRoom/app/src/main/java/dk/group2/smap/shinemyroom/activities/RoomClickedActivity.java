@@ -28,16 +28,17 @@ public class RoomClickedActivity extends AppCompatActivity {
     private static final String TAG = "LOG/" + RoomClickedActivity.class.getName();
 
     TextView roomTextView;
-
+    ListView lw;
+    Switch sw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG,"onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_clicked);
         //init
-        ListView lw = (ListView)findViewById(R.id.room_click_listview);
+        lw = (ListView)findViewById(R.id.room_click_listview);
         roomTextView = (TextView) findViewById(R.id.room_clicked_name);
-
+        sw = (Switch) findViewById(R.id.room_clicked_lamp_switch);
         //data from intent
         final Intent intent = getIntent();
         String roomIdToClickedActivity = intent.getStringExtra("roomIdToClickedActivity");
@@ -48,6 +49,7 @@ public class RoomClickedActivity extends AppCompatActivity {
         ArrayList<PHLight> allLights = new ArrayList<>();
         PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
+
         Map<String, PHLight> lights = resourceCache.getLights();
         Map<String, PHGroup> groups = resourceCache.getGroups();
 
@@ -58,7 +60,10 @@ public class RoomClickedActivity extends AppCompatActivity {
         ArrayList<PHLight> lightForRoom = new ArrayList<>();
         for (String str : lightIdArrayListToClickedActivity)
         {
-            lightForRoom.add(lights.get(str));
+            PHLight phLight = lights.get(str);
+            if(phLight.getLastKnownLightState().isOn())
+                sw.setChecked(true);
+            lightForRoom.add(phLight);
         }
         RoomClickedAdapter roomClickedAdapter = new RoomClickedAdapter(this, lightForRoom);
         lw.setAdapter(roomClickedAdapter);
@@ -71,7 +76,16 @@ public class RoomClickedActivity extends AppCompatActivity {
             }
         });
 
+
+        //our keys
+        //lightIdArrayListToClickedActivity
+        //phGroup.getLightIdentifiers();
+
+
+
         //set
+
+
         roomTextView.setText(roomNameToClickedActivity);
     }
 }
