@@ -56,8 +56,6 @@ public class RoomClickedActivity extends AppCompatActivity {
 
        //----------------
         //our room
-        //PHGroup ourRoom = groups.get(roomIdToClickedActivity);
-
         ArrayList<PHLight> lightForRoom = new ArrayList<>();
         for (String str : lightIdArrayListToClickedActivity)
         {
