@@ -9,16 +9,6 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/shine_my_room"
-        android:textColor="#FFFFFFFF"
-        android:textSize="50sp"
-        android:textStyle="bold" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
@@ -41,9 +31,20 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="187dp"
+            android:layout_width="match_parent"
+            android:layout_height="248dp"
             app:srcCompat="@drawable/hue_icon" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:text="@string/shine_my_room"
+        android:textColor="#FFFFFFFF"
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
 </FrameLayout>

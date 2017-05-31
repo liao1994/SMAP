@@ -16,7 +16,7 @@
     <string name="remote_connected_action">remote_connected_action</string>
     <string name="authentication_required_action">authentication_required_action</string>
     <string name="authenticaion_failed_action">authentication_failed_action</string>
-    <string name="connection_status_remote">Fjern Forbindelse</string>
+    <string name="connection_status_remote">Fjernforbindelse</string>
     <string name="no_connection_action">no_connection_action</string>
     <string name="no_connection_found">Ingen Forbindelse Funder</string>
     <string name="room_name">Værelses Navn</string>
