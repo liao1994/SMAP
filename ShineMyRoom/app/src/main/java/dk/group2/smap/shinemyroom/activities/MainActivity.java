@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-            //Toast.makeText(MainActivity.this,"stuff", Toast.LENGTH_SHORT).show();
+
             drawTabIcons();
         }
     };

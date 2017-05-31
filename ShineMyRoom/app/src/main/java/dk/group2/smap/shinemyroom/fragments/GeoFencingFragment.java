@@ -18,7 +18,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.R;
 
-
+//https://developer.android.com/training/permissions/requesting.html
 public class GeoFencingFragment extends Fragment {
 
     public GeoFencingFragment() {

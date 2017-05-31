@@ -33,4 +33,5 @@
     <string name="lamp_status_not_connected">Ikke Forbundet</string>
     <string name="no_wifi">Rediger Værelse Ikke Tilgængeligt\nForbind til WIFI</string>
     <string name="add_room">Tilføj Værelse</string>
+    <string name="locked_txt">Forbind til WIFI for at låse op for denne funktionalitet</string>
 </resources>

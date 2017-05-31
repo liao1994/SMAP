@@ -52,35 +52,9 @@ public class GeoFencingService extends Service {
             }
         });
         googleapiClient = apiClientBuilder.build();
-        //4startLocationMonitoring();
+
         return i;
     }
 
-//    private void startLocationMonitoring() {
-//        Log.d(TAG, "startLocationMonitoring");
-//
-//        getApplication().getApplicationContext().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Global.LOCATION_REQUEST);
-//
-//        LocationRequest locationRequest = LocationRequest.create()
-//                .setInterval(30000)
-//                .setFastestInterval(10000)
-//                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//               public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                                                      int[] grantResults);
-////             to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        LocationServices.FusedLocationApi.requestLocationUpdates(googleapiClient, locationRequest, new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//
-//            }
-//        });
-//
-//    }
+
 }

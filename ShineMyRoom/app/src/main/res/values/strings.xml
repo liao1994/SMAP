@@ -32,5 +32,6 @@
     <string name="lamp_status_not_connected">Not Connected</string>
     <string name="no_wifi">Edit Room Not Avalible\nConnect To Wifi</string>
     <string name="add_room">Add Room</string>
+    <string name="locked_txt">Connect to wifi to unlock light feature</string>
 
 </resources>

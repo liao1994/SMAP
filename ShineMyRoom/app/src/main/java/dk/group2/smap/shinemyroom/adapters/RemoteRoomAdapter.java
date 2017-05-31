@@ -75,10 +75,6 @@ public class RemoteRoomAdapter extends ArrayAdapter<RemoteRoom> {
                             RemoteHueControlService.setLightForGroupAction(applicationContext,element.getGroup().getIdentifier(),isChecked);
                             //TODO should check for if remote call respond
                             element.setLightStateForGroup(isChecked);
-//                            PHBridge selectedBridge = PHHueSDK.getInstance().getSelectedBridge();
-//                            PHLightState phLightState = new PHLightState();
-//                            phLightState.setOn(isChecked);
-//                            selectedBridge.setLightStateForGroup(element.getPhGroup().getIdentifier(),phLightState);
                         }
                     });
             view.setTag(viewHolder);

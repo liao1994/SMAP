@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -80,10 +81,10 @@ public class RoomListFragment extends Fragment {
     private void createRemoteView() throws JSONException {
         HueSharedPreferences prefs = HueSharedPreferences.getInstance(getActivity().getApplicationContext());
         String remoteBridge = prefs.getRemoteBridge();
-        //TODO SOME MAGIC JSON WORK
         JSONObject reader = new JSONObject(remoteBridge);
 
         Gson gson = new Gson();
+
 
         ArrayList<Group> groupArrayList = new ArrayList<>();
         JSONObject groupsJson = reader.getJSONObject("groups");
@@ -117,8 +118,13 @@ public class RoomListFragment extends Fragment {
 
         RemoteRoomAdapter remoteRoomAdapter = new RemoteRoomAdapter(getActivity().getApplicationContext(), remoteRoomArrayList);
         lw.setAdapter(remoteRoomAdapter);
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity().getApplicationContext(), R.string.locked_txt,Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        StartRoomClicked(lw);
 
     }
 
@@ -132,6 +138,7 @@ public class RoomListFragment extends Fragment {
 
         final ArrayList<Room> rooms = new ArrayList<>();
 
+        //
         for (int i = 0; i <roomlist.size(); i++) {
             if(roomlist.get(i).getLightIdentifiers().size() != 0 && !Objects.equals(roomlist.get(i).getName(),"Custom group for $group"))
             {

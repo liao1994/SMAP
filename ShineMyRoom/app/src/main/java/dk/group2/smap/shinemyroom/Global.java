@@ -12,5 +12,5 @@ public class Global {
     public static final int NO_CONNECTION_FOUND_COLOR = Color.rgb(230,0,0);
     public static final int LightStrengthMAX = 254;
     public static final int BRIDGE_COOLDOWN = 200;
-    public static final long SPLASHSCREEN_LENGTH = 200;
+    public static final long SPLASHSCREEN_LENGTH = 3000;
 }
