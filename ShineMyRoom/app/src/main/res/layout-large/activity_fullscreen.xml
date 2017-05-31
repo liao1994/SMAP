@@ -41,7 +41,6 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/iconView"
             android:layout_width="wrap_content"
             android:layout_height="187dp"
             app:srcCompat="@drawable/hue_icon" />

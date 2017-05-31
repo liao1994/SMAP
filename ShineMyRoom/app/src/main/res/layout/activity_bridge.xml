@@ -18,7 +18,6 @@
         android:layout_marginTop="141dp" />
 
     <Button
-        android:id="@+id/bridge_btn"
         android:layout_width="135dp"
         android:layout_height="77dp"
         android:text="@string/setup_bridge"

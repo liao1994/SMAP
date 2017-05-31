@@ -1,19 +1,13 @@
 <resources>
     <string name="app_name">Shine My Room</string>
-    <string name="title_activity_fullscreen">Shine My Room</string>
-    <string name="dummy_button">Dummy Button</string>
     <string name="shine_my_room">SHINE MY\nROOM</string>
     <string name="authentication_required">Push Link Button On Bridge</string>
-    <string name="connected">connected</string>
     <string name="enter_ip_btn_text">Manuel enter IP</string>
     <string name="cancel_btn_txt">Cancel</string>
-    <string name="ph_bridge_json">phBridgeJson</string>
     <string name="username">userName</string>
     <string name="ip_adress">IpAddress</string>
-    <string name="kill_app_action">kill_app_action</string>
     <string name="no_bridge_found">NO BRIDGE FOUND</string>
     <string name="setup_bridge">Setup Bridge</string>
-    <string name="api_group_result_action">api_group_result_action</string>
     <string name="connection_status_waiting">Connecting…</string>
     <string name="connection_status_bridge">Bridge Connected</string>
     <string name="start_service_action">start_service_action</string>
@@ -29,7 +23,6 @@
     <string name="lamp_name">Lamp Name</string>
     <string name="lamp_status_label">Status:</string>
     <string name="lamp_status_connected">Connected</string>
-    <string name="lamp_status_not_connected">Not Connected</string>
     <string name="no_wifi">Edit Room Not Avalible\nConnect To Wifi</string>
     <string name="add_room">Add Room</string>
     <string name="locked_txt">Connect to wifi to unlock light feature</string>
