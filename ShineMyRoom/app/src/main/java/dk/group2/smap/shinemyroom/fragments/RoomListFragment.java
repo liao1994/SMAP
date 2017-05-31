@@ -184,7 +184,7 @@ public class RoomListFragment extends Fragment {
                     }
 
                 }
-                intent.putExtra("roomIdToClickedActivity",groupId);
+                intent.putExtra("roomIdToClickedActivityroomIdToClickedActivity",groupId);
                 intent.putExtra("roomNameToClickedActivity",s);
                 intent.putStringArrayListExtra("lightIdArrayListToClickedActivity",lightIdArrayList);
                 Log.d(TAG, "starting new activity: " + RoomClickedActivity.class.getName() + "| for: " + s);
