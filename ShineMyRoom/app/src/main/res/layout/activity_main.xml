@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:layout_weight="0.03"/>
+        android:layout_weight="0.02"/>
 
 </LinearLayout>
