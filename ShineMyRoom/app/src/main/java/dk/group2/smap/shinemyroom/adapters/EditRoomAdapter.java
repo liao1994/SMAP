@@ -1,5 +1,6 @@
 package dk.group2.smap.shinemyroom.adapters;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,31 +8,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHGroup;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import dk.group2.smap.shinemyroom.R;
 
-
-public class RoomClickedAdapter extends BaseAdapter {
+public class EditRoomAdapter extends BaseAdapter{
 
     private final Context c;
-    private final ArrayList<PHLight> phLightArrayList;
+    private final Map<String, PHGroup> groups;
 
-    public RoomClickedAdapter(Context c, ArrayList<PHLight> phLightArrayList){
+    public EditRoomAdapter(Context c, Map<String, PHGroup> groups){
 
         this.c = c;
-        this.phLightArrayList = phLightArrayList;
+        this.groups = groups;
     }
     @Override
     public int getCount() {
-        return phLightArrayList.size();
+        return groups.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return phLightArrayList.get(position);
+        return groups.get(position);
     }
 
     @Override
@@ -46,14 +46,8 @@ public class RoomClickedAdapter extends BaseAdapter {
             LayoutInflater inflator = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflator.inflate(R.layout.item_room_clicked_lamp_list, null);
         }
-        TextView lampName = (TextView) convertView.findViewById(R.id.room_clicked_lamp_name);
-        TextView lampStatus = (TextView) convertView.findViewById(R.id.room_clicked_lamp_status);
-        PHLight lamp = phLightArrayList.get(position);
-        if(lamp.getLastKnownLightState().isReachable())
-            lampStatus.setText("Reachable");
-        else
-            lampStatus.setText("Out of Reach");
-        lampName.setText(lamp.getName());
+        TextView roomName = (TextView) convertView.findViewById(R.id.editRoomName);
+
         return convertView;
     }
 }
