@@ -1,4 +1,4 @@
-package dk.group2.smap.shinemyroom.generated;
+package dk.group2.smap.shinemyroom.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

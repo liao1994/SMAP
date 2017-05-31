@@ -49,7 +49,7 @@
             android:name=".activities.LampActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".generated.BridgeActivity"
+            android:name=".activities.BridgeActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.AddRoomActivity"></activity>
     </application>

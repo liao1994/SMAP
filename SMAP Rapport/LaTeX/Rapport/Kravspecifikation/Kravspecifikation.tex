@@ -37,29 +37,39 @@
 		[Extention 1]: Bruger vælger cancel og bliver navigeret tilbage til forrige activity uden gemt rum
 		\newpage
 		
+		Use Case 4:
+		\begin{itemize}
+			\item Bruger ønsker at aktivere geofencing
+			\item Bruger navigere over i geofencing tabben
+			\item Bruger aktivere geofencing
+			\item Bruger forlader hjemmet
+			\item Pærene slukker når han er udenfor geofencing loaction
+		\end{itemize}
 		
-		
-		
-			
+		\subsection{Ikke-funktionelle krav}
+		Nedenfor ses de ikke funktionelle krav til applikationen
+		\begin{itemize}
+			\item Mindst to Activities
+			\item Bruge Intents til at sende data mellem komponenter
+			\item Persisting data gennem SharedPrefrences eller SQLite
+			\item En anden form for kommunikation gemmen internet, Bluetooth eller WIFI
+			\item Mindst en service
+			\item Bruge Asynchronous processing
+			\item Bruge nødvendig resource externalization
+			\item Understøtte layouts til mindst to forskellige skærm størrelser
+			\item Understøtte mindst to sporg (Dansk og Engelsk)
+		\end{itemize}
+				
 		\subsection{Designovervejelser}
 		Billedet herunder beskriver vores første design tanker til applikationen
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.5\linewidth]{Kravspecifikation/Designovervejelser}
+			\includegraphics[width=0.9\linewidth]{Kravspecifikation/Designovervejelser}
 			\caption{Oversigt over systemet}
 			\label{fig:Designovervejelser}
 		\end{figure}
-		\newpage
-	
-		\subsection{Riskovervejelser}
-		Med udgangspunktet fra applikationens side, vi der være en risk i forhold til:
-		\begin{itemize}
-			\item Hvor meget plads vores data vil tage
-			\item Hvor meget strøm det tager for brugeren. 
-			\item Kommer vi til at bruge meget internet når vi sender en sekvens af API kald til lamperne, og hvor stort et problem det bliver at sørge for at det bliver i en sekvensilt rækkefølge.
-			\item Hvordan vi intercepter lyd output fra mobilen og evt. skærm output. \newline
-		\end{itemize}	
-	
+		\newpage	
+				
 		\subsection{Første GUI udkast}
 		Billedet herunder beskriver vores første GUI tanker til applikationen
 		\begin{figure}[H]

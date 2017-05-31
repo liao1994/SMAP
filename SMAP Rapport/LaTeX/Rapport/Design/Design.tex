@@ -20,10 +20,16 @@ Applikationen er bygget op af en tab baseret activity hvor der ligger tre tabs m
 Her under ses UML diagrammet for Shine My Room
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth, height=0.7\linewidth]{Design/Startscreen}
+	\includegraphics[width=0.6\linewidth, height=0.7\linewidth]{Design/UMLDiagram}
 	\caption{UML}
 	\label{fig:UML Diagram}
 \end{figure}
+For at holde UML diagrammet simpelt uden for mange dependencies har vi samlet vores fragment class' og adapter class' i en. \\
+Vores fragment class' består altså af klasserne: EditRoomFragment, GeoFencingFragment, LoadingFragment, NoBridgeConnectFragment og RoomListFragment.\\
+Adapter class' består af: AddRoomAdapter, EditRoomAdapter, FragmentPageAdapter, RemoteRoomAdapter, RoomAdapter og RoomClickedAdapter.
+
+De activities som ligger i bunden er lagt ind på denne måde, da de udspringer af en fragment, og derfor kunne vi ikke placere deres dependensy pga den samlede fragment class.
+\newpage
 
 \section{Sekvensdiagram}
 Her under ses sekvensdiagrammet for Shine My Room
