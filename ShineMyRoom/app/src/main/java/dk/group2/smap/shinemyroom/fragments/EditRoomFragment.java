@@ -34,8 +34,7 @@ public class EditRoomFragment extends Fragment {
     ListView lw;
     View view;
 
-    PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
-    PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

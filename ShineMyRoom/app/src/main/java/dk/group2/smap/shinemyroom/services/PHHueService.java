@@ -78,6 +78,8 @@ public class PHHueService extends Service {
                 broadcastAuthenticationFailed();
             if(i == 1157 | i == 46)
                 RemoteHueControlService.startTryGetRemoteAccessAction(getApplicationContext());
+            if( i == 22)
+                broadcastBridgeNotRespoding();
         }
 
         @Override
