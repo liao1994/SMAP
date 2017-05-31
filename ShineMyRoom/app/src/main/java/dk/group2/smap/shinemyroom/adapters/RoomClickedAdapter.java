@@ -5,9 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
 
@@ -51,12 +56,26 @@ public class RoomClickedAdapter extends BaseAdapter {
         }
         TextView lampName = (TextView) convertView.findViewById(R.id.room_clicked_lamp_name);
         TextView lampStatus = (TextView) convertView.findViewById(R.id.room_clicked_lamp_status);
-        PHLight lamp = phLightArrayList.get(position);
+        Switch lightSwitch = (Switch) convertView.findViewById(R.id.room_clicked_lampSwitch);
+
+        final PHLight lamp = phLightArrayList.get(position);
         if(lamp.getLastKnownLightState().isReachable())
             lampStatus.setText("Reachable");
         else
             lampStatus.setText("Out of Reach");
         lampName.setText(lamp.getName());
+        lightSwitch.setChecked(lamp.getLastKnownLightState().isOn());
+
+        lightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                PHBridge selectedBridge = PHHueSDK.getInstance().getSelectedBridge();
+                PHLightState phLightState = new PHLightState();
+                phLightState.setOn(isChecked);
+                selectedBridge.updateLightState(lamp,phLightState);
+            }
+        });
+
         return convertView;
     }
 }
