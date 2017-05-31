@@ -78,11 +78,9 @@ public class EditRoomFragment extends Fragment {
             lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intentaddroom = new Intent(getContext(), AddRoomActivity.class);
-                    // More stuff
-
-
-                    startActivity(intentaddroom);
+                    Intent intent = new Intent(getContext(), AddRoomActivity.class);
+                    intent.putExtra("groupId",rooms.get(position).getPhGroup().getIdentifier());
+                    startActivity(intent);
                 }
             });
 
@@ -90,8 +88,9 @@ public class EditRoomFragment extends Fragment {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentaddroom = new Intent(getContext(), AddRoomActivity.class);
-                    startActivity(intentaddroom);
+                    Intent intent = new Intent(getContext(), AddRoomActivity.class);
+                    intent.putExtra("groupId","");
+                    startActivity(intent);
                 }
             });
 

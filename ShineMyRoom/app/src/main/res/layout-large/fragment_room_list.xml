@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/room_list_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <!--<ListView-->
+    <!--android:id="@+id/roomListView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+    <ListView
+        android:id="@+id/room_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:divider="@drawable/divider"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="true"
+
+
+        />
+</LinearLayout>

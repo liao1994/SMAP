@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/room_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <Switch
+        android:id="@+id/room_switch_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="20dp"
+
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <TextView
+        android:id="@+id/room_name_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/room_switch_list_item"
+        android:layout_alignBottom="@+id/room_switch_list_item"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="19dp"
+        android:text="@string/room_name"
+        android:textColor="#FFFFFFFF"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/light_strenght_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/room_switch_list_item"
+        android:layout_marginTop="24dp"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@drawable/thumb"
+        android:background="@null"
+        />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/light_strenght_list_item"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

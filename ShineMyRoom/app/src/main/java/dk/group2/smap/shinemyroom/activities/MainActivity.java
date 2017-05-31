@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
             }else if(intent.getAction().equals(getString(R.string.no_connection_action)))
             {
                 updateConnectionStatus(getString(R.string.no_connection_found));
+                fragmentPageAdapter.replaceFragmentAt(0,new NoBridgeConnectFragment());
+                authenticationDialog.dismiss();
             }
             else if(intent.getAction().equals(getString(R.string.authenticaion_failed_action))){
                 updateConnectionStatus(getString(R.string.no_connection_found));

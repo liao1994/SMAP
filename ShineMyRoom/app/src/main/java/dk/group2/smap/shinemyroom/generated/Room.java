@@ -5,6 +5,7 @@ import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Room {
@@ -16,8 +17,6 @@ public class Room {
     private PHGroup phGroup;
     private ArrayList<PHLight> lights;
     private Boolean on;
-
-
     public PHGroup getPhGroup() {
         return phGroup;
     }

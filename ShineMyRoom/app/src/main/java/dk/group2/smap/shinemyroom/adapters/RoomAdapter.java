@@ -78,7 +78,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
             viewHolder.lightStrength = (SeekBar) view.findViewById(R.id.light_strenght_list_item);
             viewHolder.stack = new Stack<>();
             viewHolder.lightSwitch.setTag(rooms.get(position));
-            viewHolder.lightSwitch.setTag(rooms.get(position));
             viewHolder.lightSwitch
                     .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 

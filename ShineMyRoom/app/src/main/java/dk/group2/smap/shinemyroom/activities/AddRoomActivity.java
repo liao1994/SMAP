@@ -1,55 +1,89 @@
 package dk.group2.smap.shinemyroom.activities;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.philips.lighting.hue.listener.PHGroupListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.hue.sdk.PHSDKListener;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeResource;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 
+import com.philips.lighting.model.PHGroup;
+import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Objects;
 
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.adapters.AddRoomAdapter;
+import dk.group2.smap.shinemyroom.generated.Room;
 
 public class AddRoomActivity extends AppCompatActivity {
     ListView lw;
+    TextView roomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
 
-        lw = (ListView)findViewById(R.id.add_room_list);
+        Intent intent = getIntent();
+
+        String groupId = intent.getStringExtra("groupId");
+        roomName = (TextView) findViewById(R.id.editRoomLabel);
+        //roomName.setText(phGroup.getName());
+
+        lw = (ListView) findViewById(R.id.add_room_list);
 
         PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
-        List<PHLight> allLights = resourceCache.getAllLights();
+        Map<String, PHLight> allLights = resourceCache.getLights();
+        Map<String, PHGroup> groups = resourceCache.getGroups();
+        PHGroup phGroup;
+        if(!Objects.equals(groupId, ""))
+            phGroup = groups.get(groupId);
+        else
+        {
+            List<String> strings = new ArrayList<>();
+            phGroup = new PHGroup();
+            phGroup.setLightIdentifiers(strings);
+        }
 
-        AddRoomAdapter addRoomAdapter = new AddRoomAdapter(this, allLights);
+        final AddRoomAdapter addRoomAdapter = new AddRoomAdapter(this, phGroup, allLights);
         lw.setAdapter(addRoomAdapter);
 
-
-
-        Button saveBtn = (Button)findViewById(R.id.room_add_saveBtn);
+        Button saveBtn = (Button) findViewById(R.id.room_add_saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                PHGroup roomFromAdapter = addRoomAdapter.getRoomFromAdapter();
+                PHHueSDK.getInstance().getSelectedBridge().updateGroup(roomFromAdapter, null);
             }
         });
-        Button cancelBtn = (Button)findViewById(R.id.room_add_cancelBtn);
+        Button cancelBtn = (Button) findViewById(R.id.room_add_cancelBtn);
+
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
     }
 }
+
