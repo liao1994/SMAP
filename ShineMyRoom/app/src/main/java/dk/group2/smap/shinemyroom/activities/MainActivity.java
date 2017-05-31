@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 //                FragmentPageAdapter adapter = (FragmentPageAdapter) viewPager.getAdapter();
 //                adapter.getFragment(position).onResume();
-                Log.d("LOG/onPageSelected", "yo");
+                Log.d("LOG/onPageSelected", ""+position);
                 viewPager.setCurrentItem(position);
             }
 
