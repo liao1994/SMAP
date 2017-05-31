@@ -27,7 +27,7 @@ public class EditRoomFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.fragment_edit_room, container, false);
+            View view = inflater.inflate(R.layout.fragment_edit_room_list, container, false);
             lw = (ListView) view.findViewById(R.id.edit_room_list_view);
 
             PHBridgeResourcesCache resourceCache = PHHueSDK.getInstance().getSelectedBridge().getResourceCache();
