@@ -8,16 +8,39 @@
 		Dette sker ved at der i applikationen skal snakkes op til Philips Hue API for at kunne tilgå pærerne.
 		\newline
 		
-		\subsection{Use Case}
+		\subsection{Use Cases}
+		Use Case 1:
+		\begin{itemize}
+			\item Bruger ønsker at connecte til Hue bridge første gang
+			\item Bruger starter Shine My Room
+			\item Bruger bliver bedt om trykke på "Push to link" knappen på bridgen, for at identifisere den
+			\item Shine My Rooms status bar opdateres efter connection
+		\end{itemize}
+		
+		Use Case 2:
 		\begin{itemize}
 			\item Bruger kommer hjem
 			\item Bruger tænder sin Philips Hue pærer
-			\item Bruger sætter en bestemt playliste på sine højtaler
-			\item Pæren skifter til det brugerdefinerede tema som er valgt til denne playliste i sin ”Shine My Room” applikation
-			\item Brugeren stopper musikken
-			\item Pæren skifter til normalvisning \newline
+			\item Bruger ændre lysstyrken på pæren
+			\item Bruger slukker pæren
 		\end{itemize}
 	
+		Use Case 3:
+		\begin{itemize}
+			\item Bruger ønsker at tilføje et rum
+			\item Bruger navigere over i Edit / Add tabben
+			\item Bruger trykker på Add Room knappen
+			\item Bruger giver rummet et navn
+			\item Bruger vælger hvilke pære rummet skal indeholde
+			\item Bruger være gem bliver navigeret tilbage til forrige activity med gemt rum [Extention 1]
+		\end{itemize}
+		[Extention 1]: Bruger vælger cancel og bliver navigeret tilbage til forrige activity uden gemt rum
+		\newpage
+		
+		
+		
+		
+			
 		\subsection{Designovervejelser}
 		Billedet herunder beskriver vores første design tanker til applikationen
 		\begin{figure}[H]

@@ -8,30 +8,29 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.philips.lighting.model.PHGroup;
-
-import java.util.Map;
+import java.util.ArrayList;
 
 import dk.group2.smap.shinemyroom.R;
+import dk.group2.smap.shinemyroom.generated.Room;
 
 public class EditRoomAdapter extends BaseAdapter{
 
     private final Context c;
-    private final Map<String, PHGroup> groups;
+    private final ArrayList<Room> rooms;
 
-    public EditRoomAdapter(Context c, Map<String, PHGroup> groups){
+    public EditRoomAdapter(Context c, ArrayList<Room> rooms){
 
         this.c = c;
-        this.groups = groups;
+        this.rooms = rooms;
     }
     @Override
     public int getCount() {
-        return groups.size();
+        return rooms.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return groups.get(position);
+        return rooms.get(position);
     }
 
     @Override
@@ -44,9 +43,11 @@ public class EditRoomAdapter extends BaseAdapter{
 
         if (convertView == null){
             LayoutInflater inflator = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflator.inflate(R.layout.item_room_clicked_lamp_list, null);
+            convertView = inflator.inflate(R.layout.item_edit_room_list, null);
         }
-        TextView roomName = (TextView) convertView.findViewById(R.id.editRoomName);
+
+        TextView roomName = (TextView) convertView.findViewById(R.id.room_name_list_item);
+        roomName.setText(rooms.get(position).getPhGroup().getName());
 
         return convertView;
     }
