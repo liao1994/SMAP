@@ -19,7 +19,7 @@
         app:tabPaddingEnd="20dp"
         />
     <!--http://www.shiftedup.com/2011/08/29/disabling-pagingswiping-on-android-->
-    <dk.group2.smap.shinemyroom.CustomViewPager
+    <dk.group22.smap.shinemyroom.CustomViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".activities.FullscreenActivity"
+            android:name="dk.group22.smap.shinemyroom.activities.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme">
@@ -30,28 +30,28 @@
         </activity>
 
         <service
-            android:name=".services.PHHueService"
+            android:name="dk.group22.smap.shinemyroom.services.PHHueService"
             android:exported="false" />
         <service
-            android:name=".services.RemoteHueControlService"
+            android:name="dk.group22.smap.shinemyroom.services.RemoteHueControlService"
             android:exported="false" />
         <service
-            android:name=".services.GeoFencingService"
+            android:name="dk.group22.smap.shinemyroom.services.GeoFencingService"
             android:exported="false" />
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="dk.group22.smap.shinemyroom.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.RoomClickedActivity"
+            android:name="dk.group22.smap.shinemyroom.activities.RoomClickedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.LampActivity"
+            android:name="dk.group22.smap.shinemyroom.activities.LampActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.BridgeActivity"
+            android:name="dk.group22.smap.shinemyroom.activities.BridgeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.AddRoomActivity"></activity>
+        <activity android:name="dk.group22.smap.shinemyroom.activities.AddRoomActivity"></activity>
     </application>
 
 </manifest>
