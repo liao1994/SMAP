@@ -1,5 +1,6 @@
 package dk.group2.smap.shinemyroom.activities;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
