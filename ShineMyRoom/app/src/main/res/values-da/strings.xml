@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shine My Room</string>
+    <string name="title_activity_fullscreen">Shine My Room</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="shine_my_room">SHINE MY\nROOM</string>
+    <string name="authentication_required">Tryk Link Knap På Bridge</string>
+    <string name="connected">Forbundet</string>
+    <string name="enter_ip_btn_text">Manuelt indtast IP</string>
+    <string name="cancel_btn_txt">Fortryd</string>
+    <string name="ph_bridge_json">phBridgeJson</string>
+    <string name="username">userName</string>
+    <string name="ip_adress">IpAddress</string>
+    <string name="kill_app_action">kill_app_action</string>
+    <string name="no_bridge_found">Ingen Brigde Fundet</string>
+    <string name="setup_bridge">Setup Bridge</string>
+    <string name="api_group_result_action">api_group_result_action</string>
+    <string name="connection_status_waiting">Forbinder…</string>
+    <string name="connection_status_bridge">Bridge Forbundet</string>
+    <string name="start_service_action">start_service_action</string>
+    <string name="bridge_connected_action">bridge_connected_action</string>
+    <string name="remote_connected_action">remote_connected_action</string>
+    <string name="authentication_required_action">authentication_required_action</string>
+    <string name="authenticaion_failed_action">authentication_failed_action</string>
+    <string name="connection_status_remote">Fjern Forbindelse</string>
+    <string name="no_connection_action">no_connection_action</string>
+    <string name="no_connection_found">Ingen Forbindelse Funder</string>
+    <string name="room_name">Værelses Navn</string>
+    <string name="save_btn_text">Gem</string>
+    <string name="lamp_name">Lampe Navn</string>
+    <string name="lamp_status_label">Status:</string>
+    <string name="lamp_status_connected">Forbundet</string>
+    <string name="lamp_status_not_connected">Ikke Forbundet</string>
+    <string name="no_wifi">Rediger Værelse Ikke Tilgængeligt\nForbind til WIFI</string>
+    <string name="add_room">Tilføj Værelse</string>
+</resources>
