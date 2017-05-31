@@ -18,9 +18,6 @@ import java.util.ArrayList;
 
 import dk.group2.smap.shinemyroom.R;
 
-/**
- * Created by liao on 30-05-2017.
- */
 
 public class RoomClickedAdapter extends BaseAdapter {
 

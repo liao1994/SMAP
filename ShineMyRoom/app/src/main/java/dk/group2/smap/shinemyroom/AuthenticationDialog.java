@@ -14,10 +14,6 @@ import android.widget.RelativeLayout;
 import com.todddavies.components.progressbar.ProgressWheel;
 
 
-/**
- * Created by liao on 30-05-2017.
- */
-
 public class AuthenticationDialog extends AlertDialog {
     private final static String TAG = "LOG/" + AuthenticationDialog.class.getName();
     private Builder builder;
