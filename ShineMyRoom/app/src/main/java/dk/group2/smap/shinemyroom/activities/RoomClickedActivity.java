@@ -28,7 +28,8 @@ public class RoomClickedActivity extends AppCompatActivity {
     private static final String TAG = "LOG/" + RoomClickedActivity.class.getName();
 
     TextView roomTextView;
-
+    ListView lw;
+    Switch sw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG,"onCreate");
@@ -75,7 +76,7 @@ public class RoomClickedActivity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
+
         //our keys
         //lightIdArrayListToClickedActivity
         //phGroup.getLightIdentifiers();
@@ -84,9 +85,7 @@ public class RoomClickedActivity extends AppCompatActivity {
 
         //set
 
-=======
-        //set
->>>>>>> origin/master
+
         roomTextView.setText(roomNameToClickedActivity);
     }
 }
