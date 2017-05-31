@@ -76,16 +76,7 @@ public class RoomClickedActivity extends AppCompatActivity {
             }
         });
 
-
-        //our keys
-        //lightIdArrayListToClickedActivity
-        //phGroup.getLightIdentifiers();
-
-
-
         //set
-
-
         roomTextView.setText(roomNameToClickedActivity);
     }
 }
