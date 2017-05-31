@@ -12,6 +12,5 @@ public class BridgeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bridge);
 
-
     }
 }

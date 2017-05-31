@@ -25,7 +25,7 @@ import dk.group2.smap.shinemyroom.Global;
 import dk.group2.smap.shinemyroom.R;
 import dk.group2.smap.shinemyroom.generated.Room;
 
-
+//https://developer.android.com/reference/android/widget/Adapter.html
 public class RoomAdapter extends ArrayAdapter<Room> {
     private boolean sleeping;
     private ArrayList<Room> rooms;

@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import dk.group2.smap.shinemyroom.R;
 
+//https://developer.android.com/reference/android/widget/Adapter.html
 public class AddRoomAdapter extends BaseAdapter{
 
     private final Context c;
