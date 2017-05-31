@@ -46,7 +46,7 @@ public class RoomClickedActivity extends AppCompatActivity {
         String roomNameToClickedActivity = intent.getStringExtra("roomNameToClickedActivity");
         ArrayList<String> lightIdArrayListToClickedActivity = intent.getStringArrayListExtra("lightIdArrayListToClickedActivity");
 
-        //data from brigde
+        //data from brigde - https://www.developers.meethue.com/documentation/java-sdk-getting-started
         ArrayList<PHLight> allLights = new ArrayList<>();
         final PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
@@ -62,6 +62,7 @@ public class RoomClickedActivity extends AppCompatActivity {
             lightForRoom.add(lights.get(str));
         }
         RoomClickedAdapter roomClickedAdapter = new RoomClickedAdapter(this, lightForRoom);
+        //https://developer.android.com/reference/android/widget/Adapter.html
         lw.setAdapter(roomClickedAdapter);
         lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

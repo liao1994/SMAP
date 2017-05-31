@@ -49,7 +49,7 @@ public class AddRoomActivity extends AppCompatActivity {
         //roomName.setText(phGroup.getName());
 
         lw = (ListView) findViewById(R.id.add_room_list);
-
+        //https://www.developers.meethue.com/documentation/java-sdk-getting-started
         PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
         PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
         Map<String, PHLight> allLights = resourceCache.getLights();
@@ -63,7 +63,7 @@ public class AddRoomActivity extends AppCompatActivity {
             phGroup = new PHGroup();
             phGroup.setLightIdentifiers(strings);
         }
-
+        //https://developer.android.com/reference/android/widget/Adapter.html
         final AddRoomAdapter addRoomAdapter = new AddRoomAdapter(this, phGroup, allLights);
         lw.setAdapter(addRoomAdapter);
 
@@ -76,7 +76,6 @@ public class AddRoomActivity extends AppCompatActivity {
             }
         });
         Button cancelBtn = (Button) findViewById(R.id.room_add_cancelBtn);
-
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

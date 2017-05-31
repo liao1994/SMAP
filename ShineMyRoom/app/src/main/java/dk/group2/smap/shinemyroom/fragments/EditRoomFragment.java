@@ -49,6 +49,7 @@ public class EditRoomFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_edit_room_no_wifi, container, false);
         }
         else {
+            //https://www.developers.meethue.com/documentation/java-sdk-getting-started
             PHBridge phbridge = PHHueSDK.getInstance().getSelectedBridge();
             PHBridgeResourcesCache resourceCache = phbridge.getResourceCache();
 
