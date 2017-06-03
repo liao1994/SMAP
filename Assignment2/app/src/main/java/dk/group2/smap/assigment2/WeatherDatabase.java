@@ -249,5 +249,4 @@ public class WeatherDatabase  extends SQLiteOpenHelper {
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return dateFormat.format(date);
     }
-
 }

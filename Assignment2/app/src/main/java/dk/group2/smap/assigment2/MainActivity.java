@@ -156,14 +156,12 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 0);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
         Intent backgroundServiceIntent = new Intent(MainActivity.this, WeatherService.class);
         backgroundServiceIntent.setAction(WeatherService.ACTION_WEATHER);
-
         PendingIntent pending = PendingIntent.getService(this, 0, backgroundServiceIntent, 0);
-
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                AlarmManager.INTERVAL_HALF_HOUR, pending);
+
 
     }
 
@@ -212,7 +210,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, R.string.refresh_weather, Toast.LENGTH_SHORT).show();
         }
     };
-
-
 
 }
