@@ -45,6 +45,8 @@ import static dk.group2.smap.assigment2.Global.ICON_API_CALL;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static String TAG = "LOG/" + MainActivity.class.getName();
+
     WeatherDatabase database;
     FloatingActionButton refreshBtn;
     ArrayList<WeatherInfo> winfol;
@@ -185,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("LOG", "Broadcast received from service");
+            Log.d(TAG, "Broadcast received from service");
             switch (intent.getAction()) {
                 case "WEATHER_RESULT":
                     Gson gson = new Gson();

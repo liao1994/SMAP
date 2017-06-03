@@ -23,9 +23,6 @@ import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 import static android.os.Build.ID;
 
-/**
- * Created by liao on 08-05-2017.
- */
 
 
 // I assume you had DAB..

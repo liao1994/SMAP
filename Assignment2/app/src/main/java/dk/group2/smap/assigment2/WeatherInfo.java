@@ -8,9 +8,6 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 
-/**
- * Created by liao on 08-05-2017.
- */
 
 public class WeatherInfo {
     private UUID id;

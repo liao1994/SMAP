@@ -25,18 +25,20 @@ import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 public class WeatherService extends IntentService {
 
+    private final static String TAG = "LOG/" + WeatherService.class.getName();
+
     public static final String ACTION_WEATHER = "dk.group2.assigment2.action.weather";
     public static final String ACTION_ICON = "dk.group2.assigment2.action.icon";
 
     public WeatherService() {
         super("IntentService");
-        Log.d("LOG", "Background service onCreate");
+        Log.d(TAG, "Background service onCreate");
     }
 
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Log.d("LOG", "Background service onHandleIntent");
+        Log.d(TAG, "Background service onHandleIntent");
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_WEATHER.equals(action)) {
@@ -118,7 +120,7 @@ public class WeatherService extends IntentService {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("ICON_RESULT");
         broadcastIntent.putExtra("NEW_ICON_DOWNLOADED",iconId);
-        Log.d("LOG", "Broadcasting:" + "ICON_RESULT");
+        Log.d(TAG, "Broadcasting:" + "ICON_RESULT");
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
@@ -128,13 +130,13 @@ public class WeatherService extends IntentService {
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("WEATHER_RESULT");
         broadcastIntent.putExtra(getString(R.string.weather_info_json),gson.toJson(result));
-        Log.d("LOG", "Broadcasting:" + result);
+        Log.d(TAG, "Broadcasting:" + result);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
     @Override
     public void onDestroy() {
-        Log.d("LOG", "Intent service destroyed");
+        Log.d(TAG, "Intent service destroyed");
         super.onDestroy();
     }
 

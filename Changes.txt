@@ -1,0 +1,9 @@
+Ændringer:
+Video er ikke lavet, da vi har lavet en portrait app, så rotation er ikke noget vi tænker over.
+Zip filen mangler gruppenavnet, men da de to andre reviews har godkendt dette punkt ser vi det som værende ok.
+Package name for applikationen er en fejl, så vi forstår godt at der kunne være sket lidt forvirring.
+Resource externalization er opdateret med de få mangler der var
+APK virker nu
+Log klasse er oprettet til debugging
+Refresh knap virker
+Metode navngivning er én fundet med stort. Resten er construtors og skal derfor være med stort.
