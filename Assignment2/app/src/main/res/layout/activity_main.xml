@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="113dp"
         android:layout_height="26dp"
-        android:text="Current:"
+        android:text="@string/current"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.715"

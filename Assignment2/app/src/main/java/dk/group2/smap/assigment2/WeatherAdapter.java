@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class WeatherAdapter extends BaseAdapter{
 
-    private IconDatabaseHelper db;
+    private final WeatherDatabase db;
     private ArrayList<WeatherInfo> _weatherinfo;
     private Context _context;
     private static LayoutInflater _layoutInflater = null;
-    public WeatherAdapter(Context c, ArrayList<WeatherInfo> weatherinfo, IconDatabaseHelper db){
+    public WeatherAdapter(Context c, ArrayList<WeatherInfo> weatherinfo, WeatherDatabase db){
         _weatherinfo = weatherinfo;
         _context = c;
         this.db = db;
@@ -45,25 +45,30 @@ public class WeatherAdapter extends BaseAdapter{
         //return position;
     }
 
+//    static class ViewHolder(){
+//    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null){
             _layoutInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = _layoutInflater.inflate(R.layout.weather_list_item, null);//set layout for displaying items
+
         }
         ImageView imgView = (ImageView) convertView.findViewById(R.id.weather_icon);
+        TextView tvWeather = (TextView) convertView.findViewById(R.id.tv_weather);
+        TextView tvDate = (TextView) convertView.findViewById(R.id.tv_date);
+        TextView tvTime = (TextView) convertView.findViewById(R.id.tv_time);
+        TextView tvTemp = (TextView) convertView.findViewById(R.id.tv_temp);
+
         Bitmap tmp = db.getIcon(_weatherinfo.get(position).getIcon());
         if (tmp != null)
          imgView.setImageBitmap(tmp);
         String[] xx = _weatherinfo.get(position).getTimeStamp().split(" ");
-        TextView tvWeather = (TextView) convertView.findViewById(R.id.tv_weather);
         tvWeather.setText(_weatherinfo.get(position).getMain());
-        TextView tvDate = (TextView) convertView.findViewById(R.id.tv_date);
         tvDate.setText(xx[0]);
-        TextView tvTime = (TextView) convertView.findViewById(R.id.tv_time);
         tvTime.setText(xx[1]);
-        TextView tvTemp = (TextView) convertView.findViewById(R.id.tv_temp);
         tvTemp.setText( String.format( "%.2f", _weatherinfo.get(position).getTemp()) + _context.getString(R.string.degrees) +(char) 0x00B0 );
+
         return convertView;
 
     }

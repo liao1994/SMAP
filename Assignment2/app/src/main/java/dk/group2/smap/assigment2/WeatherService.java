@@ -25,16 +25,13 @@ import dk.group2.smap.assigment2.generatedfiles.Weather;
 
 public class WeatherService extends IntentService {
 
-    WeatherDatabase weatherDB;
     public static final String ACTION_WEATHER = "dk.group2.assigment2.action.weather";
     public static final String ACTION_ICON = "dk.group2.assigment2.action.icon";
-
 
     public WeatherService() {
         super("IntentService");
         Log.d("LOG", "Background service onCreate");
     }
-
 
 
     @Override
@@ -63,6 +60,7 @@ public class WeatherService extends IntentService {
         intent.setAction(ACTION_ICON);
         context.startService(intent);
     }
+
     private void sendRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
         //send request using Volley
@@ -79,9 +77,8 @@ public class WeatherService extends IntentService {
                         Weather w = r.getWeather().get(0);
 
                         WeatherInfo wi = new WeatherInfo(UUID.randomUUID(),w.getMain(),w.getDescription(),(r.getMain().getTemp()-275.15),w.getIcon());
-                        weatherDB = new WeatherDatabase(getApplicationContext());
-                        weatherDB.InsertWeatherInfo(wi);
-//                            Toast.makeText(getApplicationContext(),"Refreshed too soon",Toast.LENGTH_SHORT).show();
+                        WeatherDatabase database = new WeatherDatabase(getApplicationContext());
+                        database.insertWeatherInfo(wi);
                         broadcastWeatherResult(wi);
 
                     }
@@ -96,8 +93,8 @@ public class WeatherService extends IntentService {
 
     }
     private void loadIcon(final String iconId){
-        final IconDatabaseHelper iconDB = new IconDatabaseHelper(getApplicationContext());
-        if(iconDB.IconIsNull(iconId)){
+        final WeatherDatabase database = new WeatherDatabase(getApplicationContext());
+        if(database.iconIsNull(iconId)){
             RequestQueue queue = Volley.newRequestQueue(this);
             //send request using Volley
             if(queue==null){
@@ -107,7 +104,7 @@ public class WeatherService extends IntentService {
             ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
                 @Override
                 public void onResponse(Bitmap response) {
-                    int i = iconDB.insertIcon(iconId,response);
+                    int i = database.insertIcon(iconId,response);
                     Log.d("Log/test","result from iconloading: " + i);
                     broadcastIconResult(iconId);
                 }

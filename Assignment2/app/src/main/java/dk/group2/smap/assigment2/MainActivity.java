@@ -45,11 +45,10 @@ import static dk.group2.smap.assigment2.Global.ICON_API_CALL;
 
 public class MainActivity extends AppCompatActivity {
 
-    WeatherDatabase wDB;
+    WeatherDatabase database;
     FloatingActionButton refreshBtn;
     ArrayList<WeatherInfo> winfol;
     WeatherInfo currentWeather;
-    IconDatabaseHelper iconDB;
     WeatherAdapter weatherAdapter;
     AlertDialog.Builder dialog;
 
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         WeatherService.startAction(this);
 
           ImageView imgv = (ImageView)findViewById(R.id.currentIcon);
-          Bitmap currentbitmap = iconDB.getIcon(currentWeather.getIcon());
+          Bitmap currentbitmap = database.getIcon(currentWeather.getIcon());
            if(currentbitmap != null)
             imgv.setImageBitmap(currentbitmap);
     }
@@ -66,8 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        iconDB = new IconDatabaseHelper(this);
-        wDB = new WeatherDatabase(this);
+        database = new WeatherDatabase(this);
         startWeatherService();
         refreshBtn = (FloatingActionButton) findViewById(R.id.refreshBtn);
         refreshBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        winfol = wDB.getWeatherInfoList();
+        winfol = database.getWeatherInfoList();
         if (winfol == null){
 
             Toast.makeText(this, R.string.weather_db_unavailable, Toast.LENGTH_LONG).show();
@@ -98,29 +96,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageView imgv = (ImageView)findViewById(R.id.currentIcon);
-        Bitmap currentbitmap = iconDB.getIcon(currentWeather.getIcon());
+        TextView currentInfo = (TextView) findViewById(R.id.tv_currentInfo);
+        TextView currentTemp = (TextView) findViewById(R.id.tv_currentDegrees);
+        TextView currentDescription = (TextView) findViewById(R.id.tv_currentDescription);
+        Bitmap currentbitmap = database.getIcon(currentWeather.getIcon());
+
         if(currentbitmap != null)
             imgv.setImageBitmap(currentbitmap);
-        TextView currentInfo = (TextView) findViewById(R.id.tv_currentInfo);
         currentInfo.setText(currentWeather.getMain());
-        TextView currentTemp = (TextView) findViewById(R.id.tv_currentDegrees);
         currentTemp.setText(String.format( "%.2f", currentWeather.getTemp()) + getString(R.string.degrees) +(char) 0x00B0 );
-        TextView currentDescription = (TextView) findViewById(R.id.tv_currentDescription);
         currentDescription.setText(currentWeather.getDescription());
 
-        weatherAdapter = new WeatherAdapter(this, winfol,iconDB);
+        weatherAdapter = new WeatherAdapter(this, winfol,database);
         ListView lw = (ListView) findViewById(R.id.listWeather);
         lw.setAdapter(weatherAdapter);
 
+        // make new dialog on click
         lw.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WeatherInfo obj = winfol.get(position);
                 dialog = new AlertDialog.Builder(MainActivity.this);
-
                 dialog.setTitle(R.string.WeDe);
-
                 dialog.setCancelable(true);
                 ConstraintLayout viewById = (ConstraintLayout) MainActivity.this.getLayoutInflater().inflate(R.layout.dialog_box,null);
                 viewById.setBackgroundColor(Color.rgb(183, 210, 255));
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 time.setText(str[1]);
                 temp.setText(String.format( "%.2f", obj.getTemp()) + getString(R.string.degrees) +(char) 0x00B0);
                 desp.setText(obj.getDescription());
-                Bitmap tmp = iconDB.getIcon(obj.getIcon());
+                Bitmap tmp = database.getIcon(obj.getIcon());
                 if(tmp != null)
                  img.setImageBitmap(tmp);
 
@@ -181,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(onBackgroundServiceResult);
-        wDB.close();
+        database.close();
     }
 
     private BroadcastReceiver onBackgroundServiceResult = new BroadcastReceiver() {
@@ -192,10 +190,16 @@ public class MainActivity extends AppCompatActivity {
                 case "WEATHER_RESULT":
                     Gson gson = new Gson();
                     WeatherInfo tmp = gson.fromJson(intent.getStringExtra("WEATHER_INFO_JSON"), WeatherInfo.class);
-                    if (currentWeather.getId() != tmp.getId())
+                    if( currentWeather == null)
                     {
-                        winfol.add(0, currentWeather);
                         currentWeather = tmp;
+                        winfol.add(0, currentWeather);
+                        setUpdate();
+
+                    }else if (currentWeather.getId() != tmp.getId())
+                    {
+                        currentWeather = tmp;
+                        winfol.add(0, currentWeather);
                         setUpdate();
                     }
                     break;
