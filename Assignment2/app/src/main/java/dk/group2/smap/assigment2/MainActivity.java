@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        Toast.makeText(this, R.string.refresh, Toast.LENGTH_SHORT).show();
     }
 
     private void startWeatherService() {
@@ -155,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 6);
         calendar.set(Calendar.MINUTE, 0);
 
+        // creating an alarmaneger to wakeup can start the intent service every 30 min. could be set inexact to save battery draining, at the cost of less precise start
+        // Registered alarms are retained while the device is asleep
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent backgroundServiceIntent = new Intent(MainActivity.this, WeatherService.class);
         backgroundServiceIntent.setAction(WeatherService.ACTION_WEATHER);
