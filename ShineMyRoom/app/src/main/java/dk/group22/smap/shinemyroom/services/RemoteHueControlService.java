@@ -76,7 +76,7 @@ public class RemoteHueControlService extends IntentService{
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error.API", error.getMessage());
+               // Log.d("Error.API", error.getMessage());
                 broadcastRemoteAccessFailed();
             }
         });
